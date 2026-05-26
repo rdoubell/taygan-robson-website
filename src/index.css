@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #0A0A0A;
+  --primary: #3D7A57;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F4F4F4;
+  --secondary-foreground: #0A0A0A;
+  --accent: #3D7A57;
+  --accent-foreground: #FFFFFF;
+  --muted: #F7F7F5;
+  --muted-foreground: #2F5E45;
+  --border: #E2E8E4;
+  --ring: #3D7A57;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #3D7A57;
+  color: #ffffff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #f4f4f4;
+}
+::-webkit-scrollbar-thumb {
+  background: #3D7A57;
+  border-radius: 2px;
+}
+
+/* Ticker animations */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes tickerSlide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  animation: ticker 35s linear infinite;
+  width: max-content;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* Grain overlay */
+.grain::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* Section utility */
+.section-pad {
+  padding: 5rem 0;
+}
+
+@media (max-width: 768px) {
+  .section-pad {
+    padding: 3rem 0;
+  }
+}
+
+/* ── Rotating gradient button border ── */
+@property --btn-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes btn-rotate {
+  to { --btn-angle: 360deg; }
+}
+
+.btn-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(
+    from var(--btn-angle),
+    transparent 0%,
+    #6DB892 35%,
+    rgba(255, 255, 255, 0.85) 50%,
+    #6DB892 65%,
+    transparent 100%
+  );
+  animation: btn-rotate 3s linear infinite;
+  z-index: -1;
+}
+
+/* Green rule line */
+.rule-green {
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: #3D7A57;
+}
+
+/* Heading italic accent */
+.heading-italic {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  color: #3D7A57;
+}
