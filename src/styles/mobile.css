@@ -1,0 +1,66 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   MOBILE OVERRIDES  ·  taygan-robson-website
+   Fires at max-width: 767px only — desktop is completely untouched.
+   ────────────────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+
+  /* ── 1. Kill horizontal overflow / blank dead zone ─────────────────── */
+  html, body, #root {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* ── 2. Services heading ────────────────────────────────────────────── */
+  /* inline style has white-space: nowrap which overflows on mobile.
+     !important is required because inline styles beat class selectors.  */
+  .services-heading {
+    white-space: normal !important;
+    font-size: clamp(1.6rem, 7.5vw, 2.2rem) !important;
+  }
+
+  /* ── 3. Contact CTA buttons ─────────────────────────────────────────── */
+  /* Already stacked via flex-col on mobile — make them full-width       */
+  .contact-cta-group {
+    width: 100% !important;
+  }
+  .contact-cta-group a {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* ── 4. Hero CTA ─────────────────────────────────────────────────────── */
+  .hero-cta-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .hero-cta {
+    width: 100% !important;
+    max-width: 22rem !important;
+    justify-content: center !important;
+  }
+
+  /* ── 5. About image ──────────────────────────────────────────────────── */
+  /* On mobile the two-col grid stacks. Give the image a sensible height. */
+  .about-image-col .about-image-inner {
+    min-height: 55vw !important;
+  }
+
+  /* ── 6. Services — image column consistent height when stacked ────────  */
+  .services-img-col {
+    height: 14rem !important; /* 224px — comfortable on mobile */
+  }
+
+  /* ── 7. Credentials mask — slightly narrower fade on small viewports ── */
+  .cred-scroll-mask {
+    mask: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%) !important;
+    -webkit-mask: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%) !important;
+  }
+
+  /* ── 8. General section horizontal padding tightening ────────────────  */
+  .mobile-px {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+}

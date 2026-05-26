@@ -54,9 +54,9 @@ export default function About() {
             variants={fadeUp(0.1)}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="relative w-full"
+            className="about-image-col relative w-full"
           >
-            <div className="h-full min-h-[300px] border-2 border-dashed border-[#3D7A57]/30 bg-[#F7F7F5] flex flex-col items-center justify-center gap-4">
+            <div className="about-image-inner h-full min-h-[300px] border-2 border-dashed border-[#3D7A57]/30 bg-[#F7F7F5] flex flex-col items-center justify-center gap-4">
               <div className="w-12 h-12 border-2 border-dashed border-[#3D7A57]/40 rounded-full flex items-center justify-center">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3D7A57" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.45">
                   <rect x="3" y="3" width="18" height="18" rx="2"/>

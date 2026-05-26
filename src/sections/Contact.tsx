@@ -50,7 +50,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.35 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="contact-cta-group flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <a
             href="#"

@@ -48,7 +48,7 @@ export default function Services() {
             initial={{ opacity: 0, y: 14 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="text-[#3D7A57] mb-3"
+            className="text-[#3D7A57] mb-3 services-heading"
             style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "clamp(2rem, 3.8vw, 3.4rem)", fontWeight: 700, lineHeight: 1.05, textTransform: "uppercase", letterSpacing: "0.02em", whiteSpace: "nowrap" }}
           >
             Services &amp; Offerings
@@ -81,7 +81,7 @@ export default function Services() {
                 transition={{ duration: 0.65, delay: 0.1 + i * 0.08 }}
                 className="grid lg:grid-cols-2 border-b border-[#E2E8E4] last:border-b-0 group"
               >
-                <div className={`overflow-hidden h-64 lg:h-80 ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
+                <div className={`services-img-col overflow-hidden h-64 lg:h-80 ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
                   <img src={svc.image} alt={svc.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
                 <div className={`flex flex-col justify-center px-8 py-10 lg:px-12 bg-white group-hover:bg-[#FAFAF9] transition-colors duration-300 ${imageRight ? "lg:order-2" : "lg:order-1"}`}>

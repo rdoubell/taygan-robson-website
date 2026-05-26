@@ -83,10 +83,10 @@ export default function Hero() {
             Three decades. Two practices. One conversation.
           </motion.p>
 
-          <motion.div variants={fadeUp}>
+          <motion.div variants={fadeUp} className="hero-cta-wrap">
             <a
               href="#contact"
-              className="inline-flex items-center gap-3 px-10 py-4 bg-[#3D7A57] text-white text-xs tracking-[0.22em] uppercase font-medium hover:bg-[#2F5E45] hover:shadow-[0_0_28px_rgba(109,184,146,0.45)] hover:scale-[1.02] transition-all duration-300"
+              className="hero-cta inline-flex items-center gap-3 px-10 py-4 bg-[#3D7A57] text-white text-xs tracking-[0.22em] uppercase font-medium hover:bg-[#2F5E45] hover:shadow-[0_0_28px_rgba(109,184,146,0.45)] hover:scale-[1.02] transition-all duration-300"
             >
               Book Appointment <span className="text-white/50">+</span>
             </a>
