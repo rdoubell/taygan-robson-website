@@ -63,7 +63,7 @@ export default function CaseStudies() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.18 }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          className="case-studies-snap grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
           {articles.map((article) => (
             <div
