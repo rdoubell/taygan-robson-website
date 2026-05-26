@@ -71,8 +71,8 @@ export default function About() {
             <div className="absolute bottom-0 left-0 w-1 h-20 bg-[#3D7A57]" />
           </motion.div>
 
-          {/* Right — text, aligned to image top */}
-          <div>
+          {/* Right — text, centred vertically with image */}
+          <div className="flex flex-col justify-center">
             <motion.p variants={fadeUp(0.17)} initial="hidden" animate={inView ? "visible" : "hidden"} className="text-black/65 text-[15px] leading-[1.85] mb-4">
               With over two decades of experience across performance science, sports nutrition, and rehabilitation, Taygan works with athletes and teams requiring a complete performance overview before intervention begins.
             </motion.p>
