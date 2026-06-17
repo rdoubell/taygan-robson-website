@@ -65,11 +65,12 @@ export default function About() {
             animate={inView ? "visible" : "hidden"}
             className="about-image-col relative w-full"
           >
-            <div className="about-image-inner h-full min-h-[300px] overflow-hidden">
+            <div className="about-image-inner h-full min-h-[360px] overflow-hidden">
               <img
                 src="/about page photo.png"
                 alt="Taygan Robson"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-cover"
+                style={{ objectPosition: "50% 18%", transform: "scale(1.35)", transformOrigin: "50% 18%" }}
               />
             </div>
             <div className="absolute bottom-0 left-0 w-1 h-20 bg-[#C9A84C]" />

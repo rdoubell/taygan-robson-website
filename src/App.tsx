@@ -7,7 +7,6 @@ import Services from "./sections/Services"
 import Pricing from "./sections/Pricing"
 import CaseStudies from "./sections/CaseStudies"
 import TrustedBy from "./sections/TrustedBy"
-import Contact from "./sections/Contact"
 import Footer from "./sections/Footer"
 
 export default function App() {
@@ -26,7 +25,6 @@ export default function App() {
           <Pricing />
           <CaseStudies />
           <TrustedBy />
-          <Contact />
         </div>
       </main>
       <Footer />

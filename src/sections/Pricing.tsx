@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { Check, ArrowRight } from "lucide-react"
+import { Check, ArrowRight, MessageCircle } from "lucide-react"
 
 const consultationFeatures = [
   "45-minute full performance overview",
@@ -165,7 +165,7 @@ export default function Pricing() {
   const inView = useInView(ref, { once: true, margin: "-60px" })
 
   return (
-    <section id="pricing" className="section-pad bg-[#F7F7F5]" ref={ref}>
+    <section id="pricing" className="section-pad pb-0 bg-white" ref={ref}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
         {/* Section heading */}
@@ -208,7 +208,7 @@ export default function Pricing() {
           initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.75, delay: 0.15 }}
-          className="pricing-featured bg-[#0D0D0D] mb-10 p-10 lg:p-14 grid lg:grid-cols-[1fr_auto] gap-10 items-center"
+          className="pricing-featured bg-[#1A3B6E] mb-10 p-10 lg:p-14 grid lg:grid-cols-[1fr_auto] gap-10 items-center"
         >
           <div>
             <p
@@ -282,13 +282,59 @@ export default function Pricing() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center text-black/35 text-[12px] mt-10 leading-relaxed"
+          className="text-center text-black/35 text-[12px] mt-10 mb-0 leading-relaxed"
           style={{ fontFamily: "'DM Mono', monospace" }}
         >
           All service pricing is provided on application following the 1INC Initial Consultation.
           <br />
           Contact <span style={{ color: "#C9A84C" }}>hello@1inc-consulting.com</span> for further information.
         </motion.p>
+      </div>
+
+      {/* ── Get Started CTA — merged from Contact section ── */}
+      <div id="contact" className="mt-16 bg-[#0D0D0D] py-20 overflow-hidden">
+        <div className="max-w-3xl mx-auto px-6 lg:px-12 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.8 }}
+            className="text-white mb-10"
+            style={{
+              fontFamily: "'Tinos', Georgia, serif",
+              fontSize: "clamp(2.2rem, 5.5vw, 4rem)",
+              fontWeight: 700,
+              lineHeight: 1.08,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            Get Started{" "}
+            <span style={{ color: "#C9A84C", fontStyle: "italic" }}>Today.</span>
+          </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a
+              href="#"
+              className="flex items-center gap-3 px-10 py-4 bg-[#C9A84C] text-white text-xs tracking-[0.22em] uppercase font-medium hover:bg-[#A08030] hover:shadow-[0_0_28px_rgba(201,168,76,0.45)] hover:scale-[1.02] transition-all duration-300"
+            >
+              Schedule Appointment
+              <ArrowRight size={14} />
+            </a>
+            <a
+              href="#"
+              className="flex items-center gap-3 px-10 py-4 border border-white/25 text-white text-xs tracking-[0.22em] uppercase font-medium hover:border-white/60 hover:bg-white/5 hover:scale-[1.02] transition-all duration-300"
+            >
+              WhatsApp Enquiry
+              <MessageCircle size={14} />
+            </a>
+          </motion.div>
+        </div>
       </div>
     </section>
   )

@@ -30,7 +30,7 @@ export default function CaseStudies() {
             className="text-white mb-3"
             style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "clamp(2.6rem, 5vw, 4rem)", fontWeight: 700, lineHeight: 1.05, textTransform: "uppercase", letterSpacing: "0.02em" }}
           >
-            Insights &amp; Research
+            Blog
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 8 }}
