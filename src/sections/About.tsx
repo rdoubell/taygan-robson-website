@@ -6,15 +6,6 @@ const fadeUp = (delay = 0) => ({
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] } },
 })
 
-const tags = [
-  "Performance Science",
-  "Sports Rehabilitation",
-  "Sports Nutrition",
-  "Endurance Analytics",
-  "Return-to-Performance",
-  "Injury Prevention",
-]
-
 export default function About() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-80px" })
@@ -78,37 +69,19 @@ export default function About() {
 
           {/* Right — text, centred vertically with image */}
           <div className="flex flex-col justify-center">
-            <motion.p variants={fadeUp(0.17)} initial="hidden" animate={inView ? "visible" : "hidden"} className="text-black/65 text-[15px] leading-[1.85] mb-4">
+            <motion.p variants={fadeUp(0.17)} initial="hidden" animate={inView ? "visible" : "hidden"} className="text-black/65 text-[17px] leading-[1.9] mb-4">
               With over two decades of experience across performance science, sports nutrition, and rehabilitation, Taygan works with athletes and teams requiring a complete performance overview before intervention begins.
             </motion.p>
 
-            <motion.p variants={fadeUp(0.23)} initial="hidden" animate={inView ? "visible" : "hidden"} className="text-black/65 text-[15px] leading-[1.85] mb-4">
+            <motion.p variants={fadeUp(0.23)} initial="hidden" animate={inView ? "visible" : "hidden"} className="text-black/65 text-[17px] leading-[1.9] mb-4">
               His approach integrates training load analysis, injury history, movement screening, nutrition strategy, and return-to-performance planning into one evidence-based system.
             </motion.p>
 
-            <motion.p variants={fadeUp(0.29)} initial="hidden" animate={inView ? "visible" : "hidden"} className="text-black/65 text-[15px] leading-[1.85] mb-8">
+            <motion.p variants={fadeUp(0.29)} initial="hidden" animate={inView ? "visible" : "hidden"} className="text-black/65 text-[17px] leading-[1.9] mb-0">
               Through{" "}
               <span className="text-[#1A3B6E] font-medium">1INC Consulting</span>,
               clients receive direct high-level guidance tailored to their performance goals, rehabilitation needs, and long-term athletic development. Currently working with elite athletes and motorsport teams, Taygan combines practical experience with advanced academic research in sports nutrition and sports injury rehabilitation.
             </motion.p>
-
-            {/* Specialisation tags */}
-            <motion.div
-              variants={fadeUp(0.35)}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              className="flex flex-wrap gap-2"
-            >
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 border border-[#1A3B6E]/20 text-[#1A3B6E]/70 text-[10px] tracking-[0.18em] uppercase bg-[#F7F7F5]"
-                  style={{ fontFamily: "'DM Mono', monospace" }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
           </div>
         </div>
       </div>

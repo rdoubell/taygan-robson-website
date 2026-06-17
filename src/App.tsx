@@ -23,8 +23,8 @@ export default function App() {
           <Credentials />
           <Services />
           <Pricing />
-          <CaseStudies />
           <TrustedBy />
+          <CaseStudies />
         </div>
       </main>
       <Footer />

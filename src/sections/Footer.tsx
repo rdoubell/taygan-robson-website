@@ -2,7 +2,7 @@ import { Linkedin } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0F1F3D]">
+    <footer className="bg-[#1A3B6E]">
 
       {/* Gold accent line at top */}
       <div className="h-[2px] bg-[#C9A84C]/30" />

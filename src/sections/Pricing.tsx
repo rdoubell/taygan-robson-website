@@ -89,12 +89,6 @@ function ServiceCard({ svc, delay }: { svc: typeof services[number]; delay: numb
     >
       {/* Card header */}
       <div className="px-7 pt-7 pb-6 border-b border-[#E2E8E4]">
-        <p
-          className="text-[10px] tracking-[0.3em] uppercase text-[#1A3B6E]/50 mb-3"
-          style={{ fontFamily: "'DM Mono', monospace" }}
-        >
-          Service
-        </p>
         <h3
           className="text-black mb-4 leading-tight"
           style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "1.15rem", fontWeight: 700, lineHeight: 1.25 }}
@@ -294,21 +288,11 @@ export default function Pricing() {
       {/* ── Book a Consultation CTA ── */}
       <div id="contact" className="mt-16 bg-[#1A3B6E] py-24 overflow-hidden">
         <div className="max-w-2xl mx-auto px-6 lg:px-12 text-center">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.5 }}
-            className="text-[10px] tracking-[0.4em] uppercase text-white/40 mb-6"
-            style={{ fontFamily: "'DM Mono', monospace" }}
-          >
-            1INC Consulting
-          </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.8, delay: 0.05 }}
+            transition={{ duration: 0.8 }}
             className="text-white mb-4"
             style={{
               fontFamily: "'Tinos', Georgia, serif",

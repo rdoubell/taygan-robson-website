@@ -1,0 +1,52 @@
+{
+  "hash": "d757d1c1",
+  "configHash": "a1b5780a",
+  "lockfileHash": "81d5c6ea",
+  "browserHash": "140d35c6",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "8cef3d37",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "1120903c",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "667345a6",
+      "needsInterop": true
+    },
+    "framer-motion": {
+      "src": "../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "712c2ad7",
+      "needsInterop": false
+    },
+    "lucide-react": {
+      "src": "../../node_modules/lucide-react/dist/esm/lucide-react.js",
+      "file": "lucide-react.js",
+      "fileHash": "7c283020",
+      "needsInterop": false
+    },
+    "embla-carousel-auto-scroll": {
+      "src": "../../node_modules/embla-carousel-auto-scroll/esm/embla-carousel-auto-scroll.esm.js",
+      "file": "embla-carousel-auto-scroll.js",
+      "fileHash": "489e9754",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-32E4H3EV": {
+      "file": "chunk-32E4H3EV.js"
+    },
+    "chunk-G3PMV62Z": {
+      "file": "chunk-G3PMV62Z.js"
+    }
+  }
+}
