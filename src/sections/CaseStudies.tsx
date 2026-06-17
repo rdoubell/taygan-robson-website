@@ -18,7 +18,7 @@ export default function CaseStudies() {
   const inView = useInView(ref, { once: true, margin: "-60px" })
 
   return (
-    <section id="case-studies" className="py-16 bg-[#3D7A57]" ref={ref}>
+    <section id="case-studies" className="py-16 bg-[#1A3B6E]" ref={ref}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
         {/* Heading */}
@@ -27,7 +27,7 @@ export default function CaseStudies() {
             initial={{ opacity: 0, y: 8 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="text-[10px] tracking-[0.3em] uppercase text-white/50 mb-3"
+            className="text-[10px] tracking-[0.3em] uppercase text-white/40 mb-3"
             style={{ fontFamily: "'DM Mono', monospace" }}
           >
             1INC Consulting
@@ -54,7 +54,7 @@ export default function CaseStudies() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.16 }}
             className="mx-auto mt-6 block"
-            style={{ width: 48, height: 2, background: "rgba(255,255,255,0.5)" }}
+            style={{ width: 48, height: 2, background: "#C9A84C" }}
           />
         </div>
 
@@ -88,7 +88,7 @@ export default function CaseStudies() {
                 )}
                 <div className="absolute top-3 left-3">
                   <span
-                    className="px-3 py-1 bg-[#3D7A57] text-white text-[10px] tracking-[0.2em] uppercase"
+                    className="px-3 py-1 bg-[#1A3B6E] text-white text-[10px] tracking-[0.2em] uppercase"
                     style={{ fontFamily: "'DM Mono', monospace" }}
                   >
                     {article.tag}
@@ -114,14 +114,14 @@ export default function CaseStudies() {
           ))}
 
           {/* Placeholder */}
-          <div className="border border-dashed border-white/30 flex flex-col items-center justify-center gap-3 p-10 min-h-[300px]">
-            <div className="w-8 h-8 border border-dashed border-white/40 rounded-full flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.5">
+          <div className="border border-dashed border-white/20 flex flex-col items-center justify-center gap-3 p-10 min-h-[300px]">
+            <div className="w-8 h-8 border border-dashed border-white/30 rounded-full flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.45">
                 <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
               </svg>
             </div>
             <p
-              className="text-white/50 text-[10px] tracking-[0.25em] uppercase text-center"
+              className="text-white/40 text-[10px] tracking-[0.25em] uppercase text-center"
               style={{ fontFamily: "'DM Mono', monospace" }}
             >
               More articles coming

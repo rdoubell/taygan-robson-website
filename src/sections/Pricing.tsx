@@ -85,12 +85,12 @@ function ServiceCard({ svc, delay }: { svc: typeof services[number]; delay: numb
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.6, delay }}
-      className="bg-white border border-[#E2E8E4] flex flex-col hover:shadow-[0_8px_40px_rgba(61,122,87,0.08)] transition-shadow duration-400"
+      className="bg-white border border-[#E2E8E4] flex flex-col hover:shadow-[0_8px_40px_rgba(26,59,110,0.08)] transition-shadow duration-400"
     >
       {/* Card header */}
       <div className="px-7 pt-7 pb-6 border-b border-[#E2E8E4]">
         <p
-          className="text-[10px] tracking-[0.3em] uppercase text-[#3D7A57]/60 mb-3"
+          className="text-[10px] tracking-[0.3em] uppercase text-[#1A3B6E]/50 mb-3"
           style={{ fontFamily: "'DM Mono', monospace" }}
         >
           Service
@@ -103,8 +103,8 @@ function ServiceCard({ svc, delay }: { svc: typeof services[number]; delay: numb
         </h3>
         <div className="flex items-baseline gap-2">
           <span
-            className="text-[#3D7A57] font-bold tracking-tight"
-            style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "1.6rem" }}
+            className="font-bold tracking-tight"
+            style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "1.6rem", color: "#C9A84C" }}
           >
             {svc.price}
           </span>
@@ -119,7 +119,7 @@ function ServiceCard({ svc, delay }: { svc: typeof services[number]; delay: numb
         <ul className="space-y-2.5 mb-6">
           {svc.features.map((f) => (
             <li key={f} className="flex items-start gap-2.5">
-              <Check size={13} className="text-[#3D7A57] mt-[3px] flex-shrink-0" strokeWidth={2.5} />
+              <Check size={13} className="mt-[3px] flex-shrink-0" style={{ color: "#C9A84C" }} strokeWidth={2.5} />
               <span className="text-black/60 text-[13px] leading-snug">{f}</span>
             </li>
           ))}
@@ -141,7 +141,7 @@ function ServiceCard({ svc, delay }: { svc: typeof services[number]; delay: numb
             value={details}
             onChange={(e) => setDetails(e.target.value)}
             placeholder="Tell us about your current situation, goals, or what you'd like to achieve..."
-            className="w-full resize-none border border-[#E2E8E4] bg-[#FAFAF9] px-4 py-3 text-[13px] text-black/70 placeholder:text-black/25 leading-relaxed outline-none focus:border-[#3D7A57]/50 focus:ring-1 focus:ring-[#3D7A57]/20 transition-colors duration-200"
+            className="w-full resize-none border border-[#E2E8E4] bg-[#FAFAF9] px-4 py-3 text-[13px] text-black/70 placeholder:text-black/25 leading-relaxed outline-none focus:border-[#C9A84C]/50 focus:ring-1 focus:ring-[#C9A84C]/20 transition-colors duration-200"
             style={{ fontFamily: "inherit" }}
           />
         </label>
@@ -151,7 +151,7 @@ function ServiceCard({ svc, delay }: { svc: typeof services[number]; delay: numb
       <div className="px-7 pb-7">
         <button
           onClick={handleEnquire}
-          className="w-full flex items-center justify-center gap-2.5 py-3 bg-[#F7F7F5] border border-[#E2E8E4] text-[11px] tracking-[0.2em] uppercase text-black/70 font-medium hover:bg-[#3D7A57] hover:text-white hover:border-[#3D7A57] transition-all duration-250"
+          className="w-full flex items-center justify-center gap-2.5 py-3 bg-[#F7F7F5] border border-[#E2E8E4] text-[11px] tracking-[0.2em] uppercase text-black/70 font-medium hover:bg-[#C9A84C] hover:text-white hover:border-[#C9A84C] transition-all duration-250"
         >
           Send Enquiry <ArrowRight size={12} />
         </button>
@@ -174,7 +174,7 @@ export default function Pricing() {
             initial={{ opacity: 0, y: 8 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="text-[10px] tracking-[0.35em] uppercase text-[#3D7A57]/70 mb-4"
+            className="text-[10px] tracking-[0.35em] uppercase text-[#1A3B6E]/60 mb-4"
             style={{ fontFamily: "'DM Mono', monospace" }}
           >
             1INC Consulting
@@ -183,7 +183,7 @@ export default function Pricing() {
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.06 }}
-            className="text-[#3D7A57] mb-3"
+            className="mb-3"
             style={{
               fontFamily: "'Tinos', Georgia, serif",
               fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
@@ -191,6 +191,7 @@ export default function Pricing() {
               lineHeight: 1.05,
               textTransform: "uppercase",
               letterSpacing: "0.02em",
+              color: "#C9A84C",
             }}
           >
             Investment in Your Performance
@@ -220,8 +221,8 @@ export default function Pricing() {
         >
           <div>
             <p
-              className="text-[10px] tracking-[0.38em] uppercase text-[#3D7A57] mb-5"
-              style={{ fontFamily: "'DM Mono', monospace" }}
+              className="text-[10px] tracking-[0.38em] uppercase mb-5"
+              style={{ fontFamily: "'DM Mono', monospace", color: "#C9A84C" }}
             >
               Featured · Consultation
             </p>
@@ -244,7 +245,7 @@ export default function Pricing() {
             <ul className="grid sm:grid-cols-2 gap-x-10 gap-y-3 mb-0">
               {consultationFeatures.map((f) => (
                 <li key={f} className="flex items-start gap-2.5">
-                  <Check size={13} className="text-[#6DB892] mt-[3px] flex-shrink-0" strokeWidth={2.5} />
+                  <Check size={13} className="mt-[3px] flex-shrink-0" style={{ color: "#C9A84C" }} strokeWidth={2.5} />
                   <span className="text-white/65 text-[13px] leading-snug">{f}</span>
                 </li>
               ))}
@@ -253,10 +254,10 @@ export default function Pricing() {
 
           {/* Price + CTA */}
           <div className="flex flex-col items-start lg:items-end gap-6 lg:min-w-[200px]">
-            <div className="text-right">
+            <div className="lg:text-right">
               <div
-                className="text-white font-bold leading-none mb-1"
-                style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "clamp(2.4rem, 4vw, 3.2rem)" }}
+                className="font-bold leading-none mb-1"
+                style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "clamp(2.4rem, 4vw, 3.2rem)", color: "#C9A84C" }}
               >
                 POA
               </div>
@@ -269,7 +270,7 @@ export default function Pricing() {
             </div>
             <a
               href="#contact"
-              className="inline-flex items-center gap-3 px-9 py-4 bg-[#3D7A57] text-white text-[11px] tracking-[0.22em] uppercase font-medium hover:bg-[#2F5E45] hover:shadow-[0_0_28px_rgba(109,184,146,0.35)] hover:scale-[1.02] transition-all duration-300 whitespace-nowrap"
+              className="inline-flex items-center gap-3 px-9 py-4 bg-[#C9A84C] text-white text-[11px] tracking-[0.22em] uppercase font-medium hover:bg-[#A08030] hover:shadow-[0_0_28px_rgba(201,168,76,0.35)] hover:scale-[1.02] transition-all duration-300 whitespace-nowrap"
             >
               Book Consultation
               <ArrowRight size={13} />
@@ -295,7 +296,7 @@ export default function Pricing() {
         >
           All service pricing is provided on application following the 1INC Initial Consultation.
           <br />
-          Contact <span className="text-[#3D7A57]">hello@1inc-consulting.com</span> for further information.
+          Contact <span style={{ color: "#C9A84C" }}>hello@1inc-consulting.com</span> for further information.
         </motion.p>
       </div>
     </section>

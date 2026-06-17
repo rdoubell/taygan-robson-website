@@ -49,7 +49,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center">
             <a
               href="#contact"
-              className="px-6 py-2.5 border border-black text-black text-[11px] tracking-[0.18em] uppercase font-medium hover:bg-black hover:text-white hover:shadow-[0_0_20px_rgba(61,122,87,0.25)] hover:scale-[1.02] transition-all duration-300"
+              className="px-6 py-2.5 border border-black text-black text-[11px] tracking-[0.18em] uppercase font-medium hover:bg-[#C9A84C] hover:border-[#C9A84C] hover:text-white hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] hover:scale-[1.02] transition-all duration-300"
             >
               Book Appointment
             </a>

@@ -2,10 +2,10 @@ import { Linkedin } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="bg-[#3D7A57]">
+    <footer className="bg-[#0F1F3D]">
 
-      {/* Divider */}
-      <div className="border-t border-white/15 mx-6 lg:mx-12" />
+      {/* Gold accent line at top */}
+      <div className="h-[2px] bg-[#C9A84C]/30" />
 
       {/* Footer content */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -19,7 +19,7 @@ export default function Footer() {
             TAYGAN.
           </span>
           <span
-            className="text-white/50 text-[10px] tracking-[0.22em] uppercase"
+            className="text-white/40 text-[10px] tracking-[0.22em] uppercase"
             style={{ fontFamily: "'DM Mono', monospace" }}
           >
             1INC Consulting
@@ -28,7 +28,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <span
-          className="text-white/50 text-[11px] tracking-[0.15em] text-center order-last sm:order-none"
+          className="text-white/35 text-[11px] tracking-[0.15em] text-center order-last sm:order-none"
           style={{ fontFamily: "'DM Mono', monospace" }}
         >
           © {new Date().getFullYear()} Taygan Robson · All rights reserved.
@@ -38,7 +38,7 @@ export default function Footer() {
         <a
           href="#"
           aria-label="LinkedIn"
-          className="flex items-center gap-2.5 text-white/70 hover:text-white transition-colors duration-200 group"
+          className="flex items-center gap-2.5 text-white/60 hover:text-white transition-colors duration-200 group"
         >
           <span
             className="text-[10px] tracking-[0.22em] uppercase"
@@ -46,7 +46,7 @@ export default function Footer() {
           >
             LinkedIn
           </span>
-          <div className="w-8 h-8 border border-white/30 group-hover:border-white flex items-center justify-center transition-colors duration-200">
+          <div className="w-8 h-8 border border-white/25 group-hover:border-[#C9A84C] flex items-center justify-center transition-colors duration-200">
             <Linkedin size={13} />
           </div>
         </a>

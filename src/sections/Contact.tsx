@@ -13,8 +13,8 @@ export default function Contact() {
           initial={{ opacity: 0, y: 14 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-xs tracking-[0.35em] uppercase text-[#3D7A57] mb-8"
-          style={{ fontFamily: "'DM Mono', monospace" }}
+          className="text-xs tracking-[0.35em] uppercase mb-8"
+          style={{ fontFamily: "'DM Mono', monospace", color: "#C9A84C" }}
         >
           1INC Consulting
         </motion.p>
@@ -33,7 +33,7 @@ export default function Contact() {
           }}
         >
           Start With The<br />
-          <span className="text-[#6DB892]">Full Picture.</span>
+          <span style={{ color: "#C9A84C", fontStyle: "italic" }}>Full Picture.</span>
         </motion.h2>
 
         <motion.p
@@ -54,7 +54,7 @@ export default function Contact() {
         >
           <a
             href="#"
-            className="flex items-center gap-3 px-10 py-4 bg-[#3D7A57] text-white text-xs tracking-[0.22em] uppercase font-medium hover:bg-[#2F5E45] hover:shadow-[0_0_28px_rgba(109,184,146,0.45)] hover:scale-[1.02] transition-all duration-300"
+            className="flex items-center gap-3 px-10 py-4 bg-[#C9A84C] text-white text-xs tracking-[0.22em] uppercase font-medium hover:bg-[#A08030] hover:shadow-[0_0_28px_rgba(201,168,76,0.45)] hover:scale-[1.02] transition-all duration-300"
           >
             Schedule Appointment
             <ArrowRight size={14} />

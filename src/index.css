@@ -5,16 +5,16 @@
 :root {
   --background: #FFFFFF;
   --foreground: #0A0A0A;
-  --primary: #3D7A57;
+  --primary: #1A3B6E;
   --primary-foreground: #FFFFFF;
   --secondary: #F4F4F4;
   --secondary-foreground: #0A0A0A;
-  --accent: #3D7A57;
+  --accent: #C9A84C;
   --accent-foreground: #FFFFFF;
   --muted: #F7F7F5;
-  --muted-foreground: #2F5E45;
+  --muted-foreground: #1A3B6E;
   --border: #E2E8E4;
-  --ring: #3D7A57;
+  --ring: #C9A84C;
 }
 
 * {
@@ -39,7 +39,7 @@ body {
 }
 
 ::selection {
-  background: #3D7A57;
+  background: #1A3B6E;
   color: #ffffff;
 }
 
@@ -51,7 +51,7 @@ body {
   background: #f4f4f4;
 }
 ::-webkit-scrollbar-thumb {
-  background: #3D7A57;
+  background: #C9A84C;
   border-radius: 2px;
 }
 
@@ -121,26 +121,26 @@ body {
   background: conic-gradient(
     from var(--btn-angle),
     transparent 0%,
-    #6DB892 35%,
+    #C9A84C 35%,
     rgba(255, 255, 255, 0.85) 50%,
-    #6DB892 65%,
+    #C9A84C 65%,
     transparent 100%
   );
   animation: btn-rotate 3s linear infinite;
   z-index: -1;
 }
 
-/* Green rule line */
+/* Gold rule line — used across all sections */
 .rule-green {
   display: block;
   width: 48px;
   height: 2px;
-  background: #3D7A57;
+  background: #C9A84C;
 }
 
 /* Heading italic accent */
 .heading-italic {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
-  color: #3D7A57;
+  color: #C9A84C;
 }

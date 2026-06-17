@@ -72,27 +72,36 @@ export default function Credentials() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-12">
         <div className="text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="text-[10px] tracking-[0.35em] uppercase text-[#1A3B6E]/60 mb-4"
+            style={{ fontFamily: "'DM Mono', monospace" }}
+          >
+            Qualifications &amp; Accreditations
+          </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-[#3D7A57] mb-3"
-            style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "clamp(2.6rem, 5vw, 4rem)", fontWeight: 700, lineHeight: 1.05, textTransform: "uppercase", letterSpacing: "0.02em" }}
+            transition={{ duration: 0.6, delay: 0.06 }}
+            className="mb-3"
+            style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "clamp(2.6rem, 5vw, 4rem)", fontWeight: 700, lineHeight: 1.05, textTransform: "uppercase", letterSpacing: "0.02em", color: "#C9A84C" }}
           >
             Credentials
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.07 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="text-black/70 text-lg lg:text-xl font-semibold leading-snug"
           >
-            Two decades of evidence-based practice.
+            Academic depth. Industry credentials.
           </motion.p>
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.12 }}
+            transition={{ duration: 0.5, delay: 0.14 }}
             className="rule-green mx-auto mt-6 block"
           />
         </div>
@@ -110,7 +119,7 @@ export default function Credentials() {
               return (
                 <div
                   key={`quote-${i}`}
-                  className="flex-shrink-0 w-72 bg-[#3D7A57] p-7 flex flex-col justify-center"
+                  className="flex-shrink-0 w-72 bg-[#1A3B6E] p-7 flex flex-col justify-center"
                 >
                   <Quote size={20} className="text-white/30 mb-4" />
                   <p className="text-white/90 text-[14px] leading-[1.85] italic" style={{ fontFamily: "'Tinos', serif" }}>
@@ -124,7 +133,7 @@ export default function Credentials() {
             return (
               <div
                 key={`${cred.category}-${i}`}
-                className="flex-shrink-0 w-72 bg-[#3D7A57] p-7"
+                className="flex-shrink-0 w-72 bg-[#1A3B6E] p-7"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-9 h-9 border border-white/25 flex items-center justify-center flex-shrink-0">
@@ -134,10 +143,12 @@ export default function Credentials() {
                     {cred.category}
                   </span>
                 </div>
+                {/* Gold accent line */}
+                <div className="w-6 h-[1.5px] bg-[#C9A84C]/60 mb-5" />
                 <ul className="flex flex-col gap-3">
                   {cred.items.map((item) => (
                     <li key={item} className="text-[13px] text-white/80 leading-snug flex items-start gap-2.5">
-                      <span className="mt-[7px] w-1 h-1 rounded-full bg-white/50 flex-shrink-0" />
+                      <span className="mt-[7px] w-1 h-1 rounded-full bg-[#C9A84C]/60 flex-shrink-0" />
                       {item}
                     </li>
                   ))}

@@ -1,5 +1,6 @@
 import Navbar from "./sections/Navbar"
-import HeroHorizontal from "./sections/HeroHorizontal"
+import Hero from "./sections/Hero"
+import ThreePractices from "./sections/ThreePractices"
 import About from "./sections/About"
 import Credentials from "./sections/Credentials"
 import Services from "./sections/Services"
@@ -14,15 +15,19 @@ export default function App() {
     <div className="grain">
       <Navbar />
       <main>
-        {/* Horizontal scroll hero — in-flow (300vh), no sticky wrapper needed */}
-        <HeroHorizontal />
-        <About />
-        <Credentials />
-        <Services />
-        <Pricing />
-        <CaseStudies />
-        <TrustedBy />
-        <Contact />
+        {/* Sticky parallax hero — z-10 so subsequent sections slide over it */}
+        <Hero />
+        {/* z-20 ensures all content slides over the sticky hero */}
+        <div className="relative z-20">
+          <ThreePractices />
+          <About />
+          <Credentials />
+          <Services />
+          <Pricing />
+          <CaseStudies />
+          <TrustedBy />
+          <Contact />
+        </div>
       </main>
       <Footer />
     </div>
