@@ -10,7 +10,7 @@ export default function TrustedBy() {
   const inView = useInView(ref, { once: true, margin: "-60px" })
 
   return (
-    <section id="trusted-by" className="section-pad bg-white" ref={ref}>
+    <section id="trusted-by" className="section-pad bg-[#1A3B6E]" ref={ref}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-8 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 14 }}
@@ -25,7 +25,7 @@ export default function TrustedBy() {
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-black/70 text-lg lg:text-xl font-semibold leading-snug"
+          className="text-white/60 text-lg lg:text-xl font-semibold leading-snug"
         >
           Athletes &amp; teams who demand measurable outcomes.
         </motion.p>
@@ -37,16 +37,16 @@ export default function TrustedBy() {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="relative"
       >
-        <div className="absolute inset-y-0 left-0 w-16 z-10 pointer-events-none" style={{ background: "linear-gradient(to right, #ffffff, transparent)" }} />
-        <div className="absolute inset-y-0 right-0 w-16 z-10 pointer-events-none" style={{ background: "linear-gradient(to left, #ffffff, transparent)" }} />
+        <div className="absolute inset-y-0 left-0 w-16 z-10 pointer-events-none" style={{ background: "linear-gradient(to right, #1A3B6E, transparent)" }} />
+        <div className="absolute inset-y-0 right-0 w-16 z-10 pointer-events-none" style={{ background: "linear-gradient(to left, #1A3B6E, transparent)" }} />
 
         <Carousel opts={{ loop: true }} plugins={[AutoScroll({ playOnInit: true, speed: 1 })]}>
-          <CarouselContent className="ml-0 border-t border-b border-[#E2E8E4]">
+          <CarouselContent className="ml-0 border-t border-b border-white/10">
             {[...logos, ...logos].map((_, i) => (
               <CarouselItem key={i} className="pl-0 basis-auto">
-                <div className="flex flex-col items-center justify-center gap-2 px-10 py-7 border-r border-[#E2E8E4] cursor-default min-w-[200px]">
-                  <div className="w-24 h-8 border border-dashed border-[#1A3B6E]/20 bg-[#F7F7F5] flex items-center justify-center">
-                    <span className="text-[9px] tracking-[0.2em] uppercase text-[#1A3B6E]/35" style={{ fontFamily: "'DM Mono', monospace" }}>Insert Logo</span>
+                <div className="flex flex-col items-center justify-center gap-2 px-10 py-7 border-r border-white/10 cursor-default min-w-[200px]">
+                  <div className="w-24 h-8 bg-white flex items-center justify-center">
+                    <span className="text-[9px] tracking-[0.2em] uppercase text-[#1A3B6E]/50" style={{ fontFamily: "'DM Mono', monospace" }}>Insert Logo</span>
                   </div>
                 </div>
               </CarouselItem>

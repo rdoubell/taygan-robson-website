@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { Check, ArrowRight } from "lucide-react"
+import { Check, ArrowRight, Mail, MapPin } from "lucide-react"
 
 const consultationFeatures = [
   "45-minute full performance overview",
@@ -145,7 +145,7 @@ function ServiceCard({ svc, delay }: { svc: typeof services[number]; delay: numb
       <div className="px-7 pb-7">
         <button
           onClick={handleEnquire}
-          className="w-full flex items-center justify-center gap-2.5 py-3 bg-[#F7F7F5] border border-[#E2E8E4] text-[11px] tracking-[0.2em] uppercase text-black/70 font-medium hover:bg-[#1A3B6E] hover:text-white hover:border-[#1A3B6E] transition-all duration-250"
+          className="w-full flex items-center justify-center gap-2.5 py-3 rounded-full bg-[#F7F7F5] border border-[#E2E8E4] text-[11px] tracking-[0.2em] uppercase text-black/70 font-medium hover:bg-[#1A3B6E] hover:text-white hover:border-[#1A3B6E] transition-all duration-250"
         >
           Send Enquiry <ArrowRight size={12} />
         </button>
@@ -248,8 +248,8 @@ export default function Pricing() {
               </p>
             </div>
             <a
-              href="#contact"
-              className="inline-flex items-center gap-3 px-9 py-4 bg-white text-[#1A3B6E] text-[11px] tracking-[0.22em] uppercase font-semibold hover:bg-[#C9A84C] hover:text-white hover:shadow-[0_0_28px_rgba(201,168,76,0.35)] hover:scale-[1.02] transition-all duration-300 whitespace-nowrap"
+              href="mailto:hello@1inc-consulting.com?subject=Consultation%20Request"
+              className="inline-flex items-center gap-3 px-9 py-4 rounded-full bg-white text-[#1A3B6E] text-[11px] tracking-[0.22em] uppercase font-semibold hover:bg-[#C9A84C] hover:text-white hover:shadow-[0_0_28px_rgba(201,168,76,0.35)] hover:scale-[1.02] transition-all duration-300 whitespace-nowrap"
             >
               Book Consultation
               <ArrowRight size={13} />
@@ -279,49 +279,87 @@ export default function Pricing() {
         </motion.p>
       </div>
 
-      {/* ── Book a Consultation CTA ── */}
+      {/* ── Contact Info Block ── */}
       <div id="contact" className="mt-12 bg-[#1A3B6E] py-16 overflow-hidden">
-        <div className="max-w-2xl mx-auto px-6 lg:px-12 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.8 }}
-            className="text-white mb-4"
-            style={{
-              fontFamily: "'Tinos', Georgia, serif",
-              fontSize: "clamp(2.4rem, 6vw, 4.5rem)",
-              fontWeight: 700,
-              lineHeight: 1.05,
-              letterSpacing: "-0.01em",
-            }}
-          >
-            Book a{" "}
-            <span style={{ color: "#C9A84C", fontStyle: "italic" }}>Consultation.</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="text-white/45 text-[15px] leading-relaxed mb-12 max-w-md mx-auto"
-          >
-            One conversation. The full performance picture.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, delay: 0.22 }}
-          >
-            <a
-              href="#"
-              className="inline-flex items-center gap-3 px-12 py-4 bg-white text-[#1A3B6E] text-xs tracking-[0.25em] uppercase font-semibold hover:bg-[#C9A84C] hover:text-white hover:shadow-[0_0_40px_rgba(201,168,76,0.3)] hover:scale-[1.02] transition-all duration-300"
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="grid lg:grid-cols-[1fr_1px_1fr] gap-10 lg:gap-0 items-center">
+
+            {/* Left — heading + intro */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.75 }}
+              className="lg:pr-16"
             >
-              Schedule Appointment
-              <ArrowRight size={14} />
-            </a>
-          </motion.div>
+              <p
+                className="text-[10px] tracking-[0.38em] uppercase mb-5"
+                style={{ fontFamily: "'DM Mono', monospace", color: "#C9A84C" }}
+              >
+                Get in Touch
+              </p>
+              <h2
+                className="text-white mb-6 leading-tight"
+                style={{
+                  fontFamily: "'Tinos', Georgia, serif",
+                  fontSize: "clamp(2rem, 4vw, 3.2rem)",
+                  fontWeight: 700,
+                  lineHeight: 1.05,
+                }}
+              >
+                Start the{" "}
+                <span style={{ color: "#C9A84C", fontStyle: "italic" }}>conversation.</span>
+              </h2>
+              <p className="text-white/50 text-[15px] leading-relaxed max-w-md">
+                Whether you're an athlete managing a complex injury, a team building performance systems,
+                or a professional ready to take control of your physical output — the first step is one conversation.
+              </p>
+            </motion.div>
+
+            {/* Divider */}
+            <div className="hidden lg:block w-px bg-white/10 self-stretch" />
+
+            {/* Right — contact details */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.75, delay: 0.1 }}
+              className="lg:pl-16 flex flex-col gap-8"
+            >
+              <a
+                href="mailto:hello@1inc-consulting.com"
+                className="flex items-center gap-4 group"
+              >
+                <div className="w-11 h-11 border border-white/15 group-hover:border-[#C9A84C] flex items-center justify-center transition-colors duration-200 flex-shrink-0">
+                  <Mail size={16} className="text-white/50 group-hover:text-[#C9A84C] transition-colors duration-200" />
+                </div>
+                <div>
+                  <p className="text-[10px] tracking-[0.25em] uppercase text-white/30 mb-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>Email</p>
+                  <p className="text-white/80 text-[14px] group-hover:text-white transition-colors duration-200">hello@1inc-consulting.com</p>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 border border-white/15 flex items-center justify-center flex-shrink-0">
+                  <MapPin size={16} className="text-white/50" />
+                </div>
+                <div>
+                  <p className="text-[10px] tracking-[0.25em] uppercase text-white/30 mb-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>Location</p>
+                  <p className="text-white/80 text-[14px]">Available Worldwide</p>
+                </div>
+              </div>
+
+              <a
+                href="mailto:hello@1inc-consulting.com?subject=1INC%20Initial%20Consultation%20Request"
+                className="self-start inline-flex items-center gap-3 px-9 py-4 rounded-full bg-white text-[#1A3B6E] text-[11px] tracking-[0.22em] uppercase font-semibold hover:bg-[#C9A84C] hover:text-white hover:shadow-[0_0_28px_rgba(201,168,76,0.3)] hover:scale-[1.02] transition-all duration-300"
+              >
+                Schedule Appointment
+                <ArrowRight size={13} />
+              </a>
+            </motion.div>
+
+          </div>
         </div>
       </div>
     </section>

@@ -2,10 +2,10 @@ import { Linkedin } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="bg-white">
+    <footer className="bg-white border-t border-[#E2E8E4]">
 
-      {/* Thin navy top border — separates from dark Blog section above */}
-      <div className="h-[1px] bg-[#1A3B6E]/10" />
+      {/* Gold accent line at top */}
+      <div className="h-[2px] bg-[#C9A84C]/25" />
 
       {/* Footer content */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -19,7 +19,7 @@ export default function Footer() {
             TAYGAN.
           </span>
           <span
-            className="text-[#1A3B6E]/45 text-[10px] tracking-[0.22em] uppercase"
+            className="text-black/35 text-[10px] tracking-[0.22em] uppercase"
             style={{ fontFamily: "'DM Mono', monospace" }}
           >
             1INC Consulting
@@ -28,7 +28,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <span
-          className="text-black/35 text-[11px] tracking-[0.15em] text-center order-last sm:order-none"
+          className="text-black/30 text-[11px] tracking-[0.15em] text-center order-last sm:order-none"
           style={{ fontFamily: "'DM Mono', monospace" }}
         >
           © {new Date().getFullYear()} Taygan Robson · All rights reserved.
@@ -36,7 +36,9 @@ export default function Footer() {
 
         {/* LinkedIn */}
         <a
-          href="#"
+          href="https://www.linkedin.com/in/tayganrobson/"
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="LinkedIn"
           className="flex items-center gap-2.5 text-[#1A3B6E]/55 hover:text-[#1A3B6E] transition-colors duration-200 group"
         >
