@@ -1,8 +1,9 @@
 import Navbar from "./sections/Navbar"
-import Hero from "./sections/Hero"
+import HeroHorizontal from "./sections/HeroHorizontal"
 import About from "./sections/About"
 import Credentials from "./sections/Credentials"
 import Services from "./sections/Services"
+import Pricing from "./sections/Pricing"
 import CaseStudies from "./sections/CaseStudies"
 import TrustedBy from "./sections/TrustedBy"
 import Contact from "./sections/Contact"
@@ -13,16 +14,15 @@ export default function App() {
     <div className="grain">
       <Navbar />
       <main>
-        <Hero />
-        {/* z-20 ensures all content slides over the sticky z-10 hero */}
-        <div className="relative z-20">
-          <About />
-          <Credentials />
-          <Services />
-          <CaseStudies />
-          <TrustedBy />
-          <Contact />
-        </div>
+        {/* Horizontal scroll hero — in-flow (300vh), no sticky wrapper needed */}
+        <HeroHorizontal />
+        <About />
+        <Credentials />
+        <Services />
+        <Pricing />
+        <CaseStudies />
+        <TrustedBy />
+        <Contact />
       </main>
       <Footer />
     </div>

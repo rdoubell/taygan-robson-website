@@ -97,4 +97,22 @@
     overflow-x: hidden;
   }
 
+  /* ── 10. Horizontal hero — reduce scroll driver height on mobile ────────
+     300vh is a lot to scroll through on a phone. 220vh gives 2 full panel
+     transitions while keeping the experience snappy.                       */
+  .hero-horizontal-driver {
+    height: 220vh !important;
+  }
+
+  /* ── 11. Pricing — stack to single column on mobile ─────────────────── */
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── 12. Featured consultation card — tighter padding on mobile ──────── */
+  .pricing-featured {
+    padding: 2rem 1.5rem !important;
+    grid-template-columns: 1fr !important;
+  }
+
 }
