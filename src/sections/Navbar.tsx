@@ -60,7 +60,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center">
             <a
               href="#contact"
-              className="px-6 py-2.5 border border-white/35 text-white text-[11px] tracking-[0.18em] uppercase font-medium hover:bg-[#C9A84C] hover:border-[#C9A84C] hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] hover:scale-[1.02] transition-all duration-300"
+              className="px-6 py-2.5 bg-white text-[#1A3B6E] text-[11px] tracking-[0.18em] uppercase font-semibold hover:bg-[#C9A84C] hover:text-white hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] hover:scale-[1.02] transition-all duration-300"
             >
               Book Appointment
             </a>
@@ -110,7 +110,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={() => setMenuOpen(false)}
-              className="mt-4 px-8 py-3 border border-white/35 text-white text-xs tracking-widest uppercase hover:bg-[#C9A84C] hover:border-[#C9A84C] transition-all duration-300"
+              className="mt-4 px-8 py-3 bg-white text-[#1A3B6E] text-xs tracking-widest uppercase font-semibold hover:bg-[#C9A84C] hover:text-white transition-all duration-300"
             >
               Book Appointment
             </a>

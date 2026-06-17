@@ -86,7 +86,7 @@ export default function Hero() {
           <motion.div variants={fadeUp} className="hero-cta-wrap">
             <a
               href="#contact"
-              className="hero-cta inline-flex items-center gap-3 px-10 py-4 bg-[#C9A84C] text-white text-xs tracking-[0.22em] uppercase font-medium hover:bg-[#A08030] hover:shadow-[0_0_28px_rgba(201,168,76,0.45)] hover:scale-[1.02] transition-all duration-300"
+              className="hero-cta inline-flex items-center gap-3 px-10 py-4 bg-[#1A3B6E] text-white text-xs tracking-[0.22em] uppercase font-medium hover:bg-[#0F2A52] hover:shadow-[0_0_28px_rgba(26,59,110,0.5)] hover:scale-[1.02] transition-all duration-300"
             >
               Book Appointment <span className="text-white/50">+</span>
             </a>
