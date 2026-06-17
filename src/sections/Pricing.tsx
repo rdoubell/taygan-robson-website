@@ -189,12 +189,6 @@ export default function Pricing() {
           >
             Transparent pricing. Direct access. No guesswork.
           </motion.p>
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.18 }}
-            className="rule-green mx-auto mt-6 block"
-          />
         </div>
 
         {/* ── Featured: 1INC Consultation ── */}
@@ -286,7 +280,7 @@ export default function Pricing() {
       </div>
 
       {/* ── Book a Consultation CTA ── */}
-      <div id="contact" className="mt-16 bg-[#1A3B6E] py-24 overflow-hidden">
+      <div id="contact" className="mt-12 bg-[#1A3B6E] py-16 overflow-hidden">
         <div className="max-w-2xl mx-auto px-6 lg:px-12 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 22 }}

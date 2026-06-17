@@ -1,5 +1,4 @@
-import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 
 const practices = [
@@ -29,43 +28,32 @@ const practices = [
   },
 ]
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 52 },
+  visible: { opacity: 1, y: 0 },
+}
+
 export default function ThreePractices() {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: "-40px" })
-
   return (
-    <section ref={ref} className="bg-white border-t border-[#E8E8E6]">
-
-      {/* Optional eyebrow heading */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-14 pb-10 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 12 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.06 }}
-          className="text-black/85"
-          style={{
-            fontFamily: "'Tinos', Georgia, serif",
-            fontSize: "clamp(1.6rem, 3vw, 2.6rem)",
-            fontWeight: 700,
-            lineHeight: 1.1,
-          }}
-        >
-          Evidence. Performance.{" "}
-          <span style={{ color: "#C9A84C", fontStyle: "italic" }}>Results.</span>
-        </motion.h2>
-      </div>
-
-      {/* Three-column practice cards */}
-      <div className="grid lg:grid-cols-3 border-t border-[#E8E8E6]">
+    <section className="bg-white">
+      <div className="grid lg:grid-cols-3">
         {practices.map((practice, i) => (
           <motion.div
             key={practice.num}
-            initial={{ opacity: 0, y: 28 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.65, delay: 0.1 + i * 0.1 }}
-            className={`group relative flex flex-col border-b lg:border-b-0 ${i < 2 ? "lg:border-r" : ""} border-[#E8E8E6]`}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.18 }}
+            transition={{
+              duration: 0.55,
+              delay: i * 0.13,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className={`group relative flex flex-col ${
+              i < 2 ? "lg:border-r" : ""
+            } border-b lg:border-b-0 border-[#E8E8E6]`}
           >
-            {/* Image section */}
+            {/* Image */}
             <div className="relative h-60 lg:h-72 overflow-hidden">
               <img
                 src={practice.image}
@@ -77,17 +65,13 @@ export default function ThreePractices() {
               {/* Number overlay */}
               <div
                 className="absolute top-5 left-5 text-white/20 select-none leading-none font-bold"
-                style={{
-                  fontFamily: "'Tinos', Georgia, serif",
-                  fontSize: "5rem",
-                  lineHeight: 1,
-                }}
+                style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "5rem", lineHeight: 1 }}
                 aria-hidden="true"
               >
                 {practice.num}
               </div>
 
-              {/* Mono label — bottom of image */}
+              {/* Mono label */}
               <div className="absolute bottom-4 left-5 right-5">
                 <span
                   className="text-[9px] tracking-[0.35em] uppercase text-white/55"
@@ -100,9 +84,7 @@ export default function ThreePractices() {
 
             {/* Text content */}
             <div className="flex flex-col flex-1 px-7 py-8">
-              {/* Gold accent rule */}
               <div className="w-8 h-[2px] bg-[#C9A84C] mb-5" />
-
               <h3
                 className="text-black mb-4 leading-tight"
                 style={{
@@ -114,11 +96,9 @@ export default function ThreePractices() {
               >
                 {practice.title}
               </h3>
-
               <p className="text-black/55 text-[13.5px] leading-[1.8] flex-1 mb-7">
                 {practice.desc}
               </p>
-
               <a
                 href={practice.href}
                 className="self-start flex items-center gap-2.5 text-[11px] tracking-[0.2em] uppercase text-[#C9A84C] font-medium group-hover:gap-4 transition-all duration-250"

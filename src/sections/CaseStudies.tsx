@@ -40,13 +40,6 @@ export default function CaseStudies() {
           >
             Evidence-based thinking on performance, recovery, and rehabilitation.
           </motion.p>
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.16 }}
-            className="mx-auto mt-6 block"
-            style={{ width: 48, height: 2, background: "#C9A84C" }}
-          />
         </div>
 
         {/* Articles row */}

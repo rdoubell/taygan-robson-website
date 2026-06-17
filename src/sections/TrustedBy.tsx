@@ -11,7 +11,7 @@ export default function TrustedBy() {
 
   return (
     <section id="trusted-by" className="section-pad bg-white" ref={ref}>
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-14 text-center">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-8 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 14 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -29,12 +29,6 @@ export default function TrustedBy() {
         >
           Athletes &amp; teams who demand measurable outcomes.
         </motion.p>
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.14 }}
-          className="rule-green mx-auto mt-6 block"
-        />
       </div>
 
       <motion.div

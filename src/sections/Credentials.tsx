@@ -89,12 +89,6 @@ export default function Credentials() {
           >
             Academic depth. Industry credentials.
           </motion.p>
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.14 }}
-            className="rule-green mx-auto mt-6 block"
-          />
         </div>
       </div>
 

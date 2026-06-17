@@ -38,12 +38,6 @@ export default function About() {
           >
             Built on data, discipline, and systems — not guesswork.
           </motion.p>
-          <motion.span
-            variants={fadeUp(0.14)}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            className="rule-green mx-auto mt-6 block"
-          />
         </div>
 
         {/* Two-column body */}
