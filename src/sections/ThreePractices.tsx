@@ -1,5 +1,5 @@
-import { motion } from "framer-motion"
-import { ArrowRight } from "lucide-react"
+import { useRef } from "react"
+import { motion, useInView } from "framer-motion"
 
 const practices = [
   {
@@ -28,38 +28,40 @@ const practices = [
   },
 ]
 
-// Parent controls the stagger — children inherit timing
 const container = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.18,
-      delayChildren: 0.05,
+      staggerChildren: 0.28,
+      delayChildren: 0.1,
     },
   },
 }
 
 const card = {
-  hidden: { opacity: 0, y: 54 },
+  hidden: { opacity: 0, y: 80 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.58,
+      duration: 0.7,
       ease: [0.22, 1, 0.36, 1],
     },
   },
 }
 
 export default function ThreePractices() {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, amount: 0.1 })
+
   return (
     <section className="bg-white">
       <motion.div
+        ref={ref}
         className="grid lg:grid-cols-3"
         variants={container}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.15 }}
+        animate={inView ? "visible" : "hidden"}
       >
         {practices.map((practice, i) => (
           <motion.div
