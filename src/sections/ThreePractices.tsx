@@ -28,27 +28,43 @@ const practices = [
   },
 ]
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 52 },
-  visible: { opacity: 1, y: 0 },
+// Parent controls the stagger — children inherit timing
+const container = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.18,
+      delayChildren: 0.05,
+    },
+  },
+}
+
+const card = {
+  hidden: { opacity: 0, y: 54 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.58,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 }
 
 export default function ThreePractices() {
   return (
     <section className="bg-white">
-      <div className="grid lg:grid-cols-3">
+      <motion.div
+        className="grid lg:grid-cols-3"
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+      >
         {practices.map((practice, i) => (
           <motion.div
             key={practice.num}
-            variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.18 }}
-            transition={{
-              duration: 0.55,
-              delay: i * 0.13,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+            variants={card}
             className={`group relative flex flex-col ${
               i < 2 ? "lg:border-r" : ""
             } border-b lg:border-b-0 border-[#E8E8E6]`}
@@ -109,7 +125,7 @@ export default function ThreePractices() {
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   )
 }
