@@ -1,68 +1,38 @@
-import React from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
+import { ArrowDown } from "lucide-react"
 
-// ── Floating data metrics (right side, desktop only) ──────────────────────
-const metrics = [
-  { label: "VO₂ Max",         value: "78.4", unit: "ml/kg/min",  delay: 1.05, floatY: -10 },
-  { label: "Force Output",    value: "3.2×", unit: "Bodyweight", delay: 1.25, floatY: -7  },
-  { label: "Recovery HRV",   value: "94",   unit: "ms",          delay: 1.45, floatY: -12 },
-  { label: "Asymmetry Index", value: "4.1",  unit: "%",           delay: 1.6,  floatY: -8  },
-]
-
-// Positions in the right 40% of the screen
-const metricPositions = [
-  { top: "22%", right: "9%"  },
-  { top: "41%", right: "16%" },
-  { top: "56%", right: "7%"  },
-  { top: "70%", right: "18%" },
-]
-
-// ── Word-clip reveal ──────────────────────────────────────────────────────
-const wordReveal = {
+const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.09, delayChildren: 0.55 } },
-}
-const word = {
-  hidden:  { y: "108%", opacity: 0 },
-  visible: { y: "0%",   opacity: 1, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+  visible: { transition: { staggerChildren: 0.18, delayChildren: 0.3 } },
 }
 
-// ── Content fade/drift on scroll ──────────────────────────────────────────
-const metaStagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.14, delayChildren: 1.55 } },
-}
 const fadeUp = {
-  hidden:  { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0,   transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
-}
-
-// Helper: wrap each word in a clip container
-function ClipWord({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span className={`inline-block overflow-hidden align-bottom ${className}`}>
-      <motion.span className="inline-block" variants={word}>
-        {children}
-      </motion.span>
-    </span>
-  )
+  hidden: { opacity: 0, y: 32 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
 }
 
 export default function Hero() {
   const { scrollY } = useScroll()
 
-  const imageScale    = useTransform(scrollY, [0, 700], [1.06, 0.94])
-  const contentOpacity = useTransform(scrollY, [0, 360], [1, 0])
-  const contentY      = useTransform(scrollY, [0, 360], [0, -50])
-  const overlayOpacity = useTransform(scrollY, [0, 600], [0.62, 0.82])
-  const scrollOpacity = useTransform(scrollY, [0, 140], [1, 0])
+  // Image starts slightly zoomed in, pulls back as you scroll (zoom-out effect)
+  const imageScale = useTransform(scrollY, [0, 700], [1.06, 0.94])
+
+  // Hero text fades out and drifts upward as About slides over
+  const contentOpacity = useTransform(scrollY, [0, 380], [1, 0])
+  const contentY = useTransform(scrollY, [0, 380], [0, -55])
+
+  // Overlay darkens slightly to reinforce the "receding" feel
+  const overlayOpacity = useTransform(scrollY, [0, 600], [0.68, 0.82])
+
+  // Scroll hint disappears quickly
+  const scrollHintOpacity = useTransform(scrollY, [0, 160], [1, 0])
 
   return (
     <section
       id="hero"
-      className="sticky top-0 z-10 w-full h-screen overflow-hidden bg-black"
+      className="sticky top-0 z-10 w-full h-screen flex flex-col items-center justify-center overflow-hidden bg-black"
     >
-      {/* Background image — parallax zoom-out */}
+      {/* Zoomable hero image */}
       <motion.div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
@@ -79,156 +49,60 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* Subtle left vignette to push eye toward text */}
-      <div
-        className="absolute inset-y-0 left-0 w-1/2 pointer-events-none"
-        style={{ background: "linear-gradient(to right, rgba(0,0,0,0.38), transparent)" }}
-        aria-hidden="true"
-      />
-
-      {/* ── Main content — fades out on scroll ─────────────────────────── */}
+      {/* Hero content — fades + drifts up on scroll */}
       <motion.div
         style={{ opacity: contentOpacity, y: contentY }}
-        className="absolute inset-0 z-10 flex items-center"
+        className="relative z-10 text-center text-white px-6 max-w-5xl mx-auto"
       >
-        <div className="w-full max-w-7xl mx-auto px-6 lg:px-12">
-
-          {/* Gold accent line — draws in from left */}
-          <motion.div
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            style={{ originX: 0, height: 2, width: 52, background: "#C9A84C", marginBottom: "1.5rem" }}
-          />
-
-          {/* Mono label */}
+        <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="text-[10px] tracking-[0.45em] uppercase text-white/40 mb-6"
+            variants={fadeUp}
+            className="text-xs tracking-[0.35em] uppercase text-white/50 mb-7"
             style={{ fontFamily: "'DM Mono', monospace" }}
           >
             Performance · Rehabilitation · Science
           </motion.p>
 
-          {/* Heading — word-by-word clip reveal */}
           <motion.h1
-            variants={wordReveal}
-            initial="hidden"
-            animate="visible"
-            className="text-white mb-8 max-w-3xl"
+            variants={fadeUp}
+            className="text-white leading-[1.0] mb-7"
             style={{
               fontFamily: "'Tinos', Georgia, serif",
-              fontSize: "clamp(3.2rem, 7.5vw, 7rem)",
+              fontSize: "clamp(3rem, 8vw, 6.5rem)",
               fontWeight: 700,
-              lineHeight: 1.0,
-              letterSpacing: "-0.01em",
             }}
           >
-            <ClipWord className="mr-[0.3em]">Sports</ClipWord>
-            <ClipWord className="mr-[0.3em]">Injury</ClipWord>
-            <br />
-            <ClipWord className="mr-[0.25em]" >
-              <span style={{ color: "#C9A84C", fontStyle: "italic" }}>&amp;</span>
-            </ClipWord>
-            <ClipWord>
-              <span style={{ color: "#C9A84C", fontStyle: "italic" }}>Rehabilitation.</span>
-            </ClipWord>
+            Sports Injury<br />
+            <span className="text-[#C9A84C]">&amp; Rehabilitation.</span>
           </motion.h1>
 
-          {/* Subtitle + CTA */}
-          <motion.div variants={metaStagger} initial="hidden" animate="visible">
-            <motion.p
-              variants={fadeUp}
-              className="text-white/55 text-base lg:text-[1.1rem] font-light max-w-sm leading-relaxed mb-10"
-            >
-              Three decades. Two practices.<br />One conversation.
-            </motion.p>
-
-            <motion.div variants={fadeUp}>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-4 px-10 py-4 bg-[#1A3B6E] text-white text-[11px] tracking-[0.25em] uppercase font-semibold hover:bg-[#0F2A52] hover:shadow-[0_0_32px_rgba(26,59,110,0.55)] hover:scale-[1.02] transition-all duration-300"
-              >
-                Book Appointment
-                <span className="w-5 h-px bg-white/50 inline-block" />
-              </a>
-            </motion.div>
-          </motion.div>
-        </div>
-      </motion.div>
-
-      {/* ── Floating metric cards — desktop only ──────────────────────── */}
-      <motion.div
-        style={{ opacity: contentOpacity }}
-        className="absolute inset-0 z-10 pointer-events-none hidden lg:block"
-        aria-hidden="true"
-      >
-        {metrics.map((m, i) => (
-          <motion.div
-            key={m.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: m.delay, ease: [0.22, 1, 0.36, 1] }}
-            style={{ position: "absolute", ...metricPositions[i] }}
+          <motion.p
+            variants={fadeUp}
+            className="text-white/60 text-base lg:text-lg font-light max-w-md mx-auto leading-relaxed mb-10"
           >
-            {/* Subtle float loop */}
-            <motion.div
-              animate={{ y: [0, m.floatY, 0] }}
-              transition={{ duration: 4 + i * 0.7, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
-              className="backdrop-blur-md border border-white/12 px-5 py-4 min-w-[140px]"
-              style={{ background: "rgba(255,255,255,0.04)" }}
+            Three decades. Two practices. One conversation.
+          </motion.p>
+
+          <motion.div variants={fadeUp} className="hero-cta-wrap">
+            <a
+              href="#contact"
+              className="hero-cta inline-flex items-center gap-3 px-10 py-4 bg-[#1A3B6E] text-white text-xs tracking-[0.22em] uppercase font-medium hover:bg-[#0F2A52] hover:shadow-[0_0_28px_rgba(26,59,110,0.5)] hover:scale-[1.02] transition-all duration-300"
             >
-              {/* Gold dot */}
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#C9A84C]" />
-                <span
-                  className="text-[9px] tracking-[0.28em] uppercase text-white/40"
-                  style={{ fontFamily: "'DM Mono', monospace" }}
-                >
-                  {m.label}
-                </span>
-              </div>
-              <div className="flex items-baseline gap-1.5">
-                <span
-                  className="text-white font-bold leading-none"
-                  style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "1.6rem" }}
-                >
-                  {m.value}
-                </span>
-                <span
-                  className="text-white/35 text-[10px] tracking-wide"
-                  style={{ fontFamily: "'DM Mono', monospace" }}
-                >
-                  {m.unit}
-                </span>
-              </div>
-            </motion.div>
+              Book Appointment <span className="text-white/50">+</span>
+            </a>
           </motion.div>
-        ))}
+        </motion.div>
       </motion.div>
 
-      {/* ── Scroll indicator — bottom left ───────────────────────────── */}
+      {/* Scroll hint fades out immediately */}
       <motion.div
-        style={{ opacity: scrollOpacity }}
-        className="absolute bottom-8 left-6 lg:left-12 z-10 flex items-center gap-3"
+        style={{ opacity: scrollHintOpacity }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
       >
-        <motion.div
-          initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 0.9, delay: 2, ease: [0.22, 1, 0.36, 1] }}
-          style={{ originY: 0, width: 1, height: 40, background: "rgba(255,255,255,0.2)" }}
-        />
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 2.2 }}
-          className="text-[9px] tracking-[0.4em] uppercase text-white/30"
-          style={{ fontFamily: "'DM Mono', monospace" }}
-        >
-          Scroll
-        </motion.span>
+        <span className="text-white/25 text-[10px] tracking-[0.3em] uppercase font-mono">Scroll</span>
+        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}>
+          <ArrowDown size={13} className="text-white/25" />
+        </motion.div>
       </motion.div>
     </section>
   )
