@@ -20,13 +20,13 @@ export default function Navbar() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#E8E8E6]"
+        className="fixed top-0 left-0 right-0 z-50 bg-[#1A3B6E] border-b border-white/10"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-16 lg:h-[70px]">
           {/* Logo */}
           <a
             href="#"
-            className="text-black font-bold tracking-[0.06em] text-lg lg:text-xl"
+            className="text-white font-bold tracking-[0.06em] text-lg lg:text-xl"
             style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: "0.04em" }}
           >
             TAYGAN.
@@ -38,7 +38,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[11px] tracking-[0.16em] uppercase text-black/60 hover:text-black transition-colors duration-200 font-medium"
+                className="text-[11px] tracking-[0.16em] uppercase text-white/65 hover:text-white transition-colors duration-200 font-medium"
               >
                 {link.label}
               </a>
@@ -49,7 +49,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center">
             <a
               href="#contact"
-              className="px-6 py-2.5 border border-black text-black text-[11px] tracking-[0.18em] uppercase font-medium hover:bg-[#C9A84C] hover:border-[#C9A84C] hover:text-white hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] hover:scale-[1.02] transition-all duration-300"
+              className="px-6 py-2.5 border border-white/35 text-white text-[11px] tracking-[0.18em] uppercase font-medium hover:bg-[#C9A84C] hover:border-[#C9A84C] hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] hover:scale-[1.02] transition-all duration-300"
             >
               Book Appointment
             </a>
@@ -57,7 +57,7 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="lg:hidden text-black p-2"
+            className="lg:hidden text-white p-2"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
@@ -74,10 +74,10 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-white flex flex-col items-center justify-center gap-8 lg:hidden"
+            className="fixed inset-0 z-40 bg-[#1A3B6E] flex flex-col items-center justify-center gap-8 lg:hidden"
           >
             <button
-              className="absolute top-5 right-6 text-black"
+              className="absolute top-5 right-6 text-white"
               onClick={() => setMenuOpen(false)}
             >
               <X size={22} />
@@ -90,7 +90,7 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.06 }}
                 onClick={() => setMenuOpen(false)}
-                className="text-3xl font-light text-black hover:text-[#3D7A57] transition-colors"
+                className="text-3xl font-light text-white hover:text-[#C9A84C] transition-colors"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
                 {link.label}
@@ -99,7 +99,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={() => setMenuOpen(false)}
-              className="mt-4 px-8 py-3 border border-black text-black text-xs tracking-widest uppercase hover:bg-black hover:text-white transition-all duration-300"
+              className="mt-4 px-8 py-3 border border-white/35 text-white text-xs tracking-widest uppercase hover:bg-[#C9A84C] hover:border-[#C9A84C] transition-all duration-300"
             >
               Book Appointment
             </a>
