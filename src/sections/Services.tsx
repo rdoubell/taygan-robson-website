@@ -44,15 +44,6 @@ export default function Services() {
 
         {/* Centred heading block */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="text-[10px] tracking-[0.35em] uppercase text-[#1A3B6E]/60 mb-4"
-            style={{ fontFamily: "'DM Mono', monospace" }}
-          >
-            Services &amp; Offerings
-          </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}

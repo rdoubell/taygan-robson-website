@@ -30,17 +30,8 @@ export default function About() {
 
         {/* Centred heading */}
         <div className="text-center mb-12">
-          <motion.p
-            variants={fadeUp(0)}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            className="text-[10px] tracking-[0.35em] uppercase text-[#1A3B6E]/60 mb-4"
-            style={{ fontFamily: "'DM Mono', monospace" }}
-          >
-            About Taygan
-          </motion.p>
           <motion.h2
-            variants={fadeUp(0.06)}
+            variants={fadeUp(0)}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
             className="mb-3"
@@ -74,17 +65,12 @@ export default function About() {
             animate={inView ? "visible" : "hidden"}
             className="about-image-col relative w-full"
           >
-            <div className="about-image-inner h-full min-h-[300px] border-2 border-dashed border-[#1A3B6E]/20 bg-[#F7F7F5] flex flex-col items-center justify-center gap-4">
-              <div className="w-12 h-12 border-2 border-dashed border-[#1A3B6E]/30 rounded-full flex items-center justify-center">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A3B6E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.35">
-                  <rect x="3" y="3" width="18" height="18" rx="2"/>
-                  <circle cx="8.5" cy="8.5" r="1.5"/>
-                  <polyline points="21 15 16 10 5 21"/>
-                </svg>
-              </div>
-              <p className="text-[#1A3B6E]/35 text-[10px] tracking-[0.22em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
-                Insert Photo
-              </p>
+            <div className="about-image-inner h-full min-h-[300px] overflow-hidden">
+              <img
+                src="/about page photo.png"
+                alt="Taygan Robson"
+                className="w-full h-full object-cover object-top"
+              />
             </div>
             <div className="absolute bottom-0 left-0 w-1 h-20 bg-[#C9A84C]" />
           </motion.div>

@@ -9,16 +9,6 @@ export default function Contact() {
   return (
     <section id="contact" className="bg-[#0D0D0D] py-20 overflow-hidden" ref={ref}>
       <div className="max-w-3xl mx-auto px-6 lg:px-12 text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-xs tracking-[0.35em] uppercase mb-6"
-          style={{ fontFamily: "'DM Mono', monospace", color: "#C9A84C" }}
-        >
-          1INC Consulting
-        </motion.p>
-
         <motion.h2
           initial={{ opacity: 0, y: 22 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

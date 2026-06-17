@@ -38,15 +38,6 @@ export default function ThreePractices() {
 
       {/* Optional eyebrow heading */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-14 pb-10 text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-[10px] tracking-[0.4em] uppercase text-[#1A3B6E]/60 mb-3"
-          style={{ fontFamily: "'DM Mono', monospace" }}
-        >
-          Three Practices · One Standard
-        </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
