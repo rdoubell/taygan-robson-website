@@ -70,9 +70,10 @@ export default function Services() {
             return (
               <motion.div
                 key={svc.num}
-                initial={{ opacity: 0, y: 28 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.65, delay: 0.1 + i * 0.08 }}
+                initial={{ opacity: 0, y: 80 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className="grid lg:grid-cols-2 border-b border-[#E2E8E4] last:border-b-0 group"
               >
                 <div className={`services-img-col overflow-hidden h-64 lg:h-80 ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
