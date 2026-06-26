@@ -168,27 +168,38 @@ function PricingCard({ card, delay }: { card: typeof cards[number]; delay: numbe
             style={{ overflow: "hidden" }}
           >
             <div className="px-6 pb-6 border-t" style={{ borderColor: "var(--border)" }}>
-              <div className="mt-4 overflow-x-auto">
-                <table className="w-full min-w-[400px] text-left text-[12.5px]" style={{ fontFamily: "var(--font-body)" }}>
-                  <thead>
-                    <tr style={{ borderBottom: `1px solid var(--border)` }}>
-                      <th className="pb-2 pr-4 font-semibold" style={{ color: "var(--color-navy)", fontFamily: "var(--font-display)", fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase" }}>Service</th>
-                      <th className="pb-2 pr-4 font-semibold whitespace-nowrap" style={{ color: "var(--color-navy)", fontFamily: "var(--font-display)", fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase" }}>Price</th>
-                      <th className="pb-2 font-semibold" style={{ color: "var(--color-navy)", fontFamily: "var(--font-display)", fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase" }}>Details</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {card.rows.map((row, i) => (
-                      <tr key={i} style={{ borderBottom: i < card.rows.length - 1 ? `1px solid var(--border)` : "none" }}>
-                        <td className="py-2.5 pr-4 leading-snug" style={{ color: "var(--text)" }}>{row.service}</td>
-                        <td className="py-2.5 pr-4 font-semibold whitespace-nowrap" style={{ color: "var(--color-gold)", fontFamily: "var(--font-display)" }}>{row.price}</td>
-                        <td className="py-2.5 leading-snug" style={{ color: "var(--text-muted)" }}>{row.detail}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="mt-4 flex flex-col">
+                {card.rows.map((row, i) => (
+                  <div
+                    key={i}
+                    className="py-3"
+                    style={{ borderBottom: i < card.rows.length - 1 ? `1px solid var(--border)` : "none" }}
+                  >
+                    {/* Service name */}
+                    <p
+                      className="leading-snug mb-1.5"
+                      style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "11.5px", color: "var(--color-navy)" }}
+                    >
+                      {row.service}
+                    </p>
+                    {/* Price */}
+                    <p
+                      className="mb-1"
+                      style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "13px", color: "var(--color-gold)" }}
+                    >
+                      {row.price}
+                    </p>
+                    {/* Detail */}
+                    <p
+                      className="leading-relaxed"
+                      style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "var(--text-muted)" }}
+                    >
+                      {row.detail}
+                    </p>
+                  </div>
+                ))}
                 {"footnote" in card && card.footnote && (
-                  <p className="mt-3 text-[11.5px] leading-relaxed" style={{ color: "var(--text-muted)", fontFamily: "var(--font-body)", fontStyle: "italic" }}>
+                  <p className="mt-3 text-[11px] leading-relaxed" style={{ color: "var(--text-muted)", fontFamily: "var(--font-body)", fontStyle: "italic" }}>
                     {card.footnote}
                   </p>
                 )}
