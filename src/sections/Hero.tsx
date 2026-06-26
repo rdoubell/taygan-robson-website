@@ -34,32 +34,35 @@ export default function Hero() {
           {/* Left — text block */}
           <div className="max-w-[560px]">
 
-            {/* Three-line headline */}
-            <div className="mb-8">
+            {/* Three-line headline — each phrase forced onto a single line */}
+            <div className="mb-8 overflow-hidden">
               {[
                 { text: "SCIENCE BACKED.", gold: true },
                 { text: "ATHLETE-BUILT.", gold: false },
                 { text: "RESULTS PROVEN.", gold: true },
               ].map(({ text, gold }, i) => (
-                <motion.div
-                  key={text}
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.75, delay: 0.35 + i * 0.13, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <h1
+                <div key={text} style={{ overflow: "hidden" }}>
+                  <motion.h1
+                    initial={{ x: "-105%", opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{
+                      duration: 0.72,
+                      delay: 0.2 + i * 0.14,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
                     style={{
                       fontFamily: "var(--font-display)",
-                      fontSize: "clamp(2.4rem, 5.5vw, 4.8rem)",
+                      fontSize: "clamp(1.75rem, 4vw, 3.8rem)",
                       fontWeight: 800,
-                      lineHeight: 1.06,
+                      lineHeight: 1.1,
                       letterSpacing: "-0.01em",
+                      whiteSpace: "nowrap",
                       color: gold ? "var(--color-gold)" : "#FFFFFF",
                     }}
                   >
                     {text}
-                  </h1>
-                </motion.div>
+                  </motion.h1>
+                </div>
               ))}
             </div>
 

@@ -2,55 +2,54 @@ import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 
-// Primary nav links
 const mainLinks = [
-  { label: "Services",   href: "#services",    sectionId: "services" },
-  { label: "Pricing",    href: "#pricing",     sectionId: "pricing" },
-  { label: "Contact",    href: "#contact",     sectionId: "contact" },
+  { label: "Services", href: "#services",  sectionId: "services" },
+  { label: "Pricing",  href: "#pricing",   sectionId: "pricing"  },
+  { label: "Contact",  href: "#contact",   sectionId: "contact"  },
 ]
 
-// Secondary pill links
 const secondaryLinks = [
-  { label: "Blog",  href: "/blog" },
+  { label: "Blog",  href: "/blog"  },
   { label: "About", href: "/about" },
 ]
 
-const ALL_SECTION_IDS = ["hero", "services", "pricing", "trusted-by", "contact"]
-const DARK_SECTION_IDS = ["hero", "trusted-by"]
+const ALL_SECTION_IDS   = ["hero", "services", "pricing", "trusted-by", "contact"]
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen]         = useState(false)
-  const [pastHero, setPastHero]         = useState(false)   // scrolled past hero → solid nav
-  const [isDark, setIsDark]             = useState(true)    // current section dark bg?
-  const [activeSection, setActiveSection] = useState("")
+  const [menuOpen,       setMenuOpen]       = useState(false)
+  const [pastHero,       setPastHero]       = useState(false)
+  const [activeSection,  setActiveSection]  = useState("")
+  const [navOpacity,     setNavOpacity]     = useState(0) // 0 = transparent, 1 = solid
 
-  // Underline ref + position
-  const underlineRef   = useRef<HTMLDivElement>(null)
-  const linkRefs       = useRef<Record<string, HTMLAnchorElement | null>>({})
+  const underlineRef = useRef<HTMLDivElement>(null)
+  const linkRefs     = useRef<Record<string, HTMLAnchorElement | null>>({})
 
-  // Detect hero height for scroll threshold
+  // Smoothly interpolate navbar background opacity based on scroll position
   useEffect(() => {
     const onScroll = () => {
-      const heroEl = document.getElementById("hero")
-      const threshold = heroEl ? heroEl.offsetHeight * 0.85 : 500
-      setPastHero(window.scrollY > threshold)
+      const heroEl   = document.getElementById("hero")
+      const heroH    = heroEl ? heroEl.offsetHeight : window.innerHeight
+      // Fade in over the last 15% of the hero
+      const fadeStart = heroH * 0.75
+      const fadeEnd   = heroH * 0.95
+      const raw       = (window.scrollY - fadeStart) / (fadeEnd - fadeStart)
+      const clamped   = Math.min(1, Math.max(0, raw))
+      setNavOpacity(clamped)
+      setPastHero(clamped >= 1)
     }
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  // Active section + dark/light detection via IntersectionObserver
+  // Active-section detection
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const id = entry.target.id
-            setIsDark(DARK_SECTION_IDS.includes(id))
-            if (mainLinks.some((l) => l.sectionId === id)) {
-              setActiveSection(id)
-            }
+            if (mainLinks.some((l) => l.sectionId === id)) setActiveSection(id)
           }
         })
       },
@@ -65,18 +64,16 @@ export default function Navbar() {
 
   // Slide underline to active link
   useEffect(() => {
-    const activeEl = linkRefs.current[activeSection]
-    const underlineEl = underlineRef.current
-    if (!activeEl || !underlineEl) return
-    const rect = activeEl.getBoundingClientRect()
+    const activeEl  = linkRefs.current[activeSection]
+    const underline = underlineRef.current
+    if (!activeEl || !underline) return
+    const rect       = activeEl.getBoundingClientRect()
     const parentRect = activeEl.parentElement?.getBoundingClientRect()
     if (!parentRect) return
-    underlineEl.style.width  = `${rect.width}px`
-    underlineEl.style.left   = `${rect.left - parentRect.left}px`
-    underlineEl.style.opacity = "1"
+    underline.style.width   = `${rect.width}px`
+    underline.style.left    = `${rect.left - parentRect.left}px`
+    underline.style.opacity = "1"
   }, [activeSection])
-
-  const isTransparent = !pastHero
 
   return (
     <>
@@ -84,11 +81,13 @@ export default function Navbar() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+        className="fixed top-0 left-0 right-0 z-50"
         style={{
-          background: isTransparent ? "transparent" : "var(--color-navy)",
-          borderBottom: isTransparent ? "none" : "1px solid rgba(255,255,255,0.08)",
-          boxShadow: isTransparent ? "none" : "0 2px 40px rgba(0,0,0,0.3)",
+          // Use rgba so the transition is always a smooth numeric interpolation
+          backgroundColor: `rgba(27, 42, 74, ${navOpacity})`,
+          borderBottom: navOpacity > 0.5 ? "1px solid rgba(255,255,255,0.08)" : "none",
+          boxShadow:    navOpacity > 0.5 ? "0 2px 40px rgba(0,0,0,0.3)"       : "none",
+          transition:   "background-color 0.12s linear, box-shadow 0.3s ease, border-bottom 0.3s ease",
         }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center h-[68px] gap-8">
@@ -103,17 +102,18 @@ export default function Navbar() {
             />
           </a>
 
-          {/* Main links + underline */}
+          {/* Main links + sliding underline */}
           <div className="hidden lg:flex items-center gap-8 relative flex-1">
             {mainLinks.map((link) => (
               <a
                 key={link.sectionId}
                 ref={(el) => { linkRefs.current[link.sectionId] = el }}
                 href={link.href}
-                className="relative text-[11px] tracking-[0.16em] uppercase font-semibold transition-colors duration-200 whitespace-nowrap"
+                className="text-[11px] tracking-[0.16em] uppercase font-semibold whitespace-nowrap"
                 style={{
                   fontFamily: "var(--font-display)",
                   color: activeSection === link.sectionId ? "#FFFFFF" : "rgba(255,255,255,0.62)",
+                  transition: "color 0.2s ease",
                 }}
               >
                 {link.label}
@@ -123,29 +123,29 @@ export default function Navbar() {
             {/* Animated underline */}
             <div
               ref={underlineRef}
-              className="absolute bottom-[-4px] h-[2px] transition-all duration-250 opacity-0"
+              className="absolute bottom-[-4px] h-[2px] opacity-0"
               style={{
                 background: "var(--color-gold)",
                 borderRadius: "2px",
-                transitionTimingFunction: "cubic-bezier(.4,0,.2,1)",
-                transitionProperty: "left, width, opacity",
+                transition: "left 0.25s cubic-bezier(.4,0,.2,1), width 0.25s cubic-bezier(.4,0,.2,1), opacity 0.2s ease",
               }}
             />
           </div>
 
           {/* Right group */}
           <div className="hidden lg:flex items-center gap-3 ml-auto">
-            {/* Secondary: Blog + About — gold pills */}
+            {/* Blog + About gold pills */}
             {secondaryLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="inline-flex items-center px-4 py-1.5 text-[10px] tracking-[0.18em] uppercase font-semibold transition-all duration-200"
+                className="inline-flex items-center px-4 py-1.5 text-[10px] tracking-[0.18em] uppercase font-semibold"
                 style={{
                   fontFamily: "var(--font-display)",
                   background: "var(--color-gold)",
                   color: "#14213D",
                   borderRadius: "var(--radius-pill)",
+                  transition: "background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget as HTMLElement
@@ -164,22 +164,25 @@ export default function Navbar() {
               </a>
             ))}
 
-            {/* Primary CTA — slides in after scrolling past hero */}
+            {/* Book Consultation — slides in once past hero */}
             <AnimatePresence>
               {pastHero && (
                 <motion.a
                   href="#contact"
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: 16 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                  className="inline-flex items-center px-5 py-2 text-[10px] tracking-[0.18em] uppercase font-bold transition-all duration-200 hover:scale-[1.02]"
+                  exit={{ opacity: 0, x: 16 }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
+                  className="inline-flex items-center px-5 py-2 text-[10px] tracking-[0.18em] uppercase font-bold"
                   style={{
                     fontFamily: "var(--font-display)",
                     background: "#FFFFFF",
                     color: "var(--color-navy)",
                     borderRadius: "var(--radius-pill)",
+                    transition: "transform 0.2s ease",
                   }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.02)" }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1)" }}
                 >
                   Book Consultation
                 </motion.a>
@@ -198,7 +201,7 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Mobile menu */}
+      {/* Mobile full-screen menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -246,7 +249,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35 }}
               onClick={() => setMenuOpen(false)}
-              className="mt-2 px-8 py-3 text-xs tracking-widest uppercase font-bold transition-all duration-300"
+              className="mt-2 px-8 py-3 text-xs tracking-widest uppercase font-bold"
               style={{
                 fontFamily: "var(--font-display)",
                 background: "var(--color-gold)",
