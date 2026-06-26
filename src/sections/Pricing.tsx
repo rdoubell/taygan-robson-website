@@ -1,266 +1,355 @@
-import { useRef, useState } from "react"
-import { motion, useInView } from "framer-motion"
-import { Check, ArrowRight, Mail, MapPin } from "lucide-react"
+import { useState, useRef } from "react"
+import { motion, useInView, AnimatePresence } from "framer-motion"
+import { ChevronDown, ArrowRight, Check } from "lucide-react"
 
-const consultationFeatures = [
-  "45-minute full performance overview",
-  "Detailed injury & medical history review",
-  "Training load and recovery analysis",
-  "Nutritional habits & supplementation audit",
-  "Strategic action plan & next steps",
-]
-
-const services = [
-  {
-    id: "performance",
-    title: "Pure Science Performance",
-    price: "POA",
-    priceNote: "Price on application",
-    features: [
-      "Training load management",
-      "Endurance & periodisation programming",
-      "Athlete monitoring & HRV analysis",
-    ],
-  },
+// ── Pricing Data ──────────────────────────────────────────────
+const cards = [
   {
     id: "nutrition",
     title: "Sports Nutrition",
-    price: "POA",
-    priceNote: "Price on application",
-    features: [
-      "Macro periodisation planning",
-      "Race fuelling & recovery protocols",
-      "Evidence-based supplementation",
+    startingFrom: "R880",
+    period: "",
+    description:
+      "Evidence-based assessment of your diet, macros, timing and training load — with race-prep strategy and a written findings report.",
+    rows: [
+      { service: "45-Minute Nutrition Consultation", price: "R880", detail: "Diet, macros, timing, training load, race/competition prep" },
+      { service: "Written Findings & Recommendations Report", price: "Included", detail: "Detailed post-session Word document" },
+      { service: "Registered Dietitian Session", price: "On request", detail: "Clinical & medical nutrition therapy" },
     ],
+  },
+  {
+    id: "training",
+    title: "Training Programme",
+    startingFrom: "R1,050",
+    period: "/ month",
+    description:
+      "Structured online coaching via TrainingPeaks. Every session reviewed, plan adjusted to your data, feedback and schedule.",
+    rows: [
+      { service: "Tier 2 — 2 sessions/week", price: "R1,050 / mo", detail: "Single sport · Monthly analysis · Weekly plan" },
+      { service: "Tier 3 — 3 sessions/week", price: "R1,450 / mo", detail: "Single sport · Monthly analysis · Weekly plan" },
+      { service: "Tier 4 — 4 sessions/week", price: "R1,850 / mo", detail: "Multi sport · Weekly analysis · Daily flexible plan" },
+      { service: "Tier 6 — 6 sessions/week", price: "R2,350 / mo", detail: "Multi sport · Full-week coverage · Limited availability" },
+    ],
+    footnote: "All tiers: personalised TrainingPeaks plan · annual periodised ATP · mesocycle testing · race-taper planning.",
   },
   {
     id: "rehab",
-    title: "Prehab & Rehabilitation",
-    price: "POA",
-    priceNote: "Price on application",
-    features: [
-      "Movement quality & FMS screening",
-      "Return-to-performance planning",
-      "Injury risk reduction systems",
+    title: "Rehab & Sports Injury",
+    startingFrom: "R880",
+    period: "",
+    description:
+      "Full injury and movement assessment, then an individualised rehab programme with video-guided exercises — tracked monthly.",
+    rows: [
+      { service: "45-Minute Assessment", price: "R880", detail: "Baseline, injury profile, movement screening" },
+      { service: "Programme Design + Physitrack Integration", price: "R420", detail: "Individualised rehab with video-guided exercises" },
+      { service: "Ongoing Rehab / Prehab Session (30 min)", price: "R560 / session", detail: "One-on-one, tracked monthly, invoiced month-end" },
     ],
   },
   {
-    id: "testing",
-    title: "Performance Testing & Analytics",
-    price: "POA",
-    priceNote: "Price on application",
-    features: [
-      "Force production & asymmetry testing",
-      "VALD ForceDecks & DynaMo analysis",
-      "Readiness & rehabilitation tracking",
+    id: "strength",
+    title: "Performance & Strength",
+    startingFrom: "R560",
+    period: "/ session",
+    description:
+      "One-on-one guided strength and conditioning for measurable performance gains, after an initial functional screening.",
+    rows: [
+      { service: "Strength & Performance Session", price: "R560 / session", detail: "One-on-one guided S&C" },
+      { service: "In-House S&C Trainer", price: "On request", detail: "Sport-specific performance sessions" },
+      { service: "Initial Functional Screening Assessment", price: "R880", detail: "Required before any programme begins" },
     ],
   },
   {
-    id: "monitoring",
-    title: "Athlete Monitoring & Planning",
-    price: "POA",
-    priceNote: "Price on application",
-    features: [
-      "Ongoing performance data review",
-      "Weekly programming & load cycles",
-      "Long-term athletic development",
+    id: "sc",
+    title: "Sports-Specific S&C",
+    startingFrom: "R880",
+    period: "",
+    description:
+      "Sport-tailored strength & conditioning for cycling, swimming, Ironman and endurance athletes — matched to your discipline.",
+    rows: [
+      { service: "Functional Screening Assessment", price: "R880", detail: "Required baseline before any programme" },
+      { service: "Sport-Specific S&C Programme", price: "On request", detail: "Cycling · Swimming · Ironman · Endurance" },
+      { service: "In-House Practitioners", price: "On request", detail: "Physio / Dietitian / S&C at The Campus, Bryanston" },
     ],
   },
 ]
 
-function ServiceCard({ svc, delay }: { svc: typeof services[number]; delay: number }) {
-  const [details, setDetails] = useState("")
-
-  const handleEnquire = () => {
-    const subject = encodeURIComponent(`Enquiry: ${svc.title}`)
-    const body = encodeURIComponent(
-      `Service Interest: ${svc.title}\n\n${details ? `My goals / details:\n${details}` : "I'd like to learn more about this service."}`
-    )
-    window.location.href = `mailto:hello@1inc-consulting.com?subject=${subject}&body=${body}`
-  }
+// ── Expandable row ─────────────────────────────────────────────
+function PricingCard({ card, delay }: { card: typeof cards[number]; delay: number }) {
+  const [open, setOpen] = useState(false)
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.6, delay }}
-      className="bg-white border border-[#E2E8E4] flex flex-col hover:shadow-[0_8px_40px_rgba(26,59,110,0.08)] transition-shadow duration-400"
+      className="bg-white flex flex-col"
+      style={{ boxShadow: "var(--shadow-sm)", borderRadius: "var(--radius-md)" }}
     >
-      {/* Card header */}
-      <div className="px-7 pt-7 pb-6 border-b border-[#E2E8E4]">
+      {/* Card body */}
+      <div className="p-6 flex flex-col flex-1">
+        {/* Title */}
         <h3
-          className="text-black mb-4 leading-tight"
-          style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "1.15rem", fontWeight: 700, lineHeight: 1.25 }}
+          className="mb-1"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "0.95rem",
+            letterSpacing: "0.01em",
+            color: "var(--color-navy)",
+            textTransform: "uppercase",
+          }}
         >
-          {svc.title}
+          {card.title}
         </h3>
-        <div className="flex items-baseline gap-2">
+
+        {/* Starting from label */}
+        <p className="text-[11px] tracking-[0.12em] text-[--text-muted] mb-1" style={{ fontFamily: "var(--font-display)" }}>
+          Starting from
+        </p>
+
+        {/* Price */}
+        <div className="flex items-baseline gap-1 mb-4">
           <span
-            className="font-bold tracking-tight"
-            style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "1.6rem", color: "#C9A84C" }}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 800,
+              fontSize: "clamp(1.5rem, 3vw, 2rem)",
+              color: "var(--color-navy)",
+              lineHeight: 1,
+            }}
           >
-            {svc.price}
+            {card.startingFrom}
           </span>
-          <span className="text-black/35 text-[11px] tracking-wide" style={{ fontFamily: "'DM Mono', monospace" }}>
-            {svc.priceNote}
-          </span>
+          {card.period && (
+            <span className="text-[11px] text-[--text-muted]" style={{ fontFamily: "var(--font-display)" }}>
+              {card.period}
+            </span>
+          )}
         </div>
-      </div>
 
-      {/* Features */}
-      <div className="px-7 py-5 flex-1">
-        <ul className="space-y-2.5 mb-6">
-          {svc.features.map((f) => (
-            <li key={f} className="flex items-start gap-2.5">
-              <Check size={13} className="mt-[3px] flex-shrink-0" style={{ color: "#C9A84C" }} strokeWidth={2.5} />
-              <span className="text-black/60 text-[13px] leading-snug">{f}</span>
-            </li>
-          ))}
-        </ul>
+        {/* Description */}
+        <p className="text-[13.5px] leading-relaxed flex-1 mb-5" style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)" }}>
+          {card.description}
+        </p>
 
-        {/* Divider */}
-        <div className="w-full h-px bg-[#E2E8E4] mb-5" />
-
-        {/* Enquiry textarea */}
-        <label className="block">
-          <span
-            className="block text-[10px] tracking-[0.25em] uppercase text-black/35 mb-2"
-            style={{ fontFamily: "'DM Mono', monospace" }}
-          >
-            Describe your goals / needs
-          </span>
-          <textarea
-            rows={3}
-            value={details}
-            onChange={(e) => setDetails(e.target.value)}
-            placeholder="Tell us about your current situation, goals, or what you'd like to achieve..."
-            className="w-full resize-none border border-[#E2E8E4] bg-[#FAFAF9] px-4 py-3 text-[13px] text-black/70 placeholder:text-black/25 leading-relaxed outline-none focus:border-[#C9A84C]/50 focus:ring-1 focus:ring-[#C9A84C]/20 transition-colors duration-200"
-            style={{ fontFamily: "inherit" }}
-          />
-        </label>
-      </div>
-
-      {/* CTA */}
-      <div className="px-7 pb-7">
+        {/* See more button */}
         <button
-          onClick={handleEnquire}
-          className="w-full flex items-center justify-center gap-2.5 py-3 rounded-full bg-[#F7F7F5] border border-[#E2E8E4] text-[11px] tracking-[0.2em] uppercase text-black/70 font-medium hover:bg-[#1A3B6E] hover:text-white hover:border-[#1A3B6E] transition-all duration-250"
+          onClick={() => setOpen((v) => !v)}
+          className="self-start flex items-center gap-1.5 text-[11px] tracking-[0.14em] uppercase font-semibold transition-all duration-200"
+          style={{
+            fontFamily: "var(--font-display)",
+            color: open ? "var(--color-navy)" : "var(--color-gold)",
+            background: "transparent",
+            border: `1px solid ${open ? "var(--color-navy)" : "var(--color-gold)"}`,
+            borderRadius: "var(--radius-pill)",
+            padding: "0.4rem 1rem",
+          }}
+          aria-expanded={open}
         >
-          Send Enquiry <ArrowRight size={12} />
+          {open ? "See less" : "See more"}
+          <ChevronDown
+            size={13}
+            className="transition-transform duration-250"
+            style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+          />
         </button>
       </div>
+
+      {/* Accordion panel */}
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="panel"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+            style={{ overflow: "hidden" }}
+          >
+            <div className="px-6 pb-6 border-t" style={{ borderColor: "var(--border)" }}>
+              <div className="mt-4 overflow-x-auto">
+                <table className="w-full min-w-[400px] text-left text-[12.5px]" style={{ fontFamily: "var(--font-body)" }}>
+                  <thead>
+                    <tr style={{ borderBottom: `1px solid var(--border)` }}>
+                      <th className="pb-2 pr-4 font-semibold" style={{ color: "var(--color-navy)", fontFamily: "var(--font-display)", fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase" }}>Service</th>
+                      <th className="pb-2 pr-4 font-semibold whitespace-nowrap" style={{ color: "var(--color-navy)", fontFamily: "var(--font-display)", fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase" }}>Price</th>
+                      <th className="pb-2 font-semibold" style={{ color: "var(--color-navy)", fontFamily: "var(--font-display)", fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase" }}>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {card.rows.map((row, i) => (
+                      <tr key={i} style={{ borderBottom: i < card.rows.length - 1 ? `1px solid var(--border)` : "none" }}>
+                        <td className="py-2.5 pr-4 leading-snug" style={{ color: "var(--text)" }}>{row.service}</td>
+                        <td className="py-2.5 pr-4 font-semibold whitespace-nowrap" style={{ color: "var(--color-gold)", fontFamily: "var(--font-display)" }}>{row.price}</td>
+                        <td className="py-2.5 leading-snug" style={{ color: "var(--text-muted)" }}>{row.detail}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {"footnote" in card && card.footnote && (
+                  <p className="mt-3 text-[11.5px] leading-relaxed" style={{ color: "var(--text-muted)", fontFamily: "var(--font-body)", fontStyle: "italic" }}>
+                    {card.footnote}
+                  </p>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
 
+// ── Main section ───────────────────────────────────────────────
 export default function Pricing() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-60px" })
 
   return (
-    <section id="pricing" className="section-pad pb-0 bg-white" ref={ref}>
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <section id="pricing" className="bg-white" style={{ paddingTop: "5rem", paddingBottom: 0 }} ref={ref}>
 
-        {/* Section heading */}
-        <div className="text-center mb-14">
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.65, delay: 0.06 }}
-            className="mb-3"
-            style={{
-              fontFamily: "'Tinos', Georgia, serif",
-              fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
-              fontWeight: 700,
-              lineHeight: 1.05,
-              textTransform: "uppercase",
-              letterSpacing: "0.02em",
-              color: "#C9A84C",
-            }}
-          >
-            Investment in Your Performance
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.12 }}
-            className="text-black/60 text-lg font-semibold leading-snug"
-          >
-            Transparent pricing. Direct access. No guesswork.
-          </motion.p>
-        </div>
-
-        {/* ── Featured: 1INC Consultation ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
+      {/* Section heading */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-10">
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.75, delay: 0.15 }}
-          className="pricing-featured bg-[#1A3B6E] mb-10 p-10 lg:p-14 grid lg:grid-cols-[1fr_auto] gap-10 items-center"
+          transition={{ duration: 0.5 }}
+          className="text-[11px] tracking-[0.38em] uppercase mb-3"
+          style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
         >
-          <div>
-            <p
-              className="text-[10px] tracking-[0.38em] uppercase mb-5"
-              style={{ fontFamily: "'DM Mono', monospace", color: "#C9A84C" }}
-            >
-              Featured · Consultation
-            </p>
-            <h3
-              className="text-white mb-4 leading-tight"
-              style={{
-                fontFamily: "'Tinos', Georgia, serif",
-                fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
-                fontWeight: 700,
-                lineHeight: 1.1,
-              }}
-            >
-              1INC Initial Consultation
-            </h3>
-            <p className="text-white/50 text-[14px] leading-relaxed mb-8 max-w-xl">
-              A 45-minute comprehensive consultation designed to assess the full performance picture —
-              injury history, training structure, nutrition, and performance goals — before any
-              intervention begins.
-            </p>
-            <ul className="grid sm:grid-cols-2 gap-x-10 gap-y-3 mb-0">
-              {consultationFeatures.map((f) => (
-                <li key={f} className="flex items-start gap-2.5">
-                  <Check size={13} className="mt-[3px] flex-shrink-0" style={{ color: "#C9A84C" }} strokeWidth={2.5} />
-                  <span className="text-white/65 text-[13px] leading-snug">{f}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          Investment
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 14 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.05 }}
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
+            fontSize: "clamp(2rem, 4vw, 3rem)",
+            color: "var(--color-navy)",
+            lineHeight: 1.1,
+          }}
+        >
+          Transparent pricing.<br className="hidden sm:block" /> Direct access. No guesswork.
+        </motion.h2>
+      </div>
 
-          {/* Price + CTA */}
-          <div className="flex flex-col items-start lg:items-end gap-6 lg:min-w-[200px]">
-            <div className="lg:text-right">
-              <div
-                className="font-bold leading-none mb-1"
-                style={{ fontFamily: "'Tinos', Georgia, serif", fontSize: "clamp(2.4rem, 4vw, 3.2rem)", color: "#C9A84C" }}
-              >
-                POA
-              </div>
+      {/* ── Consultation block ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.75, delay: 0.12 }}
+        className="mx-auto max-w-7xl px-6 lg:px-12 mb-10"
+      >
+        <div
+          className="relative overflow-hidden"
+          style={{
+            background: "var(--color-navy)",
+            borderRadius: "var(--radius-lg)",
+            padding: "clamp(2rem, 5vw, 3.5rem)",
+          }}
+        >
+          {/* Background accent */}
+          <div
+            className="absolute top-0 right-0 w-72 h-72 rounded-full opacity-10 pointer-events-none"
+            style={{ background: "var(--color-gold)", transform: "translate(30%, -40%)", filter: "blur(60px)" }}
+          />
+
+          <div className="relative grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-16 items-center">
+            {/* Left */}
+            <div>
               <p
-                className="text-white/30 text-[10px] tracking-[0.2em] uppercase"
-                style={{ fontFamily: "'DM Mono', monospace" }}
+                className="text-[10px] tracking-[0.38em] uppercase mb-3"
+                style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
               >
-                Price on application
+                Featured · Full Package
+              </p>
+              <h3
+                className="text-white mb-3"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
+                  lineHeight: 1.1,
+                }}
+              >
+                1INC Consultation
+              </h3>
+              <p className="mb-6 max-w-2xl" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)", fontSize: "0.97rem", lineHeight: 1.7 }}>
+                A personal 45-minute online session with Taygan across performance, sports nutrition, and injury &amp; rehabilitation.
+                Includes a <strong style={{ color: "rgba(255,255,255,0.8)" }}>written specialised report</strong> and a clear direction before anything else begins.
+              </p>
+
+              {/* Feature list */}
+              <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-2 mb-6">
+                {[
+                  "45-minute full performance overview",
+                  "Injury & medical history review",
+                  "Training load & recovery analysis",
+                  "Nutritional habits & supplementation audit",
+                  "Written specialised report included",
+                  "Strategic action plan & next steps",
+                ].map((f) => (
+                  <li key={f} className="flex items-start gap-2.5">
+                    <Check size={13} className="mt-1 flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
+                    <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.62)", fontSize: "0.88rem" }}>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <p className="text-[11.5px]" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.28)" }}>
+                Sessions via Microsoft Teams · Bookings via Appointment Guru · Invoice issued post-session, payable within 7 days.
               </p>
             </div>
-            <a
-              href="mailto:hello@1inc-consulting.com?subject=Consultation%20Request"
-              className="inline-flex items-center gap-3 px-9 py-4 rounded-full bg-white text-[#1A3B6E] text-[11px] tracking-[0.22em] uppercase font-semibold hover:bg-[#C9A84C] hover:text-white hover:shadow-[0_0_28px_rgba(201,168,76,0.35)] hover:scale-[1.02] transition-all duration-300 whitespace-nowrap"
-            >
-              Book Consultation
-              <ArrowRight size={13} />
-            </a>
-          </div>
-        </motion.div>
 
-        {/* ── 5 Service Pricing Cards ── */}
-        <div className="pricing-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {services.map((svc, i) => (
-            <ServiceCard key={svc.id} svc={svc} delay={0.08 * i} />
+            {/* Right — price + CTA */}
+            <div className="flex flex-col items-start lg:items-end gap-5 lg:min-w-[180px]">
+              <div className="lg:text-right">
+                <div
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 800,
+                    fontSize: "clamp(2.8rem, 5vw, 3.8rem)",
+                    color: "var(--color-gold)",
+                    lineHeight: 1,
+                  }}
+                >
+                  R950
+                </div>
+                <p className="text-[10px] tracking-[0.2em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
+                  ZAR · Full package
+                </p>
+                <p className="text-[10px] mt-0.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.22)" }}>
+                  International: $130 USD
+                </p>
+              </div>
+              <a
+                href="https://appointmentguru.co/taygan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 text-[11px] tracking-[0.2em] uppercase font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  background: "#FFFFFF",
+                  color: "var(--color-navy)",
+                  borderRadius: "var(--radius-pill)",
+                }}
+              >
+                Book Consultation
+                <ArrowRight size={13} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── Five pricing cards ── */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 pb-6">
+          {cards.map((card, i) => (
+            <PricingCard key={card.id} card={card} delay={0.07 * i} />
           ))}
         </div>
 
@@ -270,95 +359,80 @@ export default function Pricing() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center text-black/35 text-[12px] mt-10 mb-0 leading-relaxed"
-          style={{ fontFamily: "'DM Mono', monospace" }}
+          className="text-center text-[12px] py-6 border-t"
+          style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", borderColor: "var(--border)" }}
         >
-          All service pricing is provided on application following the 1INC Initial Consultation.
-          <br />
-          Contact <span style={{ color: "#C9A84C" }}>hello@1inc-consulting.com</span> for further information.
+          All service pricing is provided on application following the 1INC Initial Consultation.{" "}
+          Contact <a href="mailto:taygan@1inc.co.za" style={{ color: "var(--color-gold)" }}>taygan@1inc.co.za</a> for further information.
         </motion.p>
       </div>
 
-      {/* ── Contact Info Block ── */}
-      <div id="contact" className="mt-12 bg-[#1A3B6E] py-16 overflow-hidden">
+      {/* ── Contact / CTA block ── */}
+      <div id="contact" className="mt-0" style={{ background: "var(--color-navy)", padding: "4rem 0" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-[1fr_1px_1fr] gap-10 lg:gap-0 items-center">
-
-            {/* Left — heading + intro */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.75 }}
+              transition={{ duration: 0.7 }}
               className="lg:pr-16"
             >
               <p
-                className="text-[10px] tracking-[0.38em] uppercase mb-5"
-                style={{ fontFamily: "'DM Mono', monospace", color: "#C9A84C" }}
+                className="text-[10px] tracking-[0.38em] uppercase mb-4"
+                style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
               >
                 Get in Touch
               </p>
               <h2
-                className="text-white mb-6 leading-tight"
-                style={{
-                  fontFamily: "'Tinos', Georgia, serif",
-                  fontSize: "clamp(2rem, 4vw, 3.2rem)",
-                  fontWeight: 700,
-                  lineHeight: 1.05,
-                }}
+                className="text-white mb-5"
+                style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", lineHeight: 1.1 }}
               >
-                Start the{" "}
-                <span style={{ color: "#C9A84C", fontStyle: "italic" }}>conversation.</span>
+                Start the conversation.
               </h2>
-              <p className="text-white/50 text-[15px] leading-relaxed max-w-md">
-                Whether you're an athlete managing a complex injury, a team building performance systems,
-                or a professional ready to take control of your physical output — the first step is one conversation.
+              <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.97rem", lineHeight: 1.7, maxWidth: "38ch" }}>
+                Whether you're an athlete managing a complex injury, a team building performance systems, or a professional ready
+                to take control of your physical output — the first step is one conversation.
               </p>
             </motion.div>
 
-            {/* Divider */}
-            <div className="hidden lg:block w-px bg-white/10 self-stretch" />
+            <div className="hidden lg:block w-px self-stretch" style={{ background: "rgba(255,255,255,0.08)" }} />
 
-            {/* Right — contact details */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.75, delay: 0.1 }}
-              className="lg:pl-16 flex flex-col gap-8"
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="lg:pl-16 flex flex-col gap-6"
             >
-              <a
-                href="mailto:hello@1inc-consulting.com"
-                className="flex items-center gap-4 group"
-              >
-                <div className="w-11 h-11 border border-white/15 group-hover:border-[#C9A84C] flex items-center justify-center transition-colors duration-200 flex-shrink-0">
-                  <Mail size={16} className="text-white/50 group-hover:text-[#C9A84C] transition-colors duration-200" />
-                </div>
-                <div>
-                  <p className="text-[10px] tracking-[0.25em] uppercase text-white/30 mb-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>Email</p>
-                  <p className="text-white/80 text-[14px] group-hover:text-white transition-colors duration-200">hello@1inc-consulting.com</p>
-                </div>
-              </a>
-
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 border border-white/15 flex items-center justify-center flex-shrink-0">
-                  <MapPin size={16} className="text-white/50" />
-                </div>
-                <div>
-                  <p className="text-[10px] tracking-[0.25em] uppercase text-white/30 mb-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>Location</p>
-                  <p className="text-white/80 text-[14px]">Available Worldwide</p>
-                </div>
+              <div>
+                <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Email</p>
+                <a href="mailto:taygan@1inc.co.za" className="text-white hover:text-[#C7A14C] transition-colors text-[15px]" style={{ fontFamily: "var(--font-body)" }}>taygan@1inc.co.za</a>
               </div>
-
+              <div>
+                <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Bookings</p>
+                <a href="https://appointmentguru.co/taygan" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#C7A14C] transition-colors text-[15px]" style={{ fontFamily: "var(--font-body)" }}>Appointment Guru</a>
+              </div>
+              <div>
+                <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Location</p>
+                <p className="text-white/70 text-[15px]" style={{ fontFamily: "var(--font-body)" }}>The Campus, Bryanston · Available Worldwide</p>
+              </div>
               <a
-                href="mailto:hello@1inc-consulting.com?subject=1INC%20Initial%20Consultation%20Request"
-                className="self-start inline-flex items-center gap-3 px-9 py-4 rounded-full bg-white text-[#1A3B6E] text-[11px] tracking-[0.22em] uppercase font-semibold hover:bg-[#C9A84C] hover:text-white hover:shadow-[0_0_28px_rgba(201,168,76,0.3)] hover:scale-[1.02] transition-all duration-300"
+                href="https://appointmentguru.co/taygan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-start inline-flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  background: "var(--color-gold)",
+                  color: "#14213D",
+                  borderRadius: "var(--radius-pill)",
+                }}
               >
                 Schedule Appointment
                 <ArrowRight size={13} />
               </a>
             </motion.div>
-
           </div>
         </div>
       </div>

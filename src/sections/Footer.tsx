@@ -1,57 +1,106 @@
 import { Linkedin } from "lucide-react"
 
+const footerLinks = [
+  { label: "Services", href: "#services" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "Contact", href: "#contact" },
+  { label: "Blog", href: "/blog" },
+  { label: "About", href: "/about" },
+]
+
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-[#E2E8E4]">
+    <footer style={{ background: "var(--color-navy)" }}>
+      {/* Gold accent line */}
+      <div className="h-[2px]" style={{ background: "linear-gradient(90deg, var(--color-gold), var(--gold-300), var(--color-gold))" }} />
 
-      {/* Gold accent line at top */}
-      <div className="h-[2px] bg-[#C9A84C]/25" />
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14">
+        <div className="grid md:grid-cols-[1fr_auto_auto] gap-12 md:gap-16 items-start">
 
-      {/* Footer content */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+          {/* Brand column */}
+          <div className="flex flex-col gap-4">
+            <img src="/logo/1inc-gold.png" alt="1INC Consulting" className="h-12 w-auto object-contain object-left" />
+            <p className="text-[13px] leading-relaxed max-w-xs" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.42)" }}>
+              Science-backed sports performance, nutrition, and rehabilitation. Available worldwide.
+            </p>
+            <div className="flex flex-col gap-1.5 mt-1">
+              <a href="mailto:taygan@1inc.co.za" className="text-[13px] hover:text-white transition-colors" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)" }}>
+                taygan@1inc.co.za
+              </a>
+              <a href="https://1inc.co.za" className="text-[13px] hover:text-white transition-colors" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)" }}>
+                1inc.co.za
+              </a>
+              <p className="text-[13px]" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.3)" }}>
+                Bookings via Appointment Guru
+              </p>
+            </div>
+          </div>
 
-        {/* Brand */}
-        <div className="flex flex-col items-center sm:items-start gap-1">
-          <span
-            className="text-[#1A3B6E] text-xl font-bold tracking-tight"
-            style={{ fontFamily: "'Tinos', Georgia, serif" }}
-          >
-            TAYGAN.
-          </span>
-          <span
-            className="text-black/35 text-[10px] tracking-[0.22em] uppercase"
-            style={{ fontFamily: "'DM Mono', monospace" }}
-          >
-            1INC Consulting
-          </span>
+          {/* Nav links */}
+          <div className="flex flex-col gap-3">
+            <p className="text-[10px] tracking-[0.28em] uppercase mb-2" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)", fontWeight: 600 }}>
+              Navigate
+            </p>
+            {footerLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[13px] transition-colors hover:text-white"
+                style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)" }}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Social + CTA */}
+          <div className="flex flex-col gap-5">
+            <p className="text-[10px] tracking-[0.28em] uppercase" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)", fontWeight: 600 }}>
+              Connect
+            </p>
+            <a
+              href="https://www.linkedin.com/in/tayganrobson/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="flex items-center gap-2.5 group"
+              style={{ color: "rgba(255,255,255,0.5)" }}
+            >
+              <div
+                className="w-9 h-9 flex items-center justify-center transition-colors duration-200 group-hover:border-[#C7A14C]"
+                style={{ border: "1px solid rgba(255,255,255,0.15)", borderRadius: "var(--radius-sm)" }}
+              >
+                <Linkedin size={14} className="group-hover:text-[#C7A14C] transition-colors" />
+              </div>
+              <span className="text-[12px] group-hover:text-white transition-colors" style={{ fontFamily: "var(--font-display)" }}>LinkedIn</span>
+            </a>
+
+            <a
+              href="https://appointmentguru.co/taygan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-6 py-3 text-[10px] tracking-[0.2em] uppercase font-bold transition-all duration-300 hover:scale-[1.02] mt-2"
+              style={{
+                fontFamily: "var(--font-display)",
+                background: "var(--color-gold)",
+                color: "#14213D",
+                borderRadius: "var(--radius-pill)",
+              }}
+            >
+              Book Consultation
+            </a>
+          </div>
         </div>
 
-        {/* Copyright */}
-        <span
-          className="text-black/30 text-[11px] tracking-[0.15em] text-center order-last sm:order-none"
-          style={{ fontFamily: "'DM Mono', monospace" }}
-        >
-          © {new Date().getFullYear()} Taygan Robson · All rights reserved.
-        </span>
-
-        {/* LinkedIn */}
-        <a
-          href="https://www.linkedin.com/in/tayganrobson/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-          className="flex items-center gap-2.5 text-[#1A3B6E]/55 hover:text-[#1A3B6E] transition-colors duration-200 group"
-        >
-          <span
-            className="text-[10px] tracking-[0.22em] uppercase"
-            style={{ fontFamily: "'DM Mono', monospace" }}
-          >
-            LinkedIn
-          </span>
-          <div className="w-8 h-8 border border-[#1A3B6E]/20 group-hover:border-[#C9A84C] flex items-center justify-center transition-colors duration-200">
-            <Linkedin size={13} />
-          </div>
-        </a>
+        {/* Bottom bar */}
+        <div className="mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+          <p className="text-[11px] text-center" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.22)" }}>
+            © {new Date().getFullYear()} 1INC Consulting · Taygan Robson · All rights reserved.
+          </p>
+          <p className="text-[11px]" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.18)" }}>
+            The Campus, Bryanston, South Africa
+          </p>
+        </div>
       </div>
     </footer>
   )
