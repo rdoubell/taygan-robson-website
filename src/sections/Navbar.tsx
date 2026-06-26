@@ -17,7 +17,6 @@ const ALL_SECTION_IDS   = ["hero", "services", "pricing", "trusted-by", "contact
 
 export default function Navbar() {
   const [menuOpen,       setMenuOpen]       = useState(false)
-  const [pastHero,       setPastHero]       = useState(false)
   const [activeSection,  setActiveSection]  = useState("")
   const [navOpacity,     setNavOpacity]     = useState(0) // 0 = transparent, 1 = solid
 
@@ -35,7 +34,6 @@ export default function Navbar() {
       const raw       = (window.scrollY - fadeStart) / (fadeEnd - fadeStart)
       const clamped   = Math.min(1, Math.max(0, raw))
       setNavOpacity(clamped)
-      setPastHero(clamped >= 1)
     }
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
@@ -164,30 +162,6 @@ export default function Navbar() {
               </a>
             ))}
 
-            {/* Book Consultation — slides in once past hero */}
-            <AnimatePresence>
-              {pastHero && (
-                <motion.a
-                  href="#contact"
-                  initial={{ opacity: 0, x: 16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 16 }}
-                  transition={{ duration: 0.22, ease: "easeOut" }}
-                  className="inline-flex items-center px-5 py-2 text-[10px] tracking-[0.18em] uppercase font-bold"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    background: "#FFFFFF",
-                    color: "var(--color-navy)",
-                    borderRadius: "var(--radius-pill)",
-                    transition: "transform 0.2s ease",
-                  }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.02)" }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1)" }}
-                >
-                  Book Consultation
-                </motion.a>
-              )}
-            </AnimatePresence>
           </div>
 
           {/* Mobile hamburger */}

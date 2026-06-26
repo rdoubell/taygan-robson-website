@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Navy rounded square background -->
+  <rect width="64" height="64" rx="14" ry="14" fill="#1B2A4A"/>
+  <!-- Gold "1" numeral, centred -->
+  <text
+    x="32"
+    y="46"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="38"
+    font-weight="700"
+    fill="#C7A14C"
+    letter-spacing="-1"
+  >1</text>
+</svg>

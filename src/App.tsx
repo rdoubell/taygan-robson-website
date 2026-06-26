@@ -7,6 +7,7 @@ import Journey from "./sections/Journey"
 import TrustedBy from "./sections/TrustedBy"
 import Footer from "./sections/Footer"
 import BlogPage from "./pages/Blog"
+import AboutPage from "./pages/About"
 
 function HomePage() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/blog" element={<BlogPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
     </BrowserRouter>
   )
