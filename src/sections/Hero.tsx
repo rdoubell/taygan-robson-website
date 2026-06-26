@@ -5,13 +5,12 @@ export default function Hero() {
   const { scrollY } = useScroll()
   const contentOpacity = useTransform(scrollY, [0, 500], [1, 0])
   const contentY      = useTransform(scrollY, [0, 500], [0, -60])
-  const scrollOpacity = useTransform(scrollY, [0, 180], [1, 0])
 
   return (
     <section id="hero" className="relative w-full h-screen min-h-[640px] overflow-hidden" style={{ background: "#14213D" }}>
 
-      {/* Background photo */}
-      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/hero-bg.jpg')" }} />
+      {/* Background photo — positioned so head is always in frame */}
+      <div className="absolute inset-0 bg-cover bg-no-repeat" style={{ backgroundImage: "url('/hero-bg.jpg')", backgroundPosition: "center 15%" }} />
 
       {/* Left→right gradient overlay */}
       <div
@@ -34,16 +33,6 @@ export default function Hero() {
 
           {/* Left — text block */}
           <div className="max-w-[560px]">
-
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-[10px] tracking-[0.42em] uppercase mb-7 text-white/40"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              1INC Consulting · Est. South Africa
-            </motion.p>
 
             {/* Three-line headline */}
             <div className="mb-8">
@@ -115,23 +104,6 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Scroll hint */}
-      <motion.div
-        style={{ opacity: scrollOpacity }}
-        className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
-      >
-        <span
-          className="text-[9px] tracking-[0.35em] uppercase text-white/25"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-          className="w-px h-7 bg-gradient-to-b from-white/30 to-transparent"
-        />
-      </motion.div>
     </section>
   )
 }
