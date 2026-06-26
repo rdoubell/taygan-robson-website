@@ -9,8 +9,15 @@ export default function Hero() {
   return (
     <section id="hero" className="relative w-full h-screen min-h-[640px] overflow-hidden" style={{ background: "#14213D" }}>
 
+      {/* Mobile background position override */}
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-bg { background-position: 72% 12% !important; }
+        }
+      `}</style>
+
       {/* Background photo — positioned so head is always in frame */}
-      <div className="absolute inset-0 bg-cover bg-no-repeat" style={{ backgroundImage: "url('/hero-bg.jpg')", backgroundPosition: "center 15%" }} />
+      <div className="hero-bg absolute inset-0 bg-cover bg-no-repeat" style={{ backgroundImage: "url('/hero-bg.jpg')", backgroundPosition: "center 15%" }} />
 
       {/* Left→right gradient overlay */}
       <div
