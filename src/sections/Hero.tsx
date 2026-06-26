@@ -109,12 +109,6 @@ export default function Hero() {
                 Book Consultation
                 <ArrowRight size={14} />
               </a>
-              <span
-                className="text-[11px] leading-tight"
-                style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.28)" }}
-              >
-                45-min session · via Microsoft Teams
-              </span>
             </motion.div>
           </div>
 
