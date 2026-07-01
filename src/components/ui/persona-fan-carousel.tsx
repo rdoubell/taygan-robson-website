@@ -235,7 +235,7 @@ export default function PersonaFanCarousel({ personas, trigger = true }: { perso
       <div
         ref={containerRef}
         className="relative w-full overflow-visible"
-        style={{ height: `${CARD_H + 13}rem` }}
+        style={{ height: `${CARD_H + 10}rem` }}
       >
         {personas.map((persona, index) => {
           const Icon = persona.icon;
@@ -246,7 +246,7 @@ export default function PersonaFanCarousel({ personas, trigger = true }: { perso
               style={{
                 width: `${CARD_W}rem`,
                 height: `${CARD_H}rem`,
-                top: "50%",
+                top: "44%",
                 left: "50%",
                 marginTop: `-${CARD_H / 2}rem`,
                 marginLeft: `-${CARD_W / 2}rem`,

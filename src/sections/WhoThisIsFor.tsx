@@ -69,7 +69,7 @@ export default function WhoThisIsFor() {
     >
       {/* Heading */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-10">
+        <div className="text-center mb-4">
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
