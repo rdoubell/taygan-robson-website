@@ -20,15 +20,18 @@ export default function Footer() {
           {/* Brand column */}
           <div className="flex flex-col gap-4">
             <img src="/logo/1inc-gold.png" alt="1INC Consulting" className="h-12 w-auto object-contain object-left" />
-            <p className="text-[13px] leading-relaxed max-w-xs" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.42)" }}>
-              Science-backed sports performance, nutrition, and rehabilitation. Available worldwide.
+            <p className="text-[12px] leading-relaxed max-w-xs" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.38)", letterSpacing: "0.01em" }}>
+              Sports Injuries &amp; Return-to-Performance Specialist · Clinical Sports Nutritionist · Performance Scientist
+            </p>
+            <p className="text-[12px] leading-relaxed max-w-xs" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.28)" }}>
+              Online · Global · In-house at The Campus Wellness Centre, Bryanston, South Africa
             </p>
             <div className="flex flex-col gap-1.5 mt-1">
               <a href="mailto:taygan@1inc.co.za" className="text-[13px] hover:text-white transition-colors" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)" }}>
                 taygan@1inc.co.za
               </a>
-              <a href="https://1inc.co.za" className="text-[13px] hover:text-white transition-colors" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)" }}>
-                1inc.co.za
+              <a href="mailto:mail@1inc.co.za" className="text-[13px] hover:text-white transition-colors" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
+                mail@1inc.co.za
               </a>
               <p className="text-[13px]" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.3)" }}>
                 Bookings via Appointment Guru
@@ -87,7 +90,7 @@ export default function Footer() {
                 borderRadius: "var(--radius-pill)",
               }}
             >
-              Book Consultation
+              Book a 1INC Consultation
             </a>
           </div>
         </div>

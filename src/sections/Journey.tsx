@@ -192,26 +192,6 @@ export default function Journey() {
           </div>
         </div>
 
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.9 }}
-          className="text-center mt-14"
-        >
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
-            style={{
-              fontFamily: "var(--font-display)",
-              background: "var(--color-navy)",
-              color: "white",
-              borderRadius: "var(--radius-pill)",
-            }}
-          >
-            Book a 1INC Consultation
-          </a>
-        </motion.div>
 
       </div>
     </section>

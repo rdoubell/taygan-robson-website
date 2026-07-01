@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { ArrowRight, Target, TrendingDown, Timer, Trophy, Dumbbell, HeartPulse, Compass } from "lucide-react"
+import { Target, TrendingDown, Timer, Trophy, Dumbbell, HeartPulse, Compass } from "lucide-react"
 import PersonaFanCarousel from "../components/ui/persona-fan-carousel"
 import type { PersonaItem } from "../components/ui/persona-fan-carousel"
 
@@ -110,25 +110,6 @@ export default function WhoThisIsFor() {
         <PersonaFanCarousel personas={personas} trigger={inView} />
       </div>
 
-      {/* Single CTA bar */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <motion.a
-          href="#contact"
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55, delay: 0.65 }}
-          className="flex items-center justify-center gap-3 w-full py-5 text-[11px] tracking-[0.22em] uppercase font-bold transition-all duration-300 hover:brightness-110"
-          style={{
-            fontFamily: "var(--font-display)",
-            background: "var(--color-gold)",
-            color: "#14213D",
-            borderRadius: "var(--radius-md)",
-          }}
-        >
-          Start with a 1INC Consultation
-          <ArrowRight size={13} />
-        </motion.a>
-      </div>
     </section>
   )
 }

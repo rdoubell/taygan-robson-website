@@ -13,7 +13,7 @@ const cards = [
       "Evidence-based assessment of your diet, macros, timing and training load — with race-prep strategy and a written findings report.",
     rows: [
       { service: "1INC Nutrition Consultation", price: "R880", detail: "Diet, macros, timing, training load, race/competition prep" },
-      { service: "Written Findings & Recommendations Report", price: "Included", detail: "Detailed post-session Word document" },
+      { service: "Written Findings & Recommendations Report", price: "Included", detail: "Detailed written report" },
       { service: "Registered Dietitian Session", price: "On request", detail: "Clinical & medical nutrition therapy" },
     ],
   },
@@ -263,7 +263,7 @@ export default function Pricing() {
                 1INC Consultation
               </h3>
               <p className="mb-6 max-w-2xl" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)", fontSize: "0.97rem", lineHeight: 1.7 }}>
-                A personal 45-minute online session with Taygan across performance, sports nutrition, and injury &amp; rehabilitation.
+                A personal 1INC consultation with Taygan directly — across any or all three disciplines.
                 Includes a <strong style={{ color: "rgba(255,255,255,0.8)" }}>written specialised report</strong> and a clear direction before anything else begins.
               </p>
 
@@ -285,7 +285,7 @@ export default function Pricing() {
               </ul>
 
               <p className="text-[11.5px]" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.28)" }}>
-                Sessions via Microsoft Teams · Bookings via Appointment Guru · Invoice issued post-session, payable within 7 days.
+                Consultations via Microsoft Teams · Bookings via Appointment Guru · Invoice issued post-session, payable within 7 days.
               </p>
             </div>
 
@@ -304,7 +304,13 @@ export default function Pricing() {
                   R 1 250
                 </div>
                 <p className="text-[10px] tracking-[0.2em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
-                  All-in
+                  All-in · SA
+                </p>
+                <p className="text-[13px] mt-2" style={{ fontFamily: "var(--font-display)", fontWeight: 600, color: "rgba(255,255,255,0.45)" }}>
+                  $150 USD
+                </p>
+                <p className="text-[10px] tracking-[0.15em] uppercase mt-0.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.25)" }}>
+                  International
                 </p>
               </div>
               <a
@@ -319,7 +325,7 @@ export default function Pricing() {
                   borderRadius: "var(--radius-pill)",
                 }}
               >
-                Book Consultation
+                Book a 1INC Consultation
                 <ArrowRight size={13} />
               </a>
             </div>
@@ -373,8 +379,7 @@ export default function Pricing() {
                 Start the conversation.
               </h2>
               <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.97rem", lineHeight: 1.7, maxWidth: "38ch" }}>
-                Whether you're an athlete managing a complex injury, a team building performance systems, or a professional ready
-                to take control of your physical output — the first step is one conversation.
+                Whether you're an amateur or professional athlete, a team, an active individual, or simply someone seeking clarity on your training, nutrition, or recovery — every client starts with one conversation. A 1INC consultation with Taygan directly. The rest follows from there.
               </p>
             </motion.div>
 
@@ -390,6 +395,8 @@ export default function Pricing() {
               <div>
                 <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Email</p>
                 <a href="mailto:taygan@1inc.co.za" className="text-white hover:text-[#C7A14C] transition-colors text-[15px]" style={{ fontFamily: "var(--font-body)" }}>taygan@1inc.co.za</a>
+                <br />
+                <a href="mailto:mail@1inc.co.za" className="hover:text-[#C7A14C] transition-colors text-[13px]" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)" }}>mail@1inc.co.za</a>
               </div>
               <div>
                 <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Bookings</p>

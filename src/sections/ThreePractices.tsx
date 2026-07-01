@@ -14,7 +14,7 @@ const practices = [
     num: "02",
     label: "1INC · Consulting",
     title: "1INC Consulting",
-    desc: "One conversation. The full performance picture — before any intervention begins. A 45-minute consultation covering injury, training, nutrition and goals.",
+    desc: "One conversation. The full performance picture — before any intervention begins. A 1INC consultation with Taygan directly, covering injury, training, nutrition and goals.",
     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=900&q=85&auto=format&fit=crop",
     href: "#contact",
   },

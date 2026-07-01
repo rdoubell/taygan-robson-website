@@ -231,7 +231,7 @@ export default function Navbar() {
                 borderRadius: "var(--radius-pill)",
               }}
             >
-              Book Consultation
+              Book a 1INC Consultation
             </motion.a>
           </motion.div>
         )}
@@ -244,7 +244,7 @@ export default function Navbar() {
           className="text-[12px] tracking-[0.2em] uppercase font-bold"
           style={{ fontFamily: "var(--font-display)", color: "#14213D" }}
         >
-          Book Consultation
+          Book a 1INC Consultation
         </a>
         <span className="text-[10px] opacity-60" style={{ color: "#14213D" }}>→</span>
       </div>
