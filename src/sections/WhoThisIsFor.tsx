@@ -1,16 +1,10 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { ArrowRight, Target, TrendingDown, Timer, Trophy, Dumbbell, HeartPulse, Compass } from "lucide-react"
-import type { LucideIcon } from "lucide-react"
+import PersonaFanCarousel from "../components/ui/persona-fan-carousel"
+import type { PersonaItem } from "../components/ui/persona-fan-carousel"
 
-interface Persona {
-  id: string
-  label: string
-  problem: string
-  icon: LucideIcon
-}
-
-const personas: Persona[] = [
+const personas: PersonaItem[] = [
   {
     id: "golfer",
     label: "The Golfer / Padel Player",
@@ -111,58 +105,9 @@ export default function WhoThisIsFor() {
           </motion.p>
         </div>
 
-        {/* Cards grid — all 7 visible, 4 top row + 3 bottom row */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
-          {personas.map((persona, i) => {
-            const Icon = persona.icon
-            return (
-              <motion.div
-                key={persona.id}
-                initial={{ opacity: 0, y: 28 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                className="flex flex-col p-5"
-                style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "var(--radius-md)",
-                }}
-              >
-                {/* Icon */}
-                <div className="mb-4">
-                  <Icon size={18} style={{ color: "var(--color-gold)" }} strokeWidth={1.75} />
-                </div>
-
-                {/* Persona label */}
-                <h3
-                  className="mb-3"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: "0.85rem",
-                    color: "#FFFFFF",
-                    lineHeight: 1.3,
-                    letterSpacing: "0.01em",
-                  }}
-                >
-                  {persona.label}
-                </h3>
-
-                {/* Problem description */}
-                <p
-                  className="flex-1"
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.82rem",
-                    color: "rgba(255,255,255,0.55)",
-                    lineHeight: 1.7,
-                  }}
-                >
-                  {persona.problem}
-                </p>
-              </motion.div>
-            )
-          })}
+        {/* Fan carousel — trigger passed so GSAP entry fires when section is in view */}
+        <div className="mb-6">
+          <PersonaFanCarousel personas={personas} trigger={inView} />
         </div>
 
         {/* Single CTA bar */}
