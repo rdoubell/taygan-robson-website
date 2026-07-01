@@ -1,49 +1,64 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Target, TrendingDown, Timer, Trophy, Dumbbell, HeartPulse, Compass } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 
-const personas = [
+interface Persona {
+  id: string
+  label: string
+  problem: string
+  icon: LucideIcon
+}
+
+const personas: Persona[] = [
   {
     id: "golfer",
     label: "The Golfer / Padel Player",
     problem:
       "Recurring elbow, Achilles or back pain affecting your swing? Rehabilitation and return-to-performance, plus nutrition to support recovery.",
+    icon: Target,
   },
   {
     id: "glp1",
     label: "The GLP-1 User",
     problem:
       "Losing weight but worried about muscle loss? Structured strength training and protein periodisation to protect what matters.",
+    icon: TrendingDown,
   },
   {
     id: "endurance",
     label: "The Endurance Athlete",
     problem:
       "Training load, race nutrition, and performance data — for cycling, running, triathlon, and multisport.",
+    icon: Timer,
   },
   {
     id: "stagerace",
     label: "The Stage Race & Multi-Discipline Athlete",
     problem:
       "Training for your 6th Comrades, 5th ABSA Cape Epic, or 20th Half Ironman? Periodised load management and race-specific nutrition for athletes who measure their season in milestones, not single events.",
+    icon: Trophy,
   },
   {
     id: "muscle",
     label: "Low Muscle Tone & Skeletal Mass",
     problem:
       "Noticing strength or muscle decline with age, illness, or inactivity? A structured strength programme and tailored nutrition plan to rebuild and protect what matters — one conversation gets you both.",
+    icon: Dumbbell,
   },
   {
     id: "injured",
     label: "The Injured Athlete",
     problem:
       "Recurring or new injury? Movement screening, rehabilitation, and a return-to-performance plan.",
+    icon: HeartPulse,
   },
   {
     id: "adventurer",
     label: "The Adventurer",
     problem:
       "Taking on something out of your comfort zone — Antarctica, a mountain summit, an Ocean swim? I'll analyse your data and HR, and build a structured training plan to get you there prepared, not just willing.",
+    icon: Compass,
   },
 ]
 
@@ -98,51 +113,56 @@ export default function WhoThisIsFor() {
 
         {/* Cards grid — all 7 visible, 4 top row + 3 bottom row */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
-          {personas.map((persona, i) => (
-            <motion.div
-              key={persona.id}
-              initial={{ opacity: 0, y: 28 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.55, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col p-5"
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "var(--radius-md)",
-              }}
-            >
-              {/* Gold accent line */}
-              <div className="w-6 h-[2px] mb-4" style={{ background: "var(--color-gold)" }} />
-
-              {/* Persona label */}
-              <h3
-                className="mb-3"
+          {personas.map((persona, i) => {
+            const Icon = persona.icon
+            return (
+              <motion.div
+                key={persona.id}
+                initial={{ opacity: 0, y: 28 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.55, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-col p-5"
                 style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: "0.85rem",
-                  color: "#FFFFFF",
-                  lineHeight: 1.3,
-                  letterSpacing: "0.01em",
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: "var(--radius-md)",
                 }}
               >
-                {persona.label}
-              </h3>
+                {/* Icon */}
+                <div className="mb-4">
+                  <Icon size={18} style={{ color: "var(--color-gold)" }} strokeWidth={1.75} />
+                </div>
 
-              {/* Problem description */}
-              <p
-                className="flex-1"
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "0.82rem",
-                  color: "rgba(255,255,255,0.55)",
-                  lineHeight: 1.7,
-                }}
-              >
-                {persona.problem}
-              </p>
-            </motion.div>
-          ))}
+                {/* Persona label */}
+                <h3
+                  className="mb-3"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "0.85rem",
+                    color: "#FFFFFF",
+                    lineHeight: 1.3,
+                    letterSpacing: "0.01em",
+                  }}
+                >
+                  {persona.label}
+                </h3>
+
+                {/* Problem description */}
+                <p
+                  className="flex-1"
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.82rem",
+                    color: "rgba(255,255,255,0.55)",
+                    lineHeight: 1.7,
+                  }}
+                >
+                  {persona.problem}
+                </p>
+              </motion.div>
+            )
+          })}
         </div>
 
         {/* Single CTA bar */}
