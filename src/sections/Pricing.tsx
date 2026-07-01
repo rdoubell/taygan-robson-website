@@ -6,69 +6,43 @@ import { ChevronDown, ArrowRight, Check } from "lucide-react"
 const cards = [
   {
     id: "nutrition",
-    title: "Sports Nutrition",
+    title: "Clinical Sports Nutrition",
     startingFrom: "R880",
     period: "",
     description:
       "Evidence-based assessment of your diet, macros, timing and training load — with race-prep strategy and a written findings report.",
     rows: [
-      { service: "45-Minute Nutrition Consultation", price: "R880", detail: "Diet, macros, timing, training load, race/competition prep" },
+      { service: "1INC Nutrition Consultation", price: "R880", detail: "Diet, macros, timing, training load, race/competition prep" },
       { service: "Written Findings & Recommendations Report", price: "Included", detail: "Detailed post-session Word document" },
       { service: "Registered Dietitian Session", price: "On request", detail: "Clinical & medical nutrition therapy" },
     ],
   },
   {
     id: "training",
-    title: "Training Programme",
-    startingFrom: "R1,050",
+    title: "Pure Science Performance",
+    startingFrom: "R 1 000 – R 2 300",
     period: "/ month",
     description:
-      "Structured online coaching via TrainingPeaks. Every session reviewed, plan adjusted to your data, feedback and schedule.",
+      "Structured online performance consulting via TrainingPeaks. Every session reviewed, plan adjusted to your data, feedback and schedule. Tier 2 (2 sessions/week) to Tier 6 (6 sessions/week). Select the tier that matches your available training days.",
     rows: [
-      { service: "Tier 2 — 2 sessions/week", price: "R1,050 / mo", detail: "Single sport · Monthly analysis · Weekly plan" },
+      { service: "Tier 2 — 2 sessions/week", price: "R1,000 / mo", detail: "Single sport · Monthly analysis · Weekly plan" },
       { service: "Tier 3 — 3 sessions/week", price: "R1,450 / mo", detail: "Single sport · Monthly analysis · Weekly plan" },
       { service: "Tier 4 — 4 sessions/week", price: "R1,850 / mo", detail: "Multi sport · Weekly analysis · Daily flexible plan" },
-      { service: "Tier 6 — 6 sessions/week", price: "R2,350 / mo", detail: "Multi sport · Full-week coverage · Limited availability" },
+      { service: "Tier 6 — 6 sessions/week", price: "R2,300 / mo", detail: "Multi sport · Full-week coverage · Limited availability" },
     ],
     footnote: "All tiers: personalised TrainingPeaks plan · annual periodised ATP · mesocycle testing · race-taper planning.",
   },
   {
     id: "rehab",
-    title: "Rehab & Sports Injury",
+    title: "Prehab — Sports Injury & Rehabilitation",
     startingFrom: "R880",
     period: "",
     description:
       "Full injury and movement assessment, then an individualised rehab programme with video-guided exercises — tracked monthly.",
     rows: [
-      { service: "45-Minute Assessment", price: "R880", detail: "Baseline, injury profile, movement screening" },
+      { service: "1INC Assessment", price: "R880", detail: "Baseline, injury profile, movement screening" },
       { service: "Programme Design + Physitrack Integration", price: "R420", detail: "Individualised rehab with video-guided exercises" },
       { service: "Ongoing Rehab / Prehab Session (30 min)", price: "R560 / session", detail: "One-on-one, tracked monthly, invoiced month-end" },
-    ],
-  },
-  {
-    id: "strength",
-    title: "Performance & Strength",
-    startingFrom: "R560",
-    period: "/ session",
-    description:
-      "One-on-one guided strength and conditioning for measurable performance gains, after an initial functional screening.",
-    rows: [
-      { service: "Strength & Performance Session", price: "R560 / session", detail: "One-on-one guided S&C" },
-      { service: "In-House S&C Trainer", price: "On request", detail: "Sport-specific performance sessions" },
-      { service: "Initial Functional Screening Assessment", price: "R880", detail: "Required before any programme begins" },
-    ],
-  },
-  {
-    id: "sc",
-    title: "Sports-Specific S&C",
-    startingFrom: "R880",
-    period: "",
-    description:
-      "Sport-tailored strength & conditioning for cycling, swimming, Ironman and endurance athletes — matched to your discipline.",
-    rows: [
-      { service: "Functional Screening Assessment", price: "R880", detail: "Required baseline before any programme" },
-      { service: "Sport-Specific S&C Programme", price: "On request", detail: "Cycling · Swimming · Ironman · Endurance" },
-      { service: "In-House Practitioners", price: "On request", detail: "Physio / Dietitian / S&C at The Campus, Bryanston" },
     ],
   },
 ]
@@ -296,12 +270,12 @@ export default function Pricing() {
               {/* Feature list */}
               <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-2 mb-6">
                 {[
-                  "45-minute full performance overview",
-                  "Injury & medical history review",
-                  "Training load & recovery analysis",
-                  "Nutritional habits & supplementation audit",
-                  "Written specialised report included",
-                  "Strategic action plan & next steps",
+                  "1INC consultation with Taygan directly — across any or all three disciplines",
+                  "Training load & history, injury background and rehabilitation analysis",
+                  "Nutritional tracking, race fuelling & supplementation assessment",
+                  "Performance goals mapped to findings",
+                  "Written Specialised Report — findings and recommendations",
+                  "Programme direction: Consult — Analysis — Report — Plan — Programme",
                 ].map((f) => (
                   <li key={f} className="flex items-start gap-2.5">
                     <Check size={13} className="mt-1 flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
@@ -327,13 +301,10 @@ export default function Pricing() {
                     lineHeight: 1,
                   }}
                 >
-                  R950
+                  R 1 250
                 </div>
                 <p className="text-[10px] tracking-[0.2em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
-                  ZAR · Full package
-                </p>
-                <p className="text-[10px] mt-0.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.22)" }}>
-                  International: $130 USD
+                  South Africa · All-in
                 </p>
               </div>
               <a
@@ -356,9 +327,9 @@ export default function Pricing() {
         </div>
       </motion.div>
 
-      {/* ── Five pricing cards ── */}
+      {/* ── Three pricing cards ── */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 pb-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pb-6">
           {cards.map((card, i) => (
             <PricingCard key={card.id} card={card} delay={0.07 * i} />
           ))}
@@ -373,8 +344,8 @@ export default function Pricing() {
           className="text-center text-[12px] py-6 border-t"
           style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", borderColor: "var(--border)" }}
         >
-          All service pricing is provided on application following the 1INC Initial Consultation.{" "}
-          Contact <a href="mailto:taygan@1inc.co.za" style={{ color: "var(--color-gold)" }}>taygan@1inc.co.za</a> for further information.
+          All ongoing programme pricing follows the initial 1INC consultation. South Africa: R 1 250 all-in.{" "}
+          Booked via <a href="https://appointmentguru.co/taygan" target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-gold)" }}>Appointment Guru</a> · Delivered via Microsoft Teams · Invoice issued post-session, payable within 7 days.
         </motion.p>
       </div>
 

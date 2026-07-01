@@ -3,6 +3,7 @@ import Navbar from "./sections/Navbar"
 import Hero from "./sections/Hero"
 import Services from "./sections/Services"
 import Pricing from "./sections/Pricing"
+import WhoThisIsFor from "./sections/WhoThisIsFor"
 import Journey from "./sections/Journey"
 import TrustedBy from "./sections/TrustedBy"
 import Footer from "./sections/Footer"
@@ -18,6 +19,7 @@ function HomePage() {
         <Hero />
         {/* Content flows normally below hero */}
         <Services />
+        <WhoThisIsFor />
         <Pricing />
         <Journey />
         <TrustedBy />
