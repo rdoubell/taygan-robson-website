@@ -96,18 +96,16 @@ export default function WhoThisIsFor() {
           </motion.p>
         </div>
 
-        {/* Cards — horizontal scroll row, ~5 visible on desktop */}
-        <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollSnapType: "x mandatory", msOverflowStyle: "none", scrollbarWidth: "none" }}>
+        {/* Cards grid — all 7 visible, 4 top row + 3 bottom row */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
           {personas.map((persona, i) => (
             <motion.div
               key={persona.id}
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.55, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col flex-shrink-0 p-6"
+              className="flex flex-col p-5"
               style={{
-                width: "clamp(240px, 20%, 280px)",
-                scrollSnapAlign: "start",
                 background: "rgba(255,255,255,0.05)",
                 border: "1px solid rgba(255,255,255,0.1)",
                 borderRadius: "var(--radius-md)",
@@ -122,7 +120,7 @@ export default function WhoThisIsFor() {
                 style={{
                   fontFamily: "var(--font-display)",
                   fontWeight: 700,
-                  fontSize: "0.9rem",
+                  fontSize: "0.85rem",
                   color: "#FFFFFF",
                   lineHeight: 1.3,
                   letterSpacing: "0.01em",
@@ -133,29 +131,37 @@ export default function WhoThisIsFor() {
 
               {/* Problem description */}
               <p
-                className="flex-1 mb-5"
+                className="flex-1"
                 style={{
                   fontFamily: "var(--font-body)",
-                  fontSize: "0.88rem",
+                  fontSize: "0.82rem",
                   color: "rgba(255,255,255,0.55)",
-                  lineHeight: 1.75,
+                  lineHeight: 1.7,
                 }}
               >
                 {persona.problem}
               </p>
-
-              {/* CTA */}
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.18em] uppercase font-semibold transition-all duration-200 hover:gap-2.5"
-                style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)" }}
-              >
-                Start with a 1INC consultation
-                <ArrowRight size={11} />
-              </a>
             </motion.div>
           ))}
         </div>
+
+        {/* Single CTA bar */}
+        <motion.a
+          href="#contact"
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55, delay: 0.65 }}
+          className="flex items-center justify-center gap-3 w-full py-5 text-[11px] tracking-[0.22em] uppercase font-bold transition-all duration-300 hover:brightness-110"
+          style={{
+            fontFamily: "var(--font-display)",
+            background: "var(--color-gold)",
+            color: "#14213D",
+            borderRadius: "var(--radius-md)",
+          }}
+        >
+          Start with a 1INC Consultation
+          <ArrowRight size={13} />
+        </motion.a>
 
       </div>
     </section>

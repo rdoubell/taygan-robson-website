@@ -304,7 +304,7 @@ export default function Pricing() {
                   R 1 250
                 </div>
                 <p className="text-[10px] tracking-[0.2em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
-                  South Africa · All-in
+                  All-in
                 </p>
               </div>
               <a
@@ -344,7 +344,7 @@ export default function Pricing() {
           className="text-center text-[12px] py-6 border-t"
           style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", borderColor: "var(--border)" }}
         >
-          All ongoing programme pricing follows the initial 1INC consultation. South Africa: R 1 250 all-in.{" "}
+          All ongoing programme pricing follows the initial 1INC consultation. R 1 250 all-in.{" "}
           Booked via <a href="https://appointmentguru.co/taygan" target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-gold)" }}>Appointment Guru</a> · Delivered via Microsoft Teams · Invoice issued post-session, payable within 7 days.
         </motion.p>
       </div>
