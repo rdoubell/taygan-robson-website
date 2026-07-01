@@ -67,10 +67,9 @@ export default function WhoThisIsFor() {
       style={{ background: "var(--color-navy)" }}
       ref={ref}
     >
+      {/* Heading */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-
-        {/* Heading */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10">
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -104,13 +103,15 @@ export default function WhoThisIsFor() {
             Whether you're a professional athlete or someone simply looking for clarity — if you have a performance, nutrition, or rehabilitation goal, there is a place for you here.
           </motion.p>
         </div>
+      </div>
 
-        {/* Fan carousel — trigger passed so GSAP entry fires when section is in view */}
-        <div className="mb-6">
-          <PersonaFanCarousel personas={personas} trigger={inView} />
-        </div>
+      {/* Fan carousel — full width, no side padding */}
+      <div className="w-full mb-6">
+        <PersonaFanCarousel personas={personas} trigger={inView} />
+      </div>
 
-        {/* Single CTA bar */}
+      {/* Single CTA bar */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <motion.a
           href="#contact"
           initial={{ opacity: 0, y: 16 }}
@@ -127,7 +128,6 @@ export default function WhoThisIsFor() {
           Start with a 1INC Consultation
           <ArrowRight size={13} />
         </motion.a>
-
       </div>
     </section>
   )

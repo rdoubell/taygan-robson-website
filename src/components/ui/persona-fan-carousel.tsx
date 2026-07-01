@@ -12,25 +12,25 @@ export interface PersonaItem {
 const MAX_VISIBLE = 7;
 const HALF = 3;
 
-const CARD_W = 11;  // rem
-const CARD_H = 16;  // rem
+const CARD_W = 13;  // rem
+const CARD_H = 19;  // rem
 
 const FAN_POSITIONS = [
-  { rot: -20, scale: 0.78, x: -20, y: 5.0, zIndex: 1 },
-  { rot: -13, scale: 0.85, x: -14, y: 2.8, zIndex: 2 },
-  { rot: -6,  scale: 0.93, x: -7,  y: 0.8, zIndex: 3 },
+  { rot: -22, scale: 0.78, x: -28, y: 6.0, zIndex: 1 },
+  { rot: -14, scale: 0.85, x: -19, y: 3.2, zIndex: 2 },
+  { rot: -6,  scale: 0.93, x: -9,  y: 0.9, zIndex: 3 },
   { rot:  0,  scale: 1.0,  x:  0,  y: 0.0, zIndex: 10 },
-  { rot:  6,  scale: 0.93, x:  7,  y: 0.8, zIndex: 3 },
-  { rot: 13,  scale: 0.85, x: 14,  y: 2.8, zIndex: 2 },
-  { rot: 20,  scale: 0.78, x: 20,  y: 5.0, zIndex: 1 },
+  { rot:  6,  scale: 0.93, x:  9,  y: 0.9, zIndex: 3 },
+  { rot: 14,  scale: 0.85, x: 19,  y: 3.2, zIndex: 2 },
+  { rot: 22,  scale: 0.78, x: 28,  y: 6.0, zIndex: 1 },
 ];
 
 function getResponsiveMultiplier(width: number) {
-  if (width < 480) return 0.3;
-  if (width < 640) return 0.42;
-  if (width < 768) return 0.55;
-  if (width < 1024) return 0.78;
-  return 1.0;
+  if (width < 480) return 0.35;
+  if (width < 640) return 0.5;
+  if (width < 768) return 0.65;
+  if (width < 1024) return 0.85;
+  return 1.1;
 }
 
 function getHeightMultiplier(width: number) {
@@ -235,7 +235,7 @@ export default function PersonaFanCarousel({ personas, trigger = true }: { perso
       <div
         ref={containerRef}
         className="relative w-full overflow-visible"
-        style={{ height: `${CARD_H + 10}rem` }}
+        style={{ height: `${CARD_H + 13}rem` }}
       >
         {personas.map((persona, index) => {
           const Icon = persona.icon;
