@@ -4,33 +4,33 @@ import { motion, useInView } from "framer-motion"
 const steps = [
   {
     num: "01",
-    label: "Consultation",
-    caption: "45-min online session covering the full performance picture",
+    label: "1INC Consultation",
+    caption: "With Taygan directly — across any or all three disciplines",
   },
   {
     num: "02",
-    label: "Assessment",
-    caption: "Objective evaluation — movement, training load, nutrition & history",
+    label: "Analysis",
+    caption: "Training load, injury background, nutrition, and performance goals",
   },
   {
     num: "03",
-    label: "Strategy",
-    caption: "A written specialised report and clear plan of action",
+    label: "Report",
+    caption: "Written findings and recommendations",
   },
   {
     num: "04",
-    label: "Implementation",
-    caption: "Structured programming delivered via TrainingPeaks or Physitrack",
+    label: "Plan",
+    caption: "Programme direction mapped to solution",
   },
   {
     num: "05",
-    label: "Performance",
-    caption: "Ongoing monitoring, data review and plan refinement",
+    label: "Programme",
+    caption: "Delivered via TrainingPeaks / Physitrack",
   },
   {
     num: "06",
     label: "Results",
-    caption: "Measurable outcomes — tracked, reported, and built upon",
+    caption: "Measurable outcomes tracked and built upon",
   },
 ]
 
@@ -69,7 +69,7 @@ export default function Journey() {
               lineHeight: 1.1,
             }}
           >
-            Your Journey to Success
+            The Process — Consult · Analyse · Report · Plan · Programme
           </motion.h2>
         </div>
 
@@ -209,7 +209,7 @@ export default function Journey() {
               borderRadius: "var(--radius-pill)",
             }}
           >
-            Start with a Consultation
+            Book a 1INC Consultation
           </a>
         </motion.div>
 

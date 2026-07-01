@@ -2,43 +2,30 @@ import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 
-const disciplines = [
-  "Registered Biokineticists",
-  "Sports Nutritionists",
-  "Sports Scientists",
-  "Performance Specialists",
-]
-
 const services = [
   {
     num: "01",
-    title: "Sports Nutrition",
-    desc: "Evidence-based assessment of your current diet, macros, nutrient timing and training load — with race and competition fuelling strategy. No generic meal plans — calibrated to low, medium and high training-demand days.",
+    title: "Clinical Sports Nutrition",
+    desc: "Evidence-based assessment of your current diet, macros, nutrient timing and training load — with race and competition fuelling strategy. No generic meal plans — calibrated to low, medium and high training-demand days. Delivered online via Microsoft Teams. Post-session written report included.",
     image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=85&auto=format&fit=crop",
   },
   {
     num: "02",
-    title: "Training Programme (Customised)",
-    desc: "Structured online performance coaching via TrainingPeaks. Every completed session is reviewed and the plan is adjusted around your data, feedback and weekly schedule. Includes a periodised annual plan and race-taper planning.",
+    title: "Pure Science Performance — Training Programme",
+    desc: "Structured online performance consulting via TrainingPeaks. Every completed session is reviewed and the plan is adjusted around your data, feedback and weekly schedule. Includes a periodised annual plan and race-taper planning.",
     image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900&q=85&auto=format&fit=crop",
   },
   {
     num: "03",
-    title: "Rehabilitation & Sports Injury",
-    desc: "Comprehensive evaluation — baseline, injury profile and movement screening — followed by an individualised rehab programme with video-guided exercises via the Physitrack app, tracked monthly.",
+    title: "Prehab — Sports Injury & Rehabilitation",
+    desc: "Comprehensive evaluation — baseline, injury profile and movement screening — followed by an individualised rehab programme with video-guided exercises via the Physitrack app, tracked monthly. Available in-house at The Campus Wellness Centre, Bryanston, South Africa, and online via Physitrack globally.",
     image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=900&q=85&auto=format&fit=crop",
   },
   {
     num: "04",
-    title: "Performance & Strength Training",
-    desc: "One-on-one guided strength and conditioning sessions built for measurable performance gains, delivered by in-house specialists after an initial functional screening.",
+    title: "1INC Consulting — The Entry Point",
+    desc: "A personal consultation with Taygan directly. I analyse your training load and history, injury background, nutrition, and performance goals — then map the findings to a written guidance report and plan, directing you to the right path or the right qualified practitioner within my team.",
     image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=900&q=85&auto=format&fit=crop",
-  },
-  {
-    num: "05",
-    title: "Sports-Specific Strength & Conditioning",
-    desc: "Sport-tailored S&C for cycling, swimming, Ironman and endurance athletes — programming matched to the demands of your discipline and competition calendar.",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=900&q=85&auto=format&fit=crop",
   },
 ]
 
@@ -59,41 +46,28 @@ export default function Services() {
             className="text-[10px] tracking-[0.42em] uppercase mb-5"
             style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
           >
-            A Multidisciplinary Team
+            One Director. Three Practices.
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.06 }}
-            className="max-w-2xl mx-auto mb-7"
+            className="max-w-2xl mx-auto mb-5"
             style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", fontSize: "1rem", lineHeight: 1.7 }}
           >
-            1INC brings together Registered Biokineticists, Sports Nutritionists, Sports Scientists, and Performance Specialists — every plan starts with an objective assessment.
+            Founded and directed by Taygan — Sports Injuries &amp; Return-to-Performance Specialist, Clinical Sports Nutritionist, and Performance Scientist with 20+ years applied experience. Every client begins with a 1INC consultation. Programmes are then delivered by a qualified practitioner within the relevant practice — Registered Dietitian · Sports-Specific S&amp;C Trainer · Registered Biokineticist — overseen throughout.
           </motion.p>
 
-          {/* Discipline pills */}
-          <motion.div
+          {/* Process line */}
+          <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.12 }}
-            className="flex flex-wrap items-center justify-center gap-3"
+            className="text-[11px] tracking-[0.18em] uppercase font-semibold"
+            style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)" }}
           >
-            {disciplines.map((d, i) => (
-              <span
-                key={d}
-                className="px-4 py-1.5 text-[11px] tracking-[0.12em] uppercase font-semibold"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  background: i === 0 ? "var(--color-navy)" : "var(--slate-50)",
-                  color: i === 0 ? "#fff" : "var(--color-navy)",
-                  borderRadius: "var(--radius-pill)",
-                  border: `1px solid ${i === 0 ? "transparent" : "var(--border)"}`,
-                }}
-              >
-                {d}
-              </span>
-            ))}
-          </motion.div>
+            Consult — Analysis — Report — Plan — Programme
+          </motion.p>
         </div>
 
         {/* Section heading */}
@@ -110,7 +84,7 @@ export default function Services() {
             lineHeight: 1.1,
           }}
         >
-          A Complete Performance System
+          Three Practices. One Entry Point.
         </motion.h2>
 
       </div>

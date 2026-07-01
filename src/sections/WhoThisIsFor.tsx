@@ -69,7 +69,7 @@ export default function WhoThisIsFor() {
             className="text-[10px] tracking-[0.42em] uppercase mb-3"
             style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
           >
-            Who This Is For
+            Built For Every Body, Every Goal
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
@@ -83,7 +83,7 @@ export default function WhoThisIsFor() {
               lineHeight: 1.1,
             }}
           >
-            Built For Every Body, Every Goal
+            Who This Is For
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -96,16 +96,18 @@ export default function WhoThisIsFor() {
           </motion.p>
         </div>
 
-        {/* Cards grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        {/* Cards — horizontal scroll row, ~5 visible on desktop */}
+        <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollSnapType: "x mandatory", msOverflowStyle: "none", scrollbarWidth: "none" }}>
           {personas.map((persona, i) => (
             <motion.div
               key={persona.id}
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.55, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col p-6"
+              className="flex flex-col flex-shrink-0 p-6"
               style={{
+                width: "clamp(240px, 20%, 280px)",
+                scrollSnapAlign: "start",
                 background: "rgba(255,255,255,0.05)",
                 border: "1px solid rgba(255,255,255,0.1)",
                 borderRadius: "var(--radius-md)",

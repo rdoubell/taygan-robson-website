@@ -44,9 +44,9 @@ export default function Hero() {
             {/* Three-line headline — each phrase forced onto a single line */}
             <div className="mb-8 overflow-hidden">
               {[
-                { text: "SCIENCE BACKED.", gold: true },
-                { text: "ATHLETE-BUILT.", gold: false },
-                { text: "RESULTS PROVEN.", gold: true },
+                { text: "TWO DECADES.", gold: true },
+                { text: "THREE PRACTICES.", gold: false },
+                { text: "ONE STRATEGY.", gold: true },
               ].map(({ text, gold }, i) => (
                 <div key={text} style={{ overflow: "hidden" }}>
                   <motion.h1
@@ -84,8 +84,7 @@ export default function Hero() {
                 maxWidth: "42ch",
               }}
             >
-              Specialised sports science and nutrition programmes designed to optimise
-              performance, recovery, and long-term athletic development.
+              Sports Injuries &amp; Return-to-Performance · Clinical Sports Nutrition · Performance Science. Athletes, active individuals, and anyone seeking data-driven guidance on performance, nutrition, or rehabilitation — online, globally. Every client begins with a 1INC consultation with Taygan directly.
             </motion.p>
 
             <motion.div
@@ -105,7 +104,7 @@ export default function Hero() {
                   boxShadow: "0 8px 32px rgba(199,161,76,0.38)",
                 }}
               >
-                Book Consultation
+                Book a 1INC Consultation
                 <ArrowRight size={14} />
               </a>
             </motion.div>
