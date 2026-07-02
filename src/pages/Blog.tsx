@@ -1,79 +1,66 @@
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
 
-// Featured / example post
-const featuredPost = {
-  category: "Sports Nutrition",
-  date: "June 2025",
-  title: "Nutritional Periodisation: Why Your Diet Should Change With Your Training",
+const post1 = {
+  slug:     "/blog/tendon-nutrition-collagen-vitamin-c",
+  category: "Sports Nutrition · Rehabilitation",
+  date:     "July 2025",
+  title:    "Tendon Nutrition: The Collagen–Vitamin C Protocol",
   excerpt:
-    "Most athletes eat the same way year-round — but your nutritional needs shift dramatically between heavy training blocks, competition phases, and recovery periods. Here's the science behind periodising your intake for maximal adaptation.",
-  readTime: "7 min read",
+    "Tendons are metabolically active structures. Targeted collagen supplementation — timed precisely before loading — amplifies the tenocyte synthetic response in ways diet alone cannot achieve.",
+  readTime: "6 min read",
+  image:    "/blog-post-1.jpeg",
 }
 
-// 8 remaining placeholder posts
-const placeholders = Array(8).fill(null)
-
-function FeaturedBlogCard() {
+function RealBlogCard() {
   return (
-    <div className="flex flex-col overflow-hidden bg-white/10 border border-white/10">
-      {/* Image area — styled with gold accent */}
-      <div className="h-52 relative flex items-end justify-start p-5" style={{ background: "linear-gradient(135deg, rgba(27,42,74,0.9) 0%, rgba(199,161,76,0.25) 100%)" }}>
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 70% 40%, rgba(199,161,76,0.6) 0%, transparent 60%)" }} />
-        <div className="relative z-10">
+    <a
+      href={post1.slug}
+      className="group flex flex-col overflow-hidden bg-white/10 border border-white/10 transition-all duration-300 hover:border-[rgba(199,161,76,0.35)]"
+    >
+      {/* Image */}
+      <div className="h-52 relative overflow-hidden">
+        <img
+          src={post1.image}
+          alt={post1.title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          style={{ objectPosition: "center 30%" }}
+        />
+        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-500" />
+        <div className="absolute bottom-4 left-4">
           <span
-            className="text-[9px] tracking-[0.3em] uppercase px-2.5 py-1 text-white/80"
-            style={{ fontFamily: "var(--font-display)", background: "rgba(199,161,76,0.25)", border: "1px solid rgba(199,161,76,0.4)" }}
+            className="text-[9px] tracking-[0.3em] uppercase px-2.5 py-1"
+            style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", background: "rgba(20,33,61,0.7)", border: "1px solid rgba(199,161,76,0.35)" }}
           >
-            {featuredPost.category}
+            {post1.category}
           </span>
         </div>
       </div>
 
       {/* Card body */}
       <div className="p-6 flex flex-col flex-1 gap-3">
-        {/* Date + read time */}
         <div className="flex items-center gap-3">
-          <span
-            className="text-[9px] tracking-[0.2em] text-white/35"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {featuredPost.date}
-          </span>
+          <span className="text-[9px] tracking-[0.2em] text-white/35" style={{ fontFamily: "var(--font-display)" }}>{post1.date}</span>
           <span className="text-white/20 text-[8px]">·</span>
-          <span
-            className="text-[9px] tracking-[0.2em] text-white/35"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {featuredPost.readTime}
-          </span>
+          <span className="text-[9px] tracking-[0.2em] text-white/35" style={{ fontFamily: "var(--font-display)" }}>{post1.readTime}</span>
         </div>
 
-        {/* Title */}
-        <h3
-          className="text-white leading-snug"
-          style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(1rem, 1.5vw, 1.1rem)" }}
-        >
-          {featuredPost.title}
+        <h3 className="text-white leading-snug" style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(1rem, 1.5vw, 1.1rem)" }}>
+          {post1.title}
         </h3>
 
-        {/* Excerpt */}
-        <p
-          className="text-[13px] leading-relaxed flex-1"
-          style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)" }}
-        >
-          {featuredPost.excerpt}
+        <p className="text-[13px] leading-relaxed flex-1" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.52)" }}>
+          {post1.excerpt}
         </p>
 
-        {/* Read more */}
         <span
-          className="self-start text-[10px] tracking-[0.2em] uppercase mt-2"
+          className="self-start text-[10px] tracking-[0.2em] uppercase mt-2 transition-all duration-200 group-hover:gap-3"
           style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)" }}
         >
-          Coming Soon →
+          Read Article →
         </span>
       </div>
-    </div>
+    </a>
   )
 }
 
@@ -170,7 +157,7 @@ export default function BlogPage() {
       {/* Row 1 — dark, first card is featured */}
       <div style={{ background: "var(--color-navy)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <FeaturedBlogCard />
+          <RealBlogCard />
           <PlaceholderBlogCard dark={true} />
           <PlaceholderBlogCard dark={true} />
         </div>

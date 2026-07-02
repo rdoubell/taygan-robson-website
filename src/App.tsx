@@ -9,6 +9,7 @@ import TrustedBy from "./sections/TrustedBy"
 import Footer from "./sections/Footer"
 import BlogPage from "./pages/Blog"
 import AboutPage from "./pages/About"
+import BlogPost1 from "./pages/BlogPost1"
 
 function HomePage() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/tendon-nutrition-collagen-vitamin-c" element={<BlogPost1 />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
     </BrowserRouter>
