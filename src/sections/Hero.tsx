@@ -172,7 +172,7 @@ export default function Hero() {
                       letterSpacing: "-0.005em",
                     }}
                   >
-                    Helping athletes around the world perform, recover, and thrive.
+                    Helping athletes<br />around the world<br />perform, recover,<br />and thrive.
                   </p>
                   <p
                     className="mt-2"
@@ -218,7 +218,7 @@ export default function Hero() {
                       letterSpacing: "-0.005em",
                     }}
                   >
-                    Rehab. Performance. Nutrition.
+                    Rehab.<br />Performance.<br />Nutrition.
                   </p>
                   <p
                     className="mt-2"
