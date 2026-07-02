@@ -248,14 +248,6 @@ export default function BlogPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           <RealBlogCardLight post={posts[3]} />
           <PlaceholderBlogCard dark={false} />
-          <PlaceholderBlogCard dark={false} />
-        </div>
-      </div>
-
-      {/* Row 3 — dark */}
-      <div style={{ background: "var(--color-navy)" }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {[0, 1, 2].map((i) => <PlaceholderBlogCard key={i} dark={true} />)}
         </div>
       </div>
 
