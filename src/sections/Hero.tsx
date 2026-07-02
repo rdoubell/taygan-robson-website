@@ -28,19 +28,6 @@ export default function Hero() {
         }}
       />
 
-      {/* Right edge blur — fades image into navy */}
-      <div
-        className="absolute inset-y-0 right-0 w-40"
-        style={{
-          background: "linear-gradient(to right, transparent, rgba(20,33,61,0.82))",
-          backdropFilter: "blur(6px)",
-          WebkitBackdropFilter: "blur(6px)",
-        }}
-      />
-
-      {/* Top + bottom subtle vignette */}
-      <div className="absolute inset-x-0 top-0 h-32" style={{ background: "linear-gradient(to bottom, rgba(20,33,61,0.55), transparent)" }} />
-      <div className="absolute inset-x-0 bottom-0 h-32" style={{ background: "linear-gradient(to top, rgba(20,33,61,0.55), transparent)" }} />
 
       {/* Overall subtle dark layer */}
       <div className="absolute inset-0 bg-[rgba(8,14,28,0.18)]" />
