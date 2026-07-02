@@ -12,6 +12,7 @@ import AboutPage from "./pages/About"
 import BlogPost1 from "./pages/BlogPost1"
 import BlogPost2 from "./pages/BlogPost2"
 import BlogPost3 from "./pages/BlogPost3"
+import BlogPost4 from "./pages/BlogPost4"
 
 function HomePage() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/blog/tendon-nutrition-collagen-vitamin-c" element={<BlogPost1 />} />
         <Route path="/blog/injuries-in-sport-structure-behind-the-incident" element={<BlogPost2 />} />
         <Route path="/blog/efficiency-factor-decoupling-what-your-data-is-telling-you" element={<BlogPost3 />} />
+        <Route path="/blog/hrv-misread-data-right-interpretation-wrong" element={<BlogPost4 />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
     </BrowserRouter>
