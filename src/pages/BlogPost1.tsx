@@ -112,12 +112,12 @@ export default function BlogPost1() {
           transition={{ duration: 0.8, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-4xl mx-auto px-6 lg:px-12"
         >
-          <div className="overflow-hidden" style={{ maxHeight: "480px" }}>
+          <div className="overflow-hidden" style={{ maxHeight: "420px" }}>
             <img
               src="/blog-post-1.jpeg"
               alt="Tendon Nutrition — Collagen and Vitamin C Protocol"
               className="w-full object-cover"
-              style={{ objectPosition: "center 30%" }}
+              style={{ objectPosition: "center bottom" }}
             />
           </div>
         </motion.div>
