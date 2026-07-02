@@ -240,7 +240,7 @@ export default function Hero() {
                 style={{ borderRadius: "20px", height: "218px", boxShadow: "0 16px 48px rgba(0,0,0,0.35)" }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=85&auto=format&fit=crop"
+                  src="/hero-block-bottom-right.png"
                   alt="Athlete rehabilitation and recovery"
                   className="w-full h-full object-cover"
                   style={{ objectPosition: "center center" }}
