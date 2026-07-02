@@ -139,18 +139,16 @@ export default function Hero() {
                 style={{
                   borderRadius: "20px",
                   height: "218px",
-                  background: "rgba(20,33,61,0.65)",
-                  border: "1px solid rgba(199,161,76,0.28)",
-                  backdropFilter: "blur(14px)",
-                  boxShadow: "0 16px 48px rgba(0,0,0,0.25)",
+                  background: "var(--color-gold)",
+                  boxShadow: "0 16px 48px rgba(199,161,76,0.30)",
                 }}
               >
                 {/* Icon badge */}
                 <div
                   className="w-9 h-9 flex items-center justify-center flex-shrink-0"
-                  style={{ background: "rgba(199,161,76,0.18)", borderRadius: "10px", border: "1px solid rgba(199,161,76,0.3)" }}
+                  style={{ background: "rgba(20,33,61,0.18)", borderRadius: "10px" }}
                 >
-                  <Globe size={17} color="var(--color-gold)" strokeWidth={1.8} />
+                  <Globe size={17} color="#14213D" strokeWidth={1.8} />
                 </div>
 
                 {/* Copy */}
@@ -160,7 +158,7 @@ export default function Hero() {
                       fontFamily: "var(--font-display)",
                       fontWeight: 700,
                       fontSize: "clamp(0.85rem, 1.25vw, 1rem)",
-                      color: "#FFFFFF",
+                      color: "#14213D",
                       lineHeight: 1.45,
                       letterSpacing: "-0.005em",
                     }}
@@ -173,7 +171,7 @@ export default function Hero() {
                       fontFamily: "var(--font-display)",
                       fontSize: "10px",
                       letterSpacing: "0.08em",
-                      color: "rgba(199,161,76,0.75)",
+                      color: "rgba(20,33,61,0.6)",
                     }}
                   >
                     Global expertise. Personalised performance.
@@ -187,18 +185,16 @@ export default function Hero() {
                 style={{
                   borderRadius: "20px",
                   height: "218px",
-                  background: "rgba(20,33,61,0.65)",
-                  border: "1px solid rgba(199,161,76,0.28)",
-                  backdropFilter: "blur(14px)",
-                  boxShadow: "0 16px 48px rgba(0,0,0,0.25)",
+                  background: "var(--color-gold)",
+                  boxShadow: "0 16px 48px rgba(199,161,76,0.30)",
                 }}
               >
                 {/* Icon badge */}
                 <div
                   className="w-9 h-9 flex items-center justify-center flex-shrink-0"
-                  style={{ background: "rgba(199,161,76,0.18)", borderRadius: "10px", border: "1px solid rgba(199,161,76,0.3)" }}
+                  style={{ background: "rgba(20,33,61,0.18)", borderRadius: "10px" }}
                 >
-                  <Activity size={17} color="var(--color-gold)" strokeWidth={1.8} />
+                  <Activity size={17} color="#14213D" strokeWidth={1.8} />
                 </div>
 
                 {/* Copy */}
@@ -208,7 +204,7 @@ export default function Hero() {
                       fontFamily: "var(--font-display)",
                       fontWeight: 700,
                       fontSize: "clamp(0.85rem, 1.25vw, 1rem)",
-                      color: "#FFFFFF",
+                      color: "#14213D",
                       lineHeight: 1.45,
                       letterSpacing: "-0.005em",
                     }}
@@ -221,7 +217,7 @@ export default function Hero() {
                       fontFamily: "var(--font-display)",
                       fontSize: "10px",
                       letterSpacing: "0.08em",
-                      color: "rgba(199,161,76,0.75)",
+                      color: "rgba(20,33,61,0.6)",
                     }}
                   >
                     Evidence-based strategies tailored to your goals.
