@@ -104,7 +104,7 @@ export default function BlogPost4() {
               src={HERO_IMAGE}
               alt="Competitive cyclist — HRV monitoring case study"
               className="w-full object-cover"
-              style={{ objectPosition: "center 40%" }}
+              style={{ objectPosition: "center bottom" }}
             />
           </div>
         </motion.div>

@@ -31,7 +31,7 @@ const posts: Post[] = [
     excerpt:       "Injury is not random. It has a structure, a pattern, and identifiable contributing conditions that preceded it — and recurrence is both biological and a systems failure.",
     readTime:      "7 min read",
     image:         "/blog-post-2.jpeg",
-    imagePosition: "center center",
+    imagePosition: "center bottom",
   },
   {
     slug:          "/blog/efficiency-factor-decoupling-what-your-data-is-telling-you",
@@ -41,7 +41,7 @@ const posts: Post[] = [
     excerpt:       "Most athletes collect training data. Fewer know what to do with it when aerobic progress stops appearing where they expected. Three metrics answer what raw power and pace cannot.",
     readTime:      "7 min read",
     image:         "/blog-post-3.jpeg",
-    imagePosition: "center center",
+    imagePosition: "center bottom",
   },
   {
     slug:          "/blog/hrv-misread-data-right-interpretation-wrong",
@@ -51,7 +51,7 @@ const posts: Post[] = [
     excerpt:       "Eight months into a structured periodisation block, a competitive cyclist hit a plateau — then regressed. His HRV data was accurate. The way it was being used was not.",
     readTime:      "6 min read",
     image:         "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=900&q=85&auto=format&fit=crop",
-    imagePosition: "center 40%",
+    imagePosition: "center bottom",
   },
 ]
 

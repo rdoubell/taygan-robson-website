@@ -115,7 +115,7 @@ export default function BlogPost2() {
               src="/blog-post-2.jpeg"
               alt="Injuries in Sport — The Structure Behind the Incident"
               className="w-full object-cover"
-              style={{ objectPosition: "center center" }}
+              style={{ objectPosition: "center bottom" }}
             />
           </div>
         </motion.div>

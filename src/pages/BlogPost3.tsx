@@ -102,7 +102,7 @@ export default function BlogPost3() {
               src="/blog-post-3.jpeg"
               alt="Efficiency Factor, Decoupling, and What Your Data Is Actually Telling You"
               className="w-full object-cover"
-              style={{ objectPosition: "center center" }}
+              style={{ objectPosition: "center bottom" }}
             />
           </div>
         </motion.div>
