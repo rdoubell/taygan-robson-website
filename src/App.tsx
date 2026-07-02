@@ -10,6 +10,7 @@ import Footer from "./sections/Footer"
 import BlogPage from "./pages/Blog"
 import AboutPage from "./pages/About"
 import BlogPost1 from "./pages/BlogPost1"
+import BlogPost2 from "./pages/BlogPost2"
 
 function HomePage() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/tendon-nutrition-collagen-vitamin-c" element={<BlogPost1 />} />
+        <Route path="/blog/injuries-in-sport-structure-behind-the-incident" element={<BlogPost2 />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
     </BrowserRouter>

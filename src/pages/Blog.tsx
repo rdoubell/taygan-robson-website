@@ -1,30 +1,53 @@
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
 
-const post1 = {
-  slug:     "/blog/tendon-nutrition-collagen-vitamin-c",
-  category: "Sports Nutrition · Rehabilitation",
-  date:     "July 2025",
-  title:    "Tendon Nutrition: The Collagen–Vitamin C Protocol",
-  excerpt:
-    "Tendons are metabolically active structures. Targeted collagen supplementation — timed precisely before loading — amplifies the tenocyte synthetic response in ways diet alone cannot achieve.",
-  readTime: "6 min read",
-  image:    "/blog-post-1.jpeg",
+type Post = {
+  slug: string
+  category: string
+  date: string
+  title: string
+  excerpt: string
+  readTime: string
+  image: string
+  imagePosition?: string
 }
 
-function RealBlogCard() {
+const posts: Post[] = [
+  {
+    slug:          "/blog/tendon-nutrition-collagen-vitamin-c",
+    category:      "Sports Nutrition · Rehabilitation",
+    date:          "July 2025",
+    title:         "Tendon Nutrition: The Collagen–Vitamin C Protocol",
+    excerpt:       "Tendons are metabolically active structures. Targeted collagen supplementation — timed precisely before loading — amplifies the tenocyte synthetic response in ways diet alone cannot achieve.",
+    readTime:      "6 min read",
+    image:         "/blog-post-1.jpeg",
+    imagePosition: "center bottom",
+  },
+  {
+    slug:          "/blog/injuries-in-sport-structure-behind-the-incident",
+    category:      "Sports Injury · Rehabilitation",
+    date:          "July 2025",
+    title:         "Injuries in Sport: The Structure Behind the Incident",
+    excerpt:       "Injury is not random. It has a structure, a pattern, and identifiable contributing conditions that preceded it — and recurrence is both biological and a systems failure.",
+    readTime:      "7 min read",
+    image:         "/blog-post-2.jpeg",
+    imagePosition: "center center",
+  },
+]
+
+function RealBlogCard({ post }: { post: Post }) {
   return (
     <a
-      href={post1.slug}
+      href={post.slug}
       className="group flex flex-col overflow-hidden bg-white/10 border border-white/10 transition-all duration-300 hover:border-[rgba(199,161,76,0.35)]"
     >
       {/* Image */}
       <div className="h-52 relative overflow-hidden">
         <img
-          src={post1.image}
-          alt={post1.title}
+          src={post.image}
+          alt={post.title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          style={{ objectPosition: "center bottom" }}
+          style={{ objectPosition: post.imagePosition ?? "center center" }}
         />
         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-500" />
         <div className="absolute bottom-4 left-4">
@@ -32,7 +55,7 @@ function RealBlogCard() {
             className="text-[9px] tracking-[0.3em] uppercase px-2.5 py-1"
             style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", background: "rgba(20,33,61,0.7)", border: "1px solid rgba(199,161,76,0.35)" }}
           >
-            {post1.category}
+            {post.category}
           </span>
         </div>
       </div>
@@ -40,21 +63,21 @@ function RealBlogCard() {
       {/* Card body */}
       <div className="p-6 flex flex-col flex-1 gap-3">
         <div className="flex items-center gap-3">
-          <span className="text-[9px] tracking-[0.2em] text-white/35" style={{ fontFamily: "var(--font-display)" }}>{post1.date}</span>
+          <span className="text-[9px] tracking-[0.2em] text-white/35" style={{ fontFamily: "var(--font-display)" }}>{post.date}</span>
           <span className="text-white/20 text-[8px]">·</span>
-          <span className="text-[9px] tracking-[0.2em] text-white/35" style={{ fontFamily: "var(--font-display)" }}>{post1.readTime}</span>
+          <span className="text-[9px] tracking-[0.2em] text-white/35" style={{ fontFamily: "var(--font-display)" }}>{post.readTime}</span>
         </div>
 
         <h3 className="text-white leading-snug" style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(1rem, 1.5vw, 1.1rem)" }}>
-          {post1.title}
+          {post.title}
         </h3>
 
         <p className="text-[13px] leading-relaxed flex-1" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.52)" }}>
-          {post1.excerpt}
+          {post.excerpt}
         </p>
 
         <span
-          className="self-start text-[10px] tracking-[0.2em] uppercase mt-2 transition-all duration-200 group-hover:gap-3"
+          className="self-start text-[10px] tracking-[0.2em] uppercase mt-2"
           style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)" }}
         >
           Read Article →
@@ -157,8 +180,8 @@ export default function BlogPage() {
       {/* Row 1 — dark, first card is featured */}
       <div style={{ background: "var(--color-navy)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <RealBlogCard />
-          <PlaceholderBlogCard dark={true} />
+          <RealBlogCard post={posts[0]} />
+          <RealBlogCard post={posts[1]} />
           <PlaceholderBlogCard dark={true} />
         </div>
       </div>
