@@ -50,7 +50,7 @@ const posts: Post[] = [
     title:         "HRV Misread: When the Data Is Right and the Interpretation Is Wrong",
     excerpt:       "Eight months into a structured periodisation block, a competitive cyclist hit a plateau — then regressed. His HRV data was accurate. The way it was being used was not.",
     readTime:      "6 min read",
-    image:         "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85&auto=format&fit=crop",
+    image:         "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=900&q=85&auto=format&fit=crop",
     imagePosition: "center 40%",
   },
 ]

@@ -13,7 +13,7 @@ const fadeUp = (delay = 0) => ({
   },
 })
 
-const HERO_IMAGE = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=85&auto=format&fit=crop"
+const HERO_IMAGE = "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=1400&q=85&auto=format&fit=crop"
 
 export default function BlogPost4() {
   const bodyRef = useRef(null)
