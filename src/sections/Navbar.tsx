@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react"
+import { useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 
@@ -16,29 +17,34 @@ const secondaryLinks = [
 const ALL_SECTION_IDS   = ["hero", "services", "pricing", "trusted-by", "contact"]
 
 export default function Navbar() {
+  const { pathname }   = useLocation()
+  const isHome         = pathname === "/"
+
   const [menuOpen,       setMenuOpen]       = useState(false)
   const [activeSection,  setActiveSection]  = useState("")
-  const [navOpacity,     setNavOpacity]     = useState(0) // 0 = transparent, 1 = solid
+  const [navOpacity,     setNavOpacity]     = useState(isHome ? 0 : 1)
 
   const underlineRef = useRef<HTMLDivElement>(null)
   const linkRefs     = useRef<Record<string, HTMLAnchorElement | null>>({})
 
-  // Smoothly interpolate navbar background opacity based on scroll position
+  // On non-home pages always stay solid; on home page fade in with hero scroll
   useEffect(() => {
+    if (!isHome) {
+      setNavOpacity(1)
+      return
+    }
     const onScroll = () => {
-      const heroEl   = document.getElementById("hero")
-      const heroH    = heroEl ? heroEl.offsetHeight : window.innerHeight
-      // Fade in over the last 15% of the hero
+      const heroEl    = document.getElementById("hero")
+      const heroH     = heroEl ? heroEl.offsetHeight : window.innerHeight
       const fadeStart = heroH * 0.75
       const fadeEnd   = heroH * 0.95
       const raw       = (window.scrollY - fadeStart) / (fadeEnd - fadeStart)
-      const clamped   = Math.min(1, Math.max(0, raw))
-      setNavOpacity(clamped)
+      setNavOpacity(Math.min(1, Math.max(0, raw)))
     }
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+  }, [isHome])
 
   // Active-section detection
   useEffect(() => {
