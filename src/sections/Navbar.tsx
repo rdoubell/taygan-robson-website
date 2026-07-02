@@ -243,17 +243,6 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Mobile sticky bottom bar */}
-      <div className="mobile-book-bar lg:hidden">
-        <a
-          href="#contact"
-          className="text-[12px] tracking-[0.2em] uppercase font-bold"
-          style={{ fontFamily: "var(--font-display)", color: "#14213D" }}
-        >
-          Book a 1INC Consultation
-        </a>
-        <span className="text-[10px] opacity-60" style={{ color: "#14213D" }}>→</span>
-      </div>
     </>
   )
 }
