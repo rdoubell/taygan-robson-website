@@ -28,8 +28,22 @@ export default function Hero() {
         }}
       />
 
+      {/* Right edge blur — fades image into navy */}
+      <div
+        className="absolute inset-y-0 right-0 w-40"
+        style={{
+          background: "linear-gradient(to right, transparent, rgba(20,33,61,0.82))",
+          backdropFilter: "blur(6px)",
+          WebkitBackdropFilter: "blur(6px)",
+        }}
+      />
+
+      {/* Top + bottom subtle vignette */}
+      <div className="absolute inset-x-0 top-0 h-32" style={{ background: "linear-gradient(to bottom, rgba(20,33,61,0.55), transparent)" }} />
+      <div className="absolute inset-x-0 bottom-0 h-32" style={{ background: "linear-gradient(to top, rgba(20,33,61,0.55), transparent)" }} />
+
       {/* Overall subtle dark layer */}
-      <div className="absolute inset-0 bg-[rgba(8,14,28,0.22)]" />
+      <div className="absolute inset-0 bg-[rgba(8,14,28,0.18)]" />
 
       {/* Content */}
       <motion.div
@@ -39,7 +53,7 @@ export default function Hero() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
 
           {/* Left — text block */}
-          <div className="max-w-[560px]">
+          <div className="max-w-[660px]">
 
             {/* Three-line headline — each phrase forced onto a single line */}
             <div className="mb-8 overflow-hidden">
@@ -48,7 +62,7 @@ export default function Hero() {
                 { text: "THREE PRACTICES.", gold: false },
                 { text: "ONE STRATEGY.", gold: true },
               ].map(({ text, gold }, i) => (
-                <div key={text} style={{ overflow: "hidden" }}>
+                <div key={text} style={{ overflow: "clip" }}>
                   <motion.h1
                     initial={{ x: "-105%", opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
