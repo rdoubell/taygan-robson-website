@@ -13,7 +13,7 @@ const services = [
     num: "02",
     title: "Pure Science Performance — Training Programme",
     desc: "Structured online performance consulting via TrainingPeaks. Every completed session is reviewed and the plan is adjusted around your data, feedback and weekly schedule. Includes a periodised annual plan and race-taper planning.",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900&q=85&auto=format&fit=crop",
+    image: "/service-image-2.jpeg",
   },
   {
     num: "03",
