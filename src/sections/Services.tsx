@@ -20,7 +20,7 @@ const services = [
     title: "Prehab — Sports Injury & Rehabilitation",
     desc: "Comprehensive evaluation — baseline, injury profile and movement screening — followed by an individualised rehab programme with video-guided exercises via the Physitrack app, tracked monthly. Available in-house at The Campus Wellness Centre, Bryanston, South Africa, and online via Physitrack globally.",
     image: "/service-image-3.jpeg",
-    imagePosition: "28% center",
+    imagePosition: "28% 70%",
   },
   {
     num: "04",
