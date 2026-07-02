@@ -105,8 +105,67 @@ export default function WhoThisIsFor() {
         </div>
       </div>
 
-      {/* Fan carousel — full width, no side padding */}
-      <div className="w-full mb-6">
+      {/* ── Mobile: horizontal scroll strip ── */}
+      <div className="md:hidden w-full overflow-x-auto pb-4" style={{ WebkitOverflowScrolling: "touch" }}>
+        <div className="flex gap-3 px-6" style={{ width: "max-content" }}>
+          {personas.map((persona) => {
+            const Icon = persona.icon
+            return (
+              <div
+                key={persona.id}
+                className="flex flex-col flex-shrink-0"
+                style={{
+                  width: "220px",
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(199,161,76,0.18)",
+                  borderRadius: "var(--radius-md)",
+                  padding: "1.25rem",
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                <div style={{ marginBottom: "0.7rem" }}>
+                  <Icon size={16} style={{ color: "var(--color-gold)" }} strokeWidth={1.75} />
+                </div>
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "0.82rem",
+                    color: "#FFFFFF",
+                    lineHeight: 1.3,
+                    marginBottom: "0.55rem",
+                  }}
+                >
+                  {persona.label}
+                </h3>
+                <div
+                  style={{
+                    width: "22px",
+                    height: "1.5px",
+                    background: "var(--color-gold)",
+                    opacity: 0.5,
+                    marginBottom: "0.55rem",
+                    flexShrink: 0,
+                  }}
+                />
+                <p
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.73rem",
+                    color: "rgba(255,255,255,0.48)",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {persona.problem}
+                </p>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* ── Desktop: fan carousel ── */}
+      <div className="hidden md:block w-full mb-6">
         <PersonaFanCarousel personas={personas} trigger={inView} />
       </div>
 
