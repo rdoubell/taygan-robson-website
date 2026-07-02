@@ -18,14 +18,7 @@ export default function Hero() {
   return (
     <section id="hero" className="relative w-full h-screen min-h-[640px] overflow-hidden" style={{ background: "#14213D" }}>
 
-      {/* Mobile background position override */}
-      <style>{`
-        @media (max-width: 768px) {
-          .hero-bg { background-position: 72% 12% !important; }
-        }
-      `}</style>
-
-      {/* DNA video — lowest layer, very subtle animated texture */}
+      {/* DNA video — full-hero background, visible against pure navy */}
       <video
         ref={videoRef}
         autoPlay
@@ -34,23 +27,14 @@ export default function Hero() {
         playsInline
         src="/dna-loop.mp4"
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ opacity: 0.10, zIndex: 0 }}
+        style={{ opacity: 0.35 }}
       />
 
-      {/* Background photo — positioned so head is always in frame */}
-      <div className="hero-bg absolute inset-0 bg-cover bg-no-repeat" style={{ backgroundImage: "url('/hero-bg.jpg')", backgroundPosition: "center 15%" }} />
-
-      {/* Left→right gradient overlay — kept denser on the right so cards read cleanly */}
+      {/* Dark overlay — keeps text and cards legible without hiding the DNA */}
       <div
         className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(100deg, rgba(20,33,61,0.97) 0%, rgba(20,33,61,0.93) 40%, rgba(20,33,61,0.88) 65%, rgba(20,33,61,0.78) 100%)",
-        }}
+        style={{ background: "rgba(14,24,50,0.72)" }}
       />
-
-      {/* Overall subtle dark layer */}
-      <div className="absolute inset-0 bg-[rgba(8,14,28,0.18)]" />
 
       {/* Content */}
       <motion.div
