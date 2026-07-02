@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { ArrowRight, Award, BookOpen, Users, Microscope, Quote } from "lucide-react"
+import { Award, BookOpen, Users, Microscope, Quote } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
 
@@ -299,27 +299,6 @@ export default function AboutPage() {
                 ))}
               </motion.div>
 
-              {/* CTA */}
-              <motion.div
-                variants={fadeUp(0.36)}
-                initial="hidden"
-                animate={bioInView ? "visible" : "hidden"}
-              >
-                <a
-                  href="/#contact"
-                  className="inline-flex items-center gap-3 px-7 py-3.5 text-[10px] tracking-[0.22em] uppercase font-bold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    background: "var(--color-gold)",
-                    color: "#14213D",
-                    borderRadius: "var(--radius-pill)",
-                    boxShadow: "0 6px 24px rgba(199,161,76,0.32)",
-                  }}
-                >
-                  Book a 1INC Consultation
-                  <ArrowRight size={13} />
-                </a>
-              </motion.div>
             </div>
           </div>
         </div>
@@ -601,27 +580,6 @@ export default function AboutPage() {
             Taygan Robson · 1INC Consulting
           </motion.p>
 
-          <motion.div
-            variants={fadeUp(0.22)}
-            initial="hidden"
-            animate={quoteInView ? "visible" : "hidden"}
-            className="mt-10"
-          >
-            <a
-              href="/#contact"
-              className="inline-flex items-center gap-3 px-8 py-4 text-[10px] tracking-[0.22em] uppercase font-bold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-              style={{
-                fontFamily: "var(--font-display)",
-                background: "var(--color-gold)",
-                color: "#14213D",
-                borderRadius: "var(--radius-pill)",
-                boxShadow: "0 6px 24px rgba(199,161,76,0.30)",
-              }}
-            >
-              Book a 1INC Consultation
-              <ArrowRight size={13} />
-            </a>
-          </motion.div>
         </div>
       </section>
 
