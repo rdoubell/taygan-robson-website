@@ -27,13 +27,17 @@ export default function Hero() {
         playsInline
         src="/dna-loop.mp4"
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ opacity: 0.35 }}
+        style={{
+          opacity: 0.55,
+          transform: "scale(1.08)",          /* zoom in — clips dark edge at bottom via section overflow:hidden */
+          filter: "blur(2.5px) brightness(0.45) saturate(0.6)",  /* soften + shift to dark navy */
+        }}
       />
 
-      {/* Dark overlay — keeps text and cards legible without hiding the DNA */}
+      {/* Dark navy overlay — integrates DNA tone with #14213D brand colour */}
       <div
         className="absolute inset-0"
-        style={{ background: "rgba(14,24,50,0.72)" }}
+        style={{ background: "rgba(14,24,50,0.68)" }}
       />
 
       {/* Content */}
