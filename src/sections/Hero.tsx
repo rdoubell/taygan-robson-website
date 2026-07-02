@@ -12,12 +12,12 @@ export default function Hero() {
       {/* Mobile background position override */}
       <style>{`
         @media (max-width: 768px) {
-          .hero-bg { background-position: right center !important; background-size: auto 115% !important; }
+          .hero-bg { background-position: 72% 12% !important; }
         }
       `}</style>
 
       {/* Background photo — positioned so head is always in frame */}
-      <div className="hero-bg absolute inset-0 bg-no-repeat" style={{ backgroundImage: "url('/hero-new.jpg')", backgroundPosition: "right center", backgroundSize: "auto 115%" }} />
+      <div className="hero-bg absolute inset-0 bg-cover bg-no-repeat" style={{ backgroundImage: "url('/hero-bg.jpg')", backgroundPosition: "center 15%" }} />
 
       {/* Left→right gradient overlay */}
       <div
