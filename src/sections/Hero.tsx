@@ -32,7 +32,7 @@ export default function Hero() {
         loop
         muted
         playsInline
-        src="https://ik.imagekit.io/lrigu76hy/tailark/dna-video.mp4?updatedAt=1745736251477"
+        src="/dna-loop.mp4"
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         style={{ opacity: 0.10, zIndex: 0 }}
       />
