@@ -99,11 +99,11 @@ export default function BlogPost4() {
           transition={{ duration: 0.8, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-4xl mx-auto px-6 lg:px-12"
         >
-          <div className="overflow-hidden" style={{ maxHeight: "420px" }}>
+          <div className="overflow-hidden" style={{ height: "420px" }}>
             <img
               src={HERO_IMAGE}
               alt="Competitive cyclist — HRV monitoring case study"
-              className="w-full object-cover"
+              className="w-full h-full object-cover"
               style={{ objectPosition: "center bottom" }}
             />
           </div>

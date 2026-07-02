@@ -110,12 +110,12 @@ export default function BlogPost2() {
           transition={{ duration: 0.8, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-4xl mx-auto px-6 lg:px-12"
         >
-          <div className="overflow-hidden" style={{ maxHeight: "420px" }}>
+          <div className="overflow-hidden" style={{ height: "420px" }}>
             <img
               src="/blog-post-2.jpeg"
               alt="Injuries in Sport — The Structure Behind the Incident"
-              className="w-full object-cover"
-              style={{ objectPosition: "center bottom" }}
+              className="w-full h-full object-cover"
+              style={{ objectPosition: "center center" }}
             />
           </div>
         </motion.div>
