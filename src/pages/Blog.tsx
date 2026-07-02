@@ -149,7 +149,7 @@ export default function BlogPage() {
       <Navbar />
 
       {/* Page header */}
-      <div className="pt-32 pb-16 text-center" style={{ background: "var(--color-navy)" }}>
+      <div className="pt-32 pb-10 text-center" style={{ background: "var(--color-navy)" }}>
         <p
           className="text-[9px] tracking-[0.45em] uppercase mb-4"
           style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.35)" }}
@@ -169,17 +169,11 @@ export default function BlogPage() {
           Blog &amp;{" "}
           <span style={{ color: "var(--color-gold)" }}>Insights.</span>
         </h1>
-        <p
-          className="mt-4 max-w-md mx-auto leading-relaxed"
-          style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.45)", fontSize: "1rem" }}
-        >
-          Evidence-based thinking on performance, recovery, and rehabilitation.
-        </p>
       </div>
 
-      {/* Row 1 — dark, first card is featured */}
+      {/* Row 1 — dark */}
       <div style={{ background: "var(--color-navy)" }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 pb-12 pt-2 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           <RealBlogCard post={posts[0]} />
           <RealBlogCard post={posts[1]} />
           <PlaceholderBlogCard dark={true} />
@@ -188,14 +182,14 @@ export default function BlogPage() {
 
       {/* Row 2 — light */}
       <div className="bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {[0, 1, 2].map((i) => <PlaceholderBlogCard key={i} dark={false} />)}
         </div>
       </div>
 
       {/* Row 3 — dark */}
       <div style={{ background: "var(--color-navy)" }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {[0, 1, 2].map((i) => <PlaceholderBlogCard key={i} dark={true} />)}
         </div>
       </div>
