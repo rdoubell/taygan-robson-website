@@ -30,7 +30,7 @@ export default function Hero() {
         style={{
           opacity: 0.55,
           transform: "scale(1.08)",          /* zoom in — clips dark edge at bottom via section overflow:hidden */
-          filter: "blur(2.5px) brightness(0.45) saturate(0.6)",  /* soften + shift to dark navy */
+          filter: "blur(6px) brightness(0.45) saturate(0.6)",    /* soften + shift to dark navy */
         }}
       />
 
