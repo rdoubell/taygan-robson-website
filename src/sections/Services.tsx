@@ -26,7 +26,7 @@ const services = [
     num: "04",
     title: "1INC Consulting — The Entry Point",
     desc: "A personal consultation with Taygan directly. I analyse your training load and history, injury background, nutrition, and performance goals — then map the findings to a written guidance report and plan, directing you to the right path or the right qualified practitioner within my team.",
-    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=900&q=85&auto=format&fit=crop",
+    image: "/service-image-4.png",
   },
 ]
 

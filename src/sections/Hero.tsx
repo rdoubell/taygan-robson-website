@@ -135,7 +135,7 @@ export default function Hero() {
                 style={{ borderRadius: "20px", height: "218px", boxShadow: "0 16px 48px rgba(0,0,0,0.35)" }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&q=85&auto=format&fit=crop"
+                  src="/hero-block-top-left.png"
                   alt="Sports science consultation"
                   className="w-full h-full object-cover"
                   style={{ objectPosition: "center center" }}
