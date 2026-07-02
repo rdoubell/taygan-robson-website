@@ -11,6 +11,7 @@ import BlogPage from "./pages/Blog"
 import AboutPage from "./pages/About"
 import BlogPost1 from "./pages/BlogPost1"
 import BlogPost2 from "./pages/BlogPost2"
+import BlogPost3 from "./pages/BlogPost3"
 
 function HomePage() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/tendon-nutrition-collagen-vitamin-c" element={<BlogPost1 />} />
         <Route path="/blog/injuries-in-sport-structure-behind-the-incident" element={<BlogPost2 />} />
+        <Route path="/blog/efficiency-factor-decoupling-what-your-data-is-telling-you" element={<BlogPost3 />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
     </BrowserRouter>

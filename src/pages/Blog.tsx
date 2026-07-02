@@ -33,6 +33,16 @@ const posts: Post[] = [
     image:         "/blog-post-2.jpeg",
     imagePosition: "center center",
   },
+  {
+    slug:          "/blog/efficiency-factor-decoupling-what-your-data-is-telling-you",
+    category:      "Performance Science",
+    date:          "July 2025",
+    title:         "Efficiency Factor, Decoupling, and What Your Data Is Actually Telling You",
+    excerpt:       "Most athletes collect training data. Fewer know what to do with it when aerobic progress stops appearing where they expected. Three metrics answer what raw power and pace cannot.",
+    readTime:      "7 min read",
+    image:         "/blog-post-3.jpeg",
+    imagePosition: "center center",
+  },
 ]
 
 function RealBlogCard({ post }: { post: Post }) {
@@ -176,7 +186,7 @@ export default function BlogPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 pb-12 pt-2 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           <RealBlogCard post={posts[0]} />
           <RealBlogCard post={posts[1]} />
-          <PlaceholderBlogCard dark={true} />
+          <RealBlogCard post={posts[2]} />
         </div>
       </div>
 
