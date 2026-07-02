@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { ArrowRight, Globe, Activity } from "lucide-react"
 
@@ -5,6 +6,14 @@ export default function Hero() {
   const { scrollY } = useScroll()
   const contentOpacity = useTransform(scrollY, [0, 500], [1, 0])
   const contentY      = useTransform(scrollY, [0, 500], [0, -60])
+
+  // Slow the DNA video to a dramatic crawl — CSS can't control playback rate
+  const videoRef = useRef<HTMLVideoElement>(null)
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.35
+    }
+  }, [])
 
   return (
     <section id="hero" className="relative w-full h-screen min-h-[640px] overflow-hidden" style={{ background: "#14213D" }}>
@@ -15,6 +24,18 @@ export default function Hero() {
           .hero-bg { background-position: 72% 12% !important; }
         }
       `}</style>
+
+      {/* DNA video — lowest layer, very subtle animated texture */}
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted
+        playsInline
+        src="https://ik.imagekit.io/lrigu76hy/tailark/dna-video.mp4?updatedAt=1745736251477"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ opacity: 0.10, zIndex: 0 }}
+      />
 
       {/* Background photo — positioned so head is always in frame */}
       <div className="hero-bg absolute inset-0 bg-cover bg-no-repeat" style={{ backgroundImage: "url('/hero-bg.jpg')", backgroundPosition: "center 15%" }} />
