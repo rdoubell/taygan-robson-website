@@ -53,17 +53,60 @@ export default function Services() {
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.06 }}
-            className="max-w-2xl mx-auto mb-5"
+            className="max-w-2xl mx-auto mb-10"
             style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", fontSize: "1rem", lineHeight: 1.7 }}
           >
             Founded and directed by Taygan — Sports Injuries &amp; Return-to-Performance Specialist, Clinical Sports Nutritionist, and Performance Scientist with 20+ years applied experience. Every client begins with a 1INC consultation. Programmes are then delivered by a qualified practitioner within the relevant practice — Registered Dietitian · Sports-Specific S&amp;C Trainer · Registered Biokineticist — overseen throughout.
           </motion.p>
 
+          {/* ── Stats row ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="flex flex-wrap justify-center gap-0 mb-10 border-y"
+            style={{ borderColor: "var(--border)" }}
+          >
+            {[
+              { num: "20+",    label: "Years\nApplied Experience" },
+              { num: "3",      label: "Specialist\nPractices" },
+              { num: "1INC",   label: "Single\nEntry Point" },
+              { num: "Global", label: "Online\nDelivery" },
+            ].map(({ num, label }, i, arr) => (
+              <div
+                key={num}
+                className="flex flex-col items-center justify-center py-8 px-10 sm:px-14"
+                style={{
+                  borderRight: i < arr.length - 1 ? "1px solid var(--border)" : "none",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 800,
+                    fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
+                    color: "var(--color-navy)",
+                    lineHeight: 1,
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {num}
+                </span>
+                <span
+                  className="mt-2 text-[9px] tracking-[0.2em] uppercase whitespace-pre-line text-center"
+                  style={{ fontFamily: "var(--font-display)", color: "var(--text-muted)", lineHeight: 1.6 }}
+                >
+                  {label}
+                </span>
+              </div>
+            ))}
+          </motion.div>
+
           {/* Process line */}
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.55, delay: 0.12 }}
+            transition={{ duration: 0.55, delay: 0.18 }}
             className="text-[11px] tracking-[0.18em] uppercase font-semibold"
             style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)" }}
           >

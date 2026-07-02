@@ -107,24 +107,21 @@ function PricingCard({ card, delay }: { card: typeof cards[number]; delay: numbe
           {card.description}
         </p>
 
-        {/* See more button */}
+        {/* See more / See less button */}
         <button
           onClick={() => setOpen((v) => !v)}
-          className="self-start flex items-center gap-1.5 text-[11px] tracking-[0.14em] uppercase font-semibold transition-all duration-200"
-          style={{
-            fontFamily: "var(--font-display)",
-            color: open ? "var(--color-navy)" : "var(--color-gold)",
-            background: "transparent",
-            border: `1px solid ${open ? "var(--color-navy)" : "var(--color-gold)"}`,
-            borderRadius: "var(--radius-pill)",
-            padding: "0.4rem 1rem",
-          }}
+          className={`self-start flex items-center gap-1.5 text-[11px] tracking-[0.14em] uppercase font-semibold transition-all duration-300 rounded-full border ${
+            open
+              ? "bg-white border-[#14213D] text-[#14213D] hover:bg-[#14213D] hover:text-white"
+              : "bg-transparent border-[#C7A14C] text-[#C7A14C] hover:bg-[#C7A14C] hover:text-[#14213D]"
+          }`}
+          style={{ fontFamily: "var(--font-display)", padding: "0.4rem 1rem" }}
           aria-expanded={open}
         >
           {open ? "See less" : "See more"}
           <ChevronDown
             size={13}
-            className="transition-transform duration-250"
+            className="transition-transform duration-300"
             style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
           />
         </button>
@@ -335,7 +332,7 @@ export default function Pricing() {
 
       {/* ── Three pricing cards ── */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pb-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 pb-6 items-start">
           {cards.map((card, i) => (
             <PricingCard key={card.id} card={card} delay={0.07 * i} />
           ))}
