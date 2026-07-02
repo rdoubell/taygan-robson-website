@@ -94,7 +94,7 @@ export default function Hero() {
                   maxWidth: "42ch",
                 }}
               >
-                Sports Injuries &amp; Return-to-Performance · Clinical Sports Nutrition · Performance Science. Athletes, active individuals, and anyone seeking data-driven guidance on performance, nutrition, or rehabilitation — online, globally. Every client begins with a 1INC consultation with Taygan directly.
+                Wherever you are in the world — structured, evidence-based support for your performance, nutrition, and recovery.
               </motion.p>
 
               <motion.div
