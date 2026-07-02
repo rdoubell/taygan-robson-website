@@ -103,7 +103,7 @@ export default function AboutPage() {
       {/* ── Page header ── */}
       <div
         ref={heroRef}
-        className="pt-36 pb-20 text-center"
+        className="pt-36 pb-14 text-center"
         style={{ background: "var(--color-navy)" }}
       >
         <motion.p
@@ -133,22 +133,12 @@ export default function AboutPage() {
           <span style={{ color: "var(--color-gold)" }}>Taygan.</span>
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.32 }}
-          className="mt-5 max-w-sm mx-auto leading-relaxed"
-          style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.42)", fontSize: "clamp(0.95rem, 1.6vw, 1.05rem)" }}
-        >
-          Built on data, discipline, and systems — not guesswork.
-        </motion.p>
-
         {/* Gold rule */}
         <motion.div
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.46, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10 mx-auto"
+          transition={{ duration: 0.8, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-8 mx-auto"
           style={{ width: "48px", height: "2px", background: "var(--color-gold)", transformOrigin: "center" }}
         />
       </div>
@@ -159,7 +149,7 @@ export default function AboutPage() {
         className="bg-white"
         style={{ boxShadow: "0 -20px 60px rgba(0,0,0,0.10)" }}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-20 lg:py-28">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14 lg:py-20">
           <div className="grid lg:grid-cols-[400px_1fr] gap-12 lg:gap-20 items-start">
 
             {/* Photo */}
@@ -307,7 +297,7 @@ export default function AboutPage() {
       {/* ── Credentials carousel ── */}
       <section
         ref={credRef}
-        className="py-20 lg:py-28"
+        className="py-14 lg:py-20"
         style={{ background: "var(--color-cream, #F7F6EF)" }}
       >
         <style>{`
@@ -328,7 +318,7 @@ export default function AboutPage() {
         `}</style>
 
         {/* Section heading */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-12 text-center">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-8 text-center">
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={credInView ? { opacity: 1, y: 0 } : {}}
@@ -438,13 +428,13 @@ export default function AboutPage() {
       {/* ── Three disciplines ── */}
       <section
         ref={discRef}
-        className="py-20 lg:py-28"
+        className="py-14 lg:py-20"
         style={{ background: "var(--color-navy)" }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
           {/* Heading */}
-          <div className="mb-14 lg:mb-16">
+          <div className="mb-10 lg:mb-12">
             <motion.p
               variants={fadeUp(0)}
               initial="hidden"
@@ -536,7 +526,7 @@ export default function AboutPage() {
       {/* ── Philosophy pull-quote ── */}
       <section
         ref={quoteRef}
-        className="py-20 lg:py-28 bg-white"
+        className="py-12 lg:py-16 bg-white"
       >
         <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center">
           <motion.div
