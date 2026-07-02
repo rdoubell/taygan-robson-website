@@ -17,7 +17,7 @@ export default function Hero() {
       `}</style>
 
       {/* Background photo — positioned so head is always in frame */}
-      <div className="hero-bg absolute inset-0 bg-cover bg-no-repeat" style={{ backgroundImage: "url('/hero image new .jpg')", backgroundPosition: "center 30%" }} />
+      <div className="hero-bg absolute inset-0 bg-cover bg-no-repeat" style={{ backgroundImage: "url('/hero-new.jpg')", backgroundPosition: "center 30%" }} />
 
       {/* Left→right gradient overlay */}
       <div
