@@ -85,7 +85,7 @@ export default function Services() {
             lineHeight: 1.1,
           }}
         >
-          Three Practices. One Entry Point.
+          What we can offer you
         </motion.h2>
 
       </div>
