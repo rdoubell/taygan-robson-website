@@ -81,9 +81,17 @@ export default function Services() {
 
       </div>
 
-      {/* Breaker */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
-        <div className="border-t" style={{ borderColor: "var(--border)" }} />
+      {/* 3D Raised Divider */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full py-3">
+        <div
+          style={{
+            height: "3px",
+            background: "linear-gradient(90deg, transparent 0%, var(--color-gold) 18%, var(--color-gold) 82%, transparent 100%)",
+            borderRadius: "3px",
+            boxShadow:
+              "0 -1px 0 rgba(255,255,255,0.12), 0 3px 12px rgba(199,161,76,0.38), 0 1px 4px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.18)",
+          }}
+        />
       </div>
 
       {/* Services list — full-width with max-width content */}
