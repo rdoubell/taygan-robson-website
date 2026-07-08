@@ -45,7 +45,7 @@ export default function Services() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.06 }}
             className="max-w-2xl mx-auto mb-6"
-            style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", fontSize: "clamp(1.1rem, 1.8vw, 1.35rem)", lineHeight: 1.75 }}
+            style={{ fontFamily: "var(--font-display)", fontWeight: 700, color: "var(--color-navy)", fontSize: "clamp(1.1rem, 1.8vw, 1.35rem)", lineHeight: 1.75 }}
           >
             Founded and directed by Taygan — two decades of applied experience across sports rehabilitation, clinical nutrition, and performance science. Three practices. One entry point. One system.
           </motion.p>
