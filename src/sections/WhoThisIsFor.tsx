@@ -91,7 +91,7 @@ export default function WhoThisIsFor() {
               lineHeight: 1.1,
             }}
           >
-            Who This Is For
+            Who This Is For.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
