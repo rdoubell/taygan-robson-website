@@ -60,6 +60,14 @@ export default function Services() {
           >
             Consult — Analysis — Report — Plan — Programme
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={inView ? { opacity: 1, scaleX: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mx-auto mt-6"
+            style={{ width: "48px", height: "2px", background: "var(--color-gold)", borderRadius: "2px" }}
+          />
         </div>
 
         {/* Section heading */}
