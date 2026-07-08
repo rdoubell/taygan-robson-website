@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { Award, BookOpen, Users, Microscope, Quote } from "lucide-react"
+import { BookOpen, Activity, Dumbbell, Quote } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
 
@@ -42,36 +42,30 @@ const credentials = [
     icon: BookOpen,
     category: "Education",
     items: [
-      "MSc Sports Nutrition — University of Portsmouth",
-      "BSc Sports Rehabilitation — Hons",
-      "Postgraduate Certificate in Strength & Conditioning",
+      "BSc Strength & Conditioning",
+      "PG Dip Performance Nutrition (IOPN)",
+      "MSc Sports Injuries & Return to Performance Management — Setanta / Irish American University (Ireland)",
+      "MSc Sports Nutrition — University of Portsmouth (UK) · candidate",
     ],
   },
   {
-    icon: Award,
-    category: "Certifications",
+    icon: Activity,
+    category: "Currently",
     items: [
-      "BASES Accredited Sport & Exercise Scientist",
-      "SENr Registered Sports Nutritionist",
-      "NSCA Certified Strength & Conditioning Specialist",
+      "Clinical movement screening & rehabilitation — The Campus Wellness Centre, Bryanston",
+      "Performance analyst & nutritionist — Dash Youth Elite Racing Team",
+      "Performance nutrition product development — Elite Labs",
     ],
   },
   {
-    icon: Users,
-    category: "Clientele",
+    icon: Dumbbell,
+    category: "What I Work With",
     items: [
-      "Elite Motorsport Athletes & Teams",
-      "Professional Endurance Athletes",
-      "Premiership & Academy Football",
-    ],
-  },
-  {
-    icon: Microscope,
-    category: "Research Focus",
-    items: [
-      "Sports Injury Biomechanics & Load Management",
-      "Nutritional Periodisation for Performance",
-      "Return-to-Sport Outcome Frameworks",
+      "TrainingPeaks",
+      "VALD ForceDecks · VALD DynaMo",
+      "FMS",
+      "VO₂ & Metabolic Cart Testing",
+      "Physitrack Online Rehab",
     ],
   },
 ]
@@ -132,6 +126,21 @@ export default function AboutPage() {
           Meet{" "}
           <span style={{ color: "var(--color-gold)" }}>Taygan.</span>
         </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-5"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(1rem, 2vw, 1.3rem)",
+            color: "rgba(255,255,255,0.50)",
+            letterSpacing: "-0.005em",
+          }}
+        >
+          Two decades. Three practices. One strategy.
+        </motion.p>
 
         {/* Gold rule */}
         <motion.div
@@ -219,7 +228,7 @@ export default function AboutPage() {
                     fontSize: "clamp(1rem, 1.6vw, 1.1rem)",
                   }}
                 >
-                  With over two decades of experience across performance science, sports nutrition, and rehabilitation, Taygan works with athletes and active individuals who need a complete performance picture before any intervention begins.
+                  I founded and direct <span style={{ color: "var(--color-navy)", fontWeight: 600 }}>1INC Consulting</span> — spanning sports injury &amp; rehabilitation, performance science, and sports &amp; clinical nutrition. Every client begins with a personal consultation with me directly, before anything else begins.
                 </p>
               </motion.div>
 
@@ -234,7 +243,7 @@ export default function AboutPage() {
                   fontSize: "clamp(1rem, 1.6vw, 1.1rem)",
                 }}
               >
-                His approach integrates training load analysis, injury history, movement screening, nutrition strategy, and return-to-performance planning into one evidence-based system — delivered directly, without referrals or hand-offs at the first touchpoint.
+                I consult — I do not coach. I analyse your training load, injury history, nutrition, and performance goals, then map the findings to a written report — a plan — with a programme — directing you to the right path or the right practitioner within my team.
               </motion.p>
 
               <motion.p
@@ -248,9 +257,7 @@ export default function AboutPage() {
                   fontSize: "clamp(1rem, 1.6vw, 1.1rem)",
                 }}
               >
-                Through{" "}
-                <span style={{ color: "var(--color-navy)", fontWeight: 600 }}>1INC Consulting</span>,
-                clients receive direct access to Taygan and the three specialist practices — Sports Injury &amp; Rehabilitation, Clinical Sports Nutrition, and Pure Science Performance — with every programme overseen from consultation through to outcomes.
+                I know what it means to train seriously. I raced mountain bikes, Xterra off-road triathlons, and trail running from 2006 to 2024, competing across the country — which means I've sat on the athlete side of the conversation. I understand the data, the fatigue, the fuelling errors, and the sporting injuries that derail months of structured work. The last two years have dealt with my own injury — managing a significant back injury sustained in Muay Thai training camp, navigating the rehabilitation process, and understanding from the inside what return-to-performance actually demands. That experience shapes every consultation.
               </motion.p>
 
               {/* Stats row */}
@@ -287,6 +294,40 @@ export default function AboutPage() {
                     </span>
                   </div>
                 ))}
+              </motion.div>
+
+              {/* Currently block */}
+              <motion.div
+                variants={fadeUp(0.36)}
+                initial="hidden"
+                animate={bioInView ? "visible" : "hidden"}
+                className="pt-6 border-t"
+                style={{ borderColor: "rgba(0,0,0,0.08)" }}
+              >
+                <p
+                  className="text-[9px] tracking-[0.38em] uppercase mb-4"
+                  style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
+                >
+                  Currently
+                </p>
+                <ul className="flex flex-col gap-3">
+                  {[
+                    { text: "Clinical movement screening, sports injury rehabilitation, and return-to-performance protocols at", entity: "The Campus Wellness Centre, Bryanston" },
+                    { text: "Embedded performance analyst and nutritionist with", entity: "Dash Youth Elite Racing Team" },
+                    { text: "Developing performance nutrition products under", entity: "Elite Labs" },
+                  ].map(({ text, entity }) => (
+                    <li key={entity} className="flex items-start gap-2.5">
+                      <span
+                        className="mt-[9px] w-1.5 h-1.5 rounded-full flex-shrink-0"
+                        style={{ background: "var(--color-gold)" }}
+                      />
+                      <span style={{ fontFamily: "var(--font-body)", fontSize: "13.5px", color: "rgba(0,0,0,0.6)", lineHeight: 1.65 }}>
+                        {text}{" "}
+                        <span style={{ color: "var(--color-navy)", fontWeight: 600 }}>{entity}</span>.
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
 
             </div>
@@ -352,6 +393,29 @@ export default function AboutPage() {
           >
             Academic depth. Industry credentials.
           </motion.p>
+
+          {/* What I work with — tool pills */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={credInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55, delay: 0.18 }}
+            className="mt-7 flex flex-wrap justify-center gap-2"
+          >
+            {["TrainingPeaks", "VALD ForceDecks", "VALD DynaMo", "FMS", "VO₂ & Metabolic Cart Testing", "Physitrack Online Rehab"].map((tool) => (
+              <span
+                key={tool}
+                className="text-[9px] tracking-[0.18em] uppercase px-3 py-1.5"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  color: "var(--color-navy)",
+                  background: "rgba(20,33,61,0.07)",
+                  border: "1px solid rgba(20,33,61,0.15)",
+                }}
+              >
+                {tool}
+              </span>
+            ))}
+          </motion.div>
         </div>
 
         {/* Scrolling track */}
