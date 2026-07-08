@@ -45,7 +45,7 @@ export default function Services() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.06 }}
             className="max-w-2xl mx-auto mb-6"
-            style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", fontSize: "1rem", lineHeight: 1.7 }}
+            style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", fontSize: "clamp(1.1rem, 1.8vw, 1.35rem)", lineHeight: 1.75 }}
           >
             Founded and directed by Taygan — two decades of applied experience across sports rehabilitation, clinical nutrition, and performance science. Three practices. One entry point. One system.
           </motion.p>
@@ -55,7 +55,7 @@ export default function Services() {
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.12 }}
-            className="text-[11px] tracking-[0.18em] uppercase font-semibold"
+            className="text-[13px] tracking-[0.18em] uppercase font-semibold"
             style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)" }}
           >
             Consult — Analysis — Report — Plan — Programme
@@ -98,6 +98,11 @@ export default function Services() {
           What we can offer you
         </motion.h2>
 
+      </div>
+
+      {/* Breaker */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
+        <div className="border-t" style={{ borderColor: "var(--border)" }} />
       </div>
 
       {/* Services list — full-width with max-width content */}
