@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { ArrowRight, ArrowDown } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 const services = [
   {
@@ -61,25 +61,6 @@ export default function Services() {
             Consult — Analysis — Report — Plan — Programme
           </motion.p>
         </div>
-
-        {/* ── Animated arrow ── */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex justify-center mb-10"
-        >
-          <motion.div
-            animate={{ y: [0, 9, 0] }}
-            transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <ArrowDown
-              size={22}
-              strokeWidth={1.6}
-              style={{ color: "var(--color-gold)" }}
-            />
-          </motion.div>
-        </motion.div>
 
         {/* Section heading */}
         <motion.h2
