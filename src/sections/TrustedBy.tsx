@@ -16,7 +16,7 @@ export default function TrustedBy() {
           initial={{ opacity: 0, y: 8 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-[10px] tracking-[0.42em] uppercase mb-3"
+          className="text-[13px] tracking-[0.32em] uppercase mb-3"
           style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
         >
           Trusted By
@@ -40,7 +40,7 @@ export default function TrustedBy() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, delay: 0.1 }}
           className="mt-3"
-          style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", fontSize: "1rem" }}
+          style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", fontSize: "clamp(1.1rem, 1.8vw, 1.35rem)" }}
         >
           Who demand measurable outcomes.
         </motion.p>
