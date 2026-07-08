@@ -84,7 +84,7 @@ export default function Services() {
             lineHeight: 1.1,
           }}
         >
-          What we can offer you
+          What we can offer you.
         </motion.h2>
 
       </div>
