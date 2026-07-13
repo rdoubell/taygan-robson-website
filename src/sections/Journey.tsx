@@ -5,12 +5,12 @@ const steps = [
   {
     num: "01",
     label: "1INC Consultation",
-    caption: "With Taygan directly — across any or all three disciplines",
+    caption: "With Taygan directly",
   },
   {
     num: "02",
     label: "Analysis",
-    caption: "Training load, injury background, nutrition, and performance goals",
+    caption: "Training load, injury, rehabilitation, nutrition, performance and training structure",
   },
   {
     num: "03",
@@ -25,12 +25,12 @@ const steps = [
   {
     num: "05",
     label: "Programme",
-    caption: "Delivered via TrainingPeaks / Physitrack",
+    caption: "Delivered via TrainingPeaks or Physitrack Videos",
   },
   {
     num: "06",
     label: "Results",
-    caption: "Measurable outcomes tracked and built upon",
+    caption: "Measurable outcomes tracked and driven by data",
   },
 ]
 

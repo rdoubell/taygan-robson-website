@@ -381,19 +381,17 @@ export default function Pricing() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="lg:pl-16 flex flex-col gap-6"
+              className="lg:pl-16 flex flex-col"
             >
-              <div>
-                <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Email</p>
-                <a href="mailto:taygan@1inc.co.za" className="text-white hover:text-[#C7A14C] transition-colors text-[15px]" style={{ fontFamily: "var(--font-body)" }}>taygan@1inc.co.za</a>
-              </div>
-              <div>
-                <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Bookings</p>
-                <a href="https://appointmentguru.co/taygan" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#C7A14C] transition-colors text-[15px]" style={{ fontFamily: "var(--font-body)" }}>Appointment Guru</a>
-              </div>
-              <div>
-                <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Location</p>
-                <p className="text-white/70 text-[15px]" style={{ fontFamily: "var(--font-body)" }}>The Campus, Bryanston · Available Worldwide</p>
+              <div className="flex flex-col gap-5 mb-8">
+                <div>
+                  <p className="text-[9px] tracking-[0.25em] uppercase mb-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Email</p>
+                  <a href="mailto:taygan@1inc.co.za" className="text-white hover:text-[#C7A14C] transition-colors text-[15px]" style={{ fontFamily: "var(--font-body)" }}>taygan@1inc.co.za</a>
+                </div>
+                <div className="pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                  <p className="text-[9px] tracking-[0.25em] uppercase mb-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Location</p>
+                  <p className="text-white/70 text-[15px]" style={{ fontFamily: "var(--font-body)" }}>The Campus, Bryanston · Available Worldwide</p>
+                </div>
               </div>
               <button
                 onClick={open}
