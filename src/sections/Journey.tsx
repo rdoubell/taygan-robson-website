@@ -41,7 +41,7 @@ export default function Journey({ showHeading = true }: { showHeading?: boolean 
   return (
     <section
       className="section-pad overflow-hidden"
-      style={{ background: "var(--color-cream)" }}
+      style={{ background: "var(--color-cream)", ...(showHeading ? {} : { paddingTop: "1.5rem" }) }}
       ref={ref}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">

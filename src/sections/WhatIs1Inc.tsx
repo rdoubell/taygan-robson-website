@@ -10,7 +10,7 @@ export default function WhatIs1Inc() {
     <section
       id="what-is-1inc"
       className="section-pad"
-      style={{ background: "var(--color-cream)" }}
+      style={{ background: "var(--color-cream)", paddingBottom: "1.5rem" }}
       ref={ref}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -76,12 +76,6 @@ export default function WhatIs1Inc() {
                 </div>
                 <p className="text-[10px] tracking-[0.2em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
                   All-in &middot; SA
-                </p>
-                <p className="text-[13px] mt-2" style={{ fontFamily: "var(--font-display)", fontWeight: 600, color: "rgba(255,255,255,0.45)" }}>
-                  $150 USD
-                </p>
-                <p className="text-[10px] tracking-[0.15em] uppercase mt-0.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.25)" }}>
-                  International
                 </p>
               </div>
               <a
