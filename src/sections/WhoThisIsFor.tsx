@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { Target, TrendingDown, Timer, Trophy, Dumbbell, HeartPulse, Compass } from "lucide-react"
+import { Target, TrendingDown, Timer, Trophy, Compass, Flame, Briefcase, GraduationCap, RotateCcw, Award } from "lucide-react"
 import PersonaFanCarousel from "../components/ui/persona-fan-carousel"
 import type { PersonaItem } from "../components/ui/persona-fan-carousel"
 
@@ -23,36 +23,57 @@ const personas: PersonaItem[] = [
     id: "endurance",
     label: "The Endurance Athlete",
     problem:
-      "Training load, race nutrition, and performance data — for cycling, running, triathlon, and multisport.",
+      "Training load, race nutrition, and performance data for cycling, running, triathlon, and multisport.",
     icon: Timer,
   },
   {
     id: "stagerace",
     label: "The Stage Race & Multi-Discipline Athlete",
     problem:
-      "Training for your 6th Comrades, 5th ABSA Cape Epic, or 20th Half Ironman? Periodised load management and race-specific nutrition for athletes who measure their season in milestones, not single events.",
+      "Training for your 6th Comrades, 5th ABSA Cape Epic, or 10th Half Ironman? Periodised load management and race-specific nutrition for athletes who measure their season in milestones, not single events.",
     icon: Trophy,
-  },
-  {
-    id: "muscle",
-    label: "Low Muscle Tone & Skeletal Mass",
-    problem:
-      "Noticing strength or muscle decline with age, illness, or inactivity? A structured strength programme and tailored nutrition plan to rebuild and protect what matters — one conversation gets you both.",
-    icon: Dumbbell,
-  },
-  {
-    id: "injured",
-    label: "The Injured Athlete",
-    problem:
-      "Recurring or new injury? Movement screening, rehabilitation, and a return-to-performance plan.",
-    icon: HeartPulse,
   },
   {
     id: "adventurer",
     label: "The Adventurer",
     problem:
-      "Taking on something out of your comfort zone — Antarctica, a mountain summit, an Ocean swim? I'll analyse your data and HR, and build a structured training plan to get you there prepared, not just willing.",
+      "Taking on something out of your comfort zone, Antarctica, a mountain summit, an ocean swim? Data and HR analysed, and a structured training plan built to get you there prepared.",
     icon: Compass,
+  },
+  {
+    id: "crossfitter",
+    label: "The Cross Fitter / HYROX Athlete",
+    problem:
+      "High-load, high-frequency training with a recurring shoulder, knee, or lower back issue? Movement screening to identify the root cause, a rehabilitation plan to fix it, and a nutrition strategy to keep up with your training demands.",
+    icon: Flame,
+  },
+  {
+    id: "corporate",
+    label: "The Corporate / Desk Worker",
+    problem:
+      "Sitting all day, training when you can, and wondering why your back, hips, or shoulders never feel right? A movement screen and structured programme built around your reality, not a gym ideal.",
+    icon: Briefcase,
+  },
+  {
+    id: "youth",
+    label: "The Youth Athlete",
+    problem:
+      "Training hard but not recovering well? For young athletes navigating high training loads, sport-specific nutrition, and the physical demands of development, the foundation matters more than the result right now.",
+    icon: GraduationCap,
+  },
+  {
+    id: "returning",
+    label: "The Returning Athlete",
+    problem:
+      "Coming back after surgery, a long break, or a serious injury? A structured return-to-performance plan built on objective data, not guesswork or optimism.",
+    icon: RotateCcw,
+  },
+  {
+    id: "masters",
+    label: "The Masters Athlete",
+    problem:
+      "Still competing in your 40s, 50s, or beyond? Training load, recovery nutrition, and injury management look different at this level, and the science backs a smarter, not harder, approach.",
+    icon: Award,
   },
 ]
 
@@ -77,7 +98,7 @@ export default function WhoThisIsFor() {
             className="text-[10px] tracking-[0.42em] uppercase mb-3"
             style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
           >
-            Built For Every Body, Every Goal
+            Who This Is For
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
@@ -91,7 +112,7 @@ export default function WhoThisIsFor() {
               lineHeight: 1.1,
             }}
           >
-            Who This Is For.
+            From Injury to Active or Performance: For Everyone Who Moves.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -100,7 +121,7 @@ export default function WhoThisIsFor() {
             className="mt-4 max-w-2xl mx-auto"
             style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.45)", fontSize: "1rem", lineHeight: 1.7 }}
           >
-            Whether you're a professional athlete or someone simply looking for clarity — if you have a performance, nutrition, or rehabilitation goal, there is a place for you here.
+            Whether you are an athlete, an active individual, or someone seeking clarity on your training, nutrition, or rehabilitation, there is a place for you here.
           </motion.p>
         </div>
       </div>
@@ -157,6 +178,19 @@ export default function WhoThisIsFor() {
                   }}
                 >
                   {persona.problem}
+                </p>
+                <p
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontStyle: "italic",
+                    fontWeight: 700,
+                    fontSize: "0.73rem",
+                    color: "var(--color-gold)",
+                    lineHeight: 1.5,
+                    marginTop: "0.65rem",
+                  }}
+                >
+                  Start with a 1INC consultation.
                 </p>
               </div>
             )

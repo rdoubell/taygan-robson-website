@@ -12,8 +12,8 @@ export interface PersonaItem {
 const MAX_VISIBLE = 7;
 const HALF = 3;
 
-const CARD_W = 11.5;  // rem
-const CARD_H = 17;    // rem
+const CARD_W = 12.5;  // rem
+const CARD_H = 20;    // rem
 
 const FAN_POSITIONS = [
   { rot: -22, scale: 0.78, x: -28, y: 6.0, zIndex: 1 },
@@ -299,12 +299,28 @@ export default function PersonaFanCarousel({ personas, trigger = true }: { perso
                   fontFamily: "var(--font-body)",
                   fontSize: "0.73rem",
                   color: "rgba(255,255,255,0.48)",
-                  lineHeight: 1.6,
+                  lineHeight: 1.55,
                   flex: 1,
                   overflow: "hidden",
                 }}
               >
                 {persona.problem}
+              </p>
+
+              {/* CTA */}
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontStyle: "italic",
+                  fontWeight: 700,
+                  fontSize: "0.7rem",
+                  color: "var(--color-gold)",
+                  lineHeight: 1.4,
+                  marginTop: "0.6rem",
+                  flexShrink: 0,
+                }}
+              >
+                Start with a 1INC consultation.
               </p>
             </div>
           );
