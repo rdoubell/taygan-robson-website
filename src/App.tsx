@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { BookingModalProvider } from "./lib/booking-modal-context"
 import BookingModal from "./components/ui/booking-modal"
@@ -18,6 +19,20 @@ import BlogPost3 from "./pages/BlogPost3"
 import BlogPost4 from "./pages/BlogPost4"
 
 function HomePage() {
+  // Coming from another page via a link like "/#services" — scroll to that
+  // section once the page (and its images) have had a chance to lay out.
+  useEffect(() => {
+    if (!window.location.hash) return
+    const id = window.location.hash.slice(1)
+    const t = setTimeout(() => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const NAV_HEIGHT = 68
+      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - NAV_HEIGHT, behavior: "smooth" })
+    }, 300)
+    return () => clearTimeout(t)
+  }, [])
+
   return (
     <div className="grain">
       <Navbar />

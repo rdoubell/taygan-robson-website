@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 
 const mainLinks = [
-  { label: "Services", href: "#services",  sectionId: "services" },
-  { label: "Pricing",  href: "#pricing",   sectionId: "pricing"  },
-  { label: "Contact",  href: "#contact",   sectionId: "contact"  },
+  { label: "Services", href: "/#services",  sectionId: "services" },
+  { label: "Pricing",  href: "/#pricing",   sectionId: "pricing"  },
+  { label: "Contact",  href: "/#contact",   sectionId: "contact"  },
 ]
 
 const secondaryLinks = [
@@ -224,7 +224,7 @@ export default function Navbar() {
               </motion.a>
             ))}
             <motion.a
-              href="#contact"
+              href="/#contact"
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35 }}
