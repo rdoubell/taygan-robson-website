@@ -34,7 +34,7 @@ const steps = [
   },
 ]
 
-export default function Journey() {
+export default function Journey({ showHeading = true }: { showHeading?: boolean }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-80px" })
 
@@ -47,31 +47,33 @@ export default function Journey() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
         {/* Heading */}
-        <div className="text-center mb-14">
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="text-[10px] tracking-[0.42em] uppercase mb-3"
-            style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
-          >
-            The Process
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 14 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
-              color: "var(--color-navy)",
-              lineHeight: 1.1,
-            }}
-          >
-            The Process — Consult · Analyse · Report · Plan · Programme
-          </motion.h2>
-        </div>
+        {showHeading && (
+          <div className="text-center mb-14">
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="text-[10px] tracking-[0.42em] uppercase mb-3"
+              style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
+            >
+              The Process
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 14 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.05 }}
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 700,
+                fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
+                color: "var(--color-navy)",
+                lineHeight: 1.1,
+              }}
+            >
+              The Process — Consult · Analyse · Report · Plan · Programme
+            </motion.h2>
+          </div>
+        )}
 
         {/* Horizontal timeline — desktop */}
         <div className="hidden lg:block relative">

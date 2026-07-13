@@ -38,38 +38,6 @@ export default function Services() {
     <section id="services" className="bg-white" style={{ paddingTop: "5rem" }} ref={ref}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
-        {/* ── Credibility block ── */}
-        <div className="text-center mb-10">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.55, delay: 0.06 }}
-            className="max-w-2xl mx-auto mb-6"
-            style={{ fontFamily: "var(--font-display)", fontWeight: 700, color: "var(--color-navy)", fontSize: "clamp(1.1rem, 1.8vw, 1.35rem)", lineHeight: 1.75 }}
-          >
-            Founded and directed by Taygan — two decades of applied experience across sports rehabilitation, clinical nutrition, and performance science. Three practices. One entry point. One system.
-          </motion.p>
-
-          {/* Process line */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.55, delay: 0.12 }}
-            className="text-[13px] tracking-[0.18em] uppercase font-semibold"
-            style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)" }}
-          >
-            Consult — Analysis — Report — Plan — Programme
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={inView ? { opacity: 1, scaleX: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mx-auto mt-6"
-            style={{ width: "48px", height: "2px", background: "var(--color-gold)", borderRadius: "2px" }}
-          />
-        </div>
-
         {/* Section heading */}
         <motion.h2
           initial={{ opacity: 0, y: 14 }}
