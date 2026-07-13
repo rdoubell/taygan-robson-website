@@ -112,7 +112,9 @@ export default function WhoThisIsFor() {
               lineHeight: 1.1,
             }}
           >
-            From Injury to Active or Performance: For Everyone Who Moves.
+            From Injury to Active or Performance:
+            <br />
+            For Everyone Who Moves.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}

@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { BookOpen, Activity, Dumbbell, Quote, Linkedin, ArrowRight } from "lucide-react"
+import { BookOpen, Activity, Dumbbell, Linkedin, ArrowRight } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
 
@@ -101,27 +101,20 @@ const credentials = [
   },
 ]
 
-const quoteCard = {
-  quote:
-    "Every recommendation is grounded in peer-reviewed science and clinical experience — not trends, not guesswork.",
-}
-
 // Duplicate for seamless infinite scroll
-const allCards = [...credentials, quoteCard, ...credentials, quoteCard]
+const allCards = [...credentials, ...credentials]
 
 export default function AboutPage() {
   const heroRef     = useRef(null)
   const bioRef      = useRef(null)
   const credRef     = useRef(null)
   const discRef     = useRef(null)
-  const quoteRef    = useRef(null)
   const linkedinRef = useRef(null)
 
-  const bioInView     = useInView(bioRef,     { once: true, margin: "-80px" })
-  const credInView    = useInView(credRef,    { once: true, margin: "-60px" })
-  const discInView    = useInView(discRef,    { once: true, margin: "-60px" })
-  const quoteInView   = useInView(quoteRef,   { once: true, margin: "-60px" })
-  const linkedinInView = useInView(linkedinRef, { once: true, margin: "-60px" })
+  const bioInView      = useInView(bioRef,      { once: true, margin: "-80px" })
+  const credInView     = useInView(credRef,     { once: true, margin: "-60px" })
+  const discInView     = useInView(discRef,     { once: true, margin: "-60px" })
+  const linkedinInView  = useInView(linkedinRef, { once: true, margin: "-60px" })
 
   return (
     <div className="grain">
@@ -425,26 +418,7 @@ export default function AboutPage() {
           className="cred-mask-about overflow-hidden"
         >
           <div className="cred-track-about flex gap-5 w-max">
-            {allCards.map((card, i) => {
-              if ("quote" in card) {
-                return (
-                  <div
-                    key={`quote-${i}`}
-                    className="flex-shrink-0 w-72 p-7 flex flex-col justify-center"
-                    style={{ background: "var(--color-navy)" }}
-                  >
-                    <Quote size={20} className="mb-4" style={{ color: "rgba(255,255,255,0.28)" }} />
-                    <p
-                      className="text-[14px] leading-[1.85] italic"
-                      style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.9)" }}
-                    >
-                      {card.quote}
-                    </p>
-                  </div>
-                )
-              }
-
-              const cred = card as typeof credentials[0]
+            {allCards.map((cred, i) => {
               return (
                 <div
                   key={`${cred.category}-${i}`}
@@ -654,55 +628,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Philosophy pull-quote ── */}
-      <section
-        ref={quoteRef}
-        className="py-12 lg:py-16 bg-white"
-      >
-        <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center">
-          <motion.div
-            variants={fadeUp(0)}
-            initial="hidden"
-            animate={quoteInView ? "visible" : "hidden"}
-            className="mb-6"
-          >
-            <div
-              className="inline-block text-[60px] leading-none select-none"
-              style={{ color: "var(--color-gold)", fontFamily: "Georgia, serif", lineHeight: 0.8, marginBottom: "0.2em" }}
-              aria-hidden="true"
-            >
-              "
-            </div>
-          </motion.div>
-
-          <motion.blockquote
-            variants={fadeUp(0.08)}
-            initial="hidden"
-            animate={quoteInView ? "visible" : "hidden"}
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: "clamp(1.3rem, 2.8vw, 2rem)",
-              color: "var(--color-navy)",
-              lineHeight: 1.4,
-              letterSpacing: "-0.01em",
-            }}
-          >
-            Every recommendation is grounded in peer-reviewed science and clinical experience — not trends, not guesswork.
-          </motion.blockquote>
-
-          <motion.p
-            variants={fadeUp(0.16)}
-            initial="hidden"
-            animate={quoteInView ? "visible" : "hidden"}
-            className="mt-6 text-[11px] tracking-[0.28em] uppercase"
-            style={{ fontFamily: "var(--font-display)", color: "rgba(0,0,0,0.35)", fontWeight: 600 }}
-          >
-            Taygan Robson · 1INC Consulting
-          </motion.p>
-
-        </div>
-      </section>
 
       {/* ── LinkedIn ── */}
       <section
