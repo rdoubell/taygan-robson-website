@@ -8,7 +8,7 @@ import Services from "./sections/Services"
 import Pricing from "./sections/Pricing"
 import WhoThisIsFor from "./sections/WhoThisIsFor"
 import Journey from "./sections/Journey"
-import TrustedBy from "./sections/TrustedBy"
+// import TrustedBy from "./sections/TrustedBy" // hidden per request — kept for later re-enable
 import Footer from "./sections/Footer"
 import BlogPage from "./pages/Blog"
 import AboutPage from "./pages/About"
@@ -30,7 +30,7 @@ function HomePage() {
         <Services />
         <WhoThisIsFor />
         <Pricing />
-        <TrustedBy />
+        {/* <TrustedBy /> hidden per request — kept for later re-enable */}
       </main>
       <Footer />
     </div>
