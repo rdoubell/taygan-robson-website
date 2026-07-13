@@ -296,40 +296,6 @@ export default function AboutPage() {
                 ))}
               </motion.div>
 
-              {/* Currently block */}
-              <motion.div
-                variants={fadeUp(0.36)}
-                initial="hidden"
-                animate={bioInView ? "visible" : "hidden"}
-                className="pt-6 border-t"
-                style={{ borderColor: "rgba(0,0,0,0.08)" }}
-              >
-                <p
-                  className="text-[9px] tracking-[0.38em] uppercase mb-4"
-                  style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
-                >
-                  Currently
-                </p>
-                <ul className="flex flex-col gap-3">
-                  {[
-                    { text: "Clinical movement screening, sports injury rehabilitation, and return-to-performance protocols at", entity: "The Campus Wellness Centre, Bryanston" },
-                    { text: "Embedded performance analyst and nutritionist with", entity: "Dash Youth Elite Racing Team" },
-                    { text: "Developing performance nutrition products under", entity: "Elite Labs" },
-                  ].map(({ text, entity }) => (
-                    <li key={entity} className="flex items-start gap-2.5">
-                      <span
-                        className="mt-[9px] w-1.5 h-1.5 rounded-full flex-shrink-0"
-                        style={{ background: "var(--color-gold)" }}
-                      />
-                      <span style={{ fontFamily: "var(--font-body)", fontSize: "13.5px", color: "rgba(0,0,0,0.6)", lineHeight: 1.65 }}>
-                        {text}{" "}
-                        <span style={{ color: "var(--color-navy)", fontWeight: 600 }}>{entity}</span>.
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-
             </div>
           </div>
         </div>
