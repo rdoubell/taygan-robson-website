@@ -12,8 +12,8 @@ const footerLinks = [
 export default function Footer() {
   const { open } = useBookingModal()
   return (
-    <footer style={{ background: "var(--color-navy)" }}>
-      {/* Gold accent line */}
+    <footer style={{ background: "#FFFFFF" }}>
+      {/* Gold accent line — marks the break from the navy contact section */}
       <div className="h-[2px]" style={{ background: "linear-gradient(90deg, var(--color-gold), var(--gold-300), var(--color-gold))" }} />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14">
@@ -21,21 +21,21 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="flex flex-col gap-4">
-            <img src="/logo/1inc-gold.png" alt="1INC Consulting" className="h-12 w-auto object-contain object-left" />
-            <p className="text-[12px] leading-relaxed max-w-xs" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.38)", letterSpacing: "0.01em" }}>
+            <img src="/logo/1inc-navy.png" alt="1INC Consulting" className="h-12 w-auto object-contain object-left" />
+            <p className="text-[12px] leading-relaxed max-w-xs" style={{ fontFamily: "var(--font-display)", color: "rgba(27,42,74,0.55)", letterSpacing: "0.01em" }}>
               Sports Injuries &amp; Return-to-Performance Specialist · Clinical Sports Nutritionist · Performance Scientist
             </p>
-            <p className="text-[12px] leading-relaxed max-w-xs" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.28)" }}>
+            <p className="text-[12px] leading-relaxed max-w-xs" style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)" }}>
               Online · Global · In-house at The Campus Wellness Centre, Bryanston, South Africa
             </p>
             <div className="flex flex-col gap-1.5 mt-1">
-              <a href="mailto:taygan@1inc.co.za" className="text-[13px] hover:text-white transition-colors" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)" }}>
+              <a href="mailto:taygan@1inc.co.za" className="text-[13px] hover:text-[#C7A14C] transition-colors" style={{ fontFamily: "var(--font-body)", color: "var(--color-navy)" }}>
                 taygan@1inc.co.za
               </a>
-              <a href="mailto:mail@1inc.co.za" className="text-[13px] hover:text-white transition-colors" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
+              <a href="mailto:mail@1inc.co.za" className="text-[13px] hover:text-[#C7A14C] transition-colors" style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)" }}>
                 mail@1inc.co.za
               </a>
-              <p className="text-[13px]" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.3)" }}>
+              <p className="text-[13px]" style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)" }}>
                 Bookings via Appointment Guru
               </p>
             </div>
@@ -43,15 +43,15 @@ export default function Footer() {
 
           {/* Nav links */}
           <div className="flex flex-col gap-3">
-            <p className="text-[10px] tracking-[0.28em] uppercase mb-2" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)", fontWeight: 600 }}>
+            <p className="text-[10px] tracking-[0.28em] uppercase mb-2" style={{ fontFamily: "var(--font-display)", color: "rgba(27,42,74,0.4)", fontWeight: 600 }}>
               Navigate
             </p>
             {footerLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[13px] transition-colors hover:text-white"
-                style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)" }}
+                className="text-[13px] transition-colors hover:text-[#C7A14C]"
+                style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)" }}
               >
                 {link.label}
               </a>
@@ -60,7 +60,7 @@ export default function Footer() {
 
           {/* Social + CTA */}
           <div className="flex flex-col gap-5">
-            <p className="text-[10px] tracking-[0.28em] uppercase" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)", fontWeight: 600 }}>
+            <p className="text-[10px] tracking-[0.28em] uppercase" style={{ fontFamily: "var(--font-display)", color: "rgba(27,42,74,0.4)", fontWeight: 600 }}>
               Connect
             </p>
             <a
@@ -69,15 +69,15 @@ export default function Footer() {
               rel="noopener noreferrer"
               aria-label="LinkedIn"
               className="flex items-center gap-2.5 group"
-              style={{ color: "rgba(255,255,255,0.5)" }}
+              style={{ color: "var(--text-muted)" }}
             >
               <div
                 className="w-9 h-9 flex items-center justify-center transition-colors duration-200 group-hover:border-[#C7A14C]"
-                style={{ border: "1px solid rgba(255,255,255,0.15)", borderRadius: "var(--radius-sm)" }}
+                style={{ border: "1px solid var(--border)", borderRadius: "var(--radius-sm)" }}
               >
                 <Linkedin size={14} className="group-hover:text-[#C7A14C] transition-colors" />
               </div>
-              <span className="text-[12px] group-hover:text-white transition-colors" style={{ fontFamily: "var(--font-display)" }}>LinkedIn</span>
+              <span className="text-[12px] group-hover:text-[#C7A14C] transition-colors" style={{ fontFamily: "var(--font-display)", color: "var(--color-navy)" }}>LinkedIn</span>
             </a>
 
             <button
@@ -96,11 +96,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-          <p className="text-[11px] text-center" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.22)" }}>
+        <div className="mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 border-t" style={{ borderColor: "var(--border)" }}>
+          <p className="text-[11px] text-center" style={{ fontFamily: "var(--font-display)", color: "rgba(27,42,74,0.35)" }}>
             © {new Date().getFullYear()} 1INC Consulting · Taygan Robson · All rights reserved.
           </p>
-          <p className="text-[11px]" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.18)" }}>
+          <p className="text-[11px]" style={{ fontFamily: "var(--font-display)", color: "rgba(27,42,74,0.3)" }}>
             The Campus, Bryanston, South Africa
           </p>
         </div>
