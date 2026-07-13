@@ -499,117 +499,117 @@ export default function AboutPage() {
             </motion.h2>
           </div>
 
-          {/* Cards */}
-          <div className="grid lg:grid-cols-3 gap-px" style={{ background: "rgba(255,255,255,0.06)" }}>
+          {/* Practices — horizontal rows */}
+          <div className="flex flex-col">
             {disciplines.map((disc, i) => (
               <motion.div
                 key={disc.num}
                 variants={fadeUp(0.08 + i * 0.1)}
                 initial="hidden"
                 animate={discInView ? "visible" : "hidden"}
-                className="flex flex-col p-8 lg:p-10"
-                style={{ background: "var(--color-navy)" }}
+                className={`grid lg:grid-cols-[300px_1fr] gap-8 lg:gap-16 py-10 lg:py-12 ${i < disciplines.length - 1 ? "border-b" : ""}`}
+                style={{ borderColor: "rgba(255,255,255,0.08)" }}
               >
-                {/* Number */}
-                <span
-                  className="mb-6 leading-none select-none"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "3.5rem",
-                    fontWeight: 800,
-                    color: "rgba(255,255,255,0.06)",
-                    letterSpacing: "-0.03em",
-                  }}
-                  aria-hidden="true"
-                >
-                  {disc.num}
-                </span>
+                {/* Left: identity + credentials */}
+                <div className="flex flex-col">
+                  <span
+                    className="mb-4 leading-none select-none"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "3rem",
+                      fontWeight: 800,
+                      color: "rgba(255,255,255,0.08)",
+                      letterSpacing: "-0.03em",
+                    }}
+                    aria-hidden="true"
+                  >
+                    {disc.num}
+                  </span>
 
-                {/* Gold bar */}
-                <div className="w-7 h-[2px] mb-5" style={{ background: "var(--color-gold)" }} />
+                  <div className="w-7 h-[2px] mb-5" style={{ background: "var(--color-gold)" }} />
 
-                {/* Title */}
-                <h3
-                  className="mb-2"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: "clamp(1rem, 1.6vw, 1.2rem)",
-                    color: "#FFFFFF",
-                    lineHeight: 1.25,
-                    letterSpacing: "-0.005em",
-                  }}
-                >
-                  {disc.title}
-                </h3>
+                  <h3
+                    className="mb-2"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 700,
+                      fontSize: "clamp(1.1rem, 1.8vw, 1.35rem)",
+                      color: "#FFFFFF",
+                      lineHeight: 1.25,
+                      letterSpacing: "-0.005em",
+                    }}
+                  >
+                    {disc.title}
+                  </h3>
 
-                {/* Subtitle */}
-                <p
-                  className="mb-4 italic"
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    color: "rgba(255,255,255,0.38)",
-                    fontSize: "12px",
-                    lineHeight: 1.5,
-                  }}
-                >
-                  {disc.subtitle}
-                </p>
+                  <p
+                    className="mb-6 italic"
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      color: "rgba(255,255,255,0.38)",
+                      fontSize: "12px",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {disc.subtitle}
+                  </p>
 
-                {/* Description */}
-                <p
-                  className="leading-[1.85] mb-6"
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    color: "rgba(255,255,255,0.52)",
-                    fontSize: "13.5px",
-                  }}
-                >
-                  {disc.desc}
-                </p>
-
-                {/* Credentials */}
-                <div className="flex flex-col gap-3 mb-6 pt-5 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-                  <div>
-                    <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}>
-                      Taygan
-                    </p>
-                    <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.6)", fontSize: "12.5px", lineHeight: 1.5 }}>
-                      {disc.taygan}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}>
-                      Team
-                    </p>
-                    <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.6)", fontSize: "12.5px", lineHeight: 1.5 }}>
-                      {disc.team}
-                    </p>
+                  <div className="flex flex-col gap-3 mt-auto">
+                    <div>
+                      <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}>
+                        Taygan
+                      </p>
+                      <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.6)", fontSize: "12.5px", lineHeight: 1.5 }}>
+                        {disc.taygan}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}>
+                        Team
+                      </p>
+                      <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.6)", fontSize: "12.5px", lineHeight: 1.5 }}>
+                        {disc.team}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
-                {/* Add-ons */}
-                <div className="flex flex-col gap-3 mt-auto">
-                  {disc.addOns.map((addOn) => (
-                    <div
-                      key={addOn.title}
-                      className="p-4"
-                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(199,161,76,0.15)", borderRadius: "var(--radius-sm)" }}
-                    >
-                      <p className="text-[9px] tracking-[0.25em] uppercase mb-2" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 700 }}>
-                        Add-On
-                      </p>
-                      <p className="mb-1.5" style={{ fontFamily: "var(--font-display)", fontWeight: 600, color: "#FFFFFF", fontSize: "12.5px", lineHeight: 1.4 }}>
-                        {addOn.title}
-                      </p>
-                      <p className="mb-2" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.48)", fontSize: "12px", lineHeight: 1.6 }}>
-                        {addOn.desc}
-                      </p>
-                      <p className="italic" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.35)", fontSize: "11.5px" }}>
-                        Pricing on request.
-                      </p>
-                    </div>
-                  ))}
+                {/* Right: description + add-ons side by side */}
+                <div className="flex flex-col">
+                  <p
+                    className="leading-[1.85] mb-6"
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      color: "rgba(255,255,255,0.52)",
+                      fontSize: "14px",
+                      maxWidth: "60ch",
+                    }}
+                  >
+                    {disc.desc}
+                  </p>
+
+                  <div className={`grid gap-4 ${disc.addOns.length > 1 ? "sm:grid-cols-2" : "sm:grid-cols-1"}`}>
+                    {disc.addOns.map((addOn) => (
+                      <div
+                        key={addOn.title}
+                        className="p-5 flex flex-col"
+                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(199,161,76,0.15)", borderRadius: "var(--radius-sm)" }}
+                      >
+                        <p className="text-[9px] tracking-[0.25em] uppercase mb-2" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 700 }}>
+                          Add-On
+                        </p>
+                        <p className="mb-1.5" style={{ fontFamily: "var(--font-display)", fontWeight: 600, color: "#FFFFFF", fontSize: "12.5px", lineHeight: 1.4 }}>
+                          {addOn.title}
+                        </p>
+                        <p className="mb-2" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.48)", fontSize: "12px", lineHeight: 1.6 }}>
+                          {addOn.desc}
+                        </p>
+                        <p className="italic mt-auto" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.35)", fontSize: "11.5px" }}>
+                          Pricing on request.
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             ))}
