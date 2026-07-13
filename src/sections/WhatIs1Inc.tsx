@@ -75,7 +75,7 @@ export default function WhatIs1Inc() {
                   R 1 250
                 </div>
                 <p className="text-[10px] tracking-[0.2em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
-                  All-in &middot; SA
+                  Online Consultation
                 </p>
               </div>
               <a
