@@ -385,29 +385,6 @@ export default function AboutPage() {
           >
             Academic depth. Industry credentials.
           </motion.p>
-
-          {/* What I work with — tool pills */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={credInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.55, delay: 0.18 }}
-            className="mt-7 flex flex-wrap justify-center gap-2"
-          >
-            {["TrainingPeaks", "VALD ForceDecks", "VALD DynaMo", "FMS", "VO₂ & Metabolic Cart Testing", "Physitrack Online Rehab"].map((tool) => (
-              <span
-                key={tool}
-                className="text-[9px] tracking-[0.18em] uppercase px-3 py-1.5"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  color: "var(--color-navy)",
-                  background: "rgba(20,33,61,0.07)",
-                  border: "1px solid rgba(20,33,61,0.15)",
-                }}
-              >
-                {tool}
-              </span>
-            ))}
-          </motion.div>
         </div>
 
         {/* Scrolling track */}
