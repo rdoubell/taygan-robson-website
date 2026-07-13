@@ -1,6 +1,7 @@
 import { useState, useRef } from "react"
 import { motion, useInView, AnimatePresence } from "framer-motion"
 import { ChevronDown, ArrowRight, Check } from "lucide-react"
+import { useBookingModal } from "../lib/booking-modal-context"
 
 // ── Pricing Data ──────────────────────────────────────────────
 const cards = [
@@ -187,6 +188,7 @@ function PricingCard({ card, delay }: { card: typeof cards[number]; delay: numbe
 export default function Pricing() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-60px" })
+  const { open } = useBookingModal()
 
   return (
     <section id="pricing" className="bg-white" style={{ paddingTop: "5rem", paddingBottom: 0 }} ref={ref}>
@@ -304,10 +306,8 @@ export default function Pricing() {
                   Online Consultation
                 </p>
               </div>
-              <a
-                href="https://appointmentguru.co/taygan"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={open}
                 className="inline-flex items-center gap-2.5 px-7 py-3.5 text-[11px] tracking-[0.2em] uppercase font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
                 style={{
                   fontFamily: "var(--font-display)",
@@ -318,7 +318,7 @@ export default function Pricing() {
               >
                 Book a 1INC Consultation
                 <ArrowRight size={13} />
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -397,10 +397,8 @@ export default function Pricing() {
                 <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Location</p>
                 <p className="text-white/70 text-[15px]" style={{ fontFamily: "var(--font-body)" }}>The Campus, Bryanston · Available Worldwide</p>
               </div>
-              <a
-                href="https://appointmentguru.co/taygan"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={open}
                 className="self-start inline-flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
                 style={{
                   fontFamily: "var(--font-display)",
@@ -411,7 +409,7 @@ export default function Pricing() {
               >
                 Schedule Appointment
                 <ArrowRight size={13} />
-              </a>
+              </button>
             </motion.div>
           </div>
         </div>

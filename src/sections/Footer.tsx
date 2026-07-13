@@ -1,4 +1,5 @@
 import { Linkedin } from "lucide-react"
+import { useBookingModal } from "../lib/booking-modal-context"
 
 const footerLinks = [
   { label: "Services", href: "#services" },
@@ -9,6 +10,7 @@ const footerLinks = [
 ]
 
 export default function Footer() {
+  const { open } = useBookingModal()
   return (
     <footer style={{ background: "var(--color-navy)" }}>
       {/* Gold accent line */}
@@ -78,10 +80,8 @@ export default function Footer() {
               <span className="text-[12px] group-hover:text-white transition-colors" style={{ fontFamily: "var(--font-display)" }}>LinkedIn</span>
             </a>
 
-            <a
-              href="https://appointmentguru.co/taygan"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={open}
               className="inline-flex items-center justify-center px-6 py-3 text-[10px] tracking-[0.2em] uppercase font-bold transition-all duration-300 hover:scale-[1.02] mt-2"
               style={{
                 fontFamily: "var(--font-display)",
@@ -91,7 +91,7 @@ export default function Footer() {
               }}
             >
               Book a 1INC Consultation
-            </a>
+            </button>
           </div>
         </div>
 

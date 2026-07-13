@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BookingModalProvider } from "./lib/booking-modal-context"
+import BookingModal from "./components/ui/booking-modal"
 import Navbar from "./sections/Navbar"
 import Hero from "./sections/Hero"
 import WhatIs1Inc from "./sections/WhatIs1Inc"
@@ -37,16 +39,19 @@ function HomePage() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/blog/tendon-nutrition-collagen-vitamin-c" element={<BlogPost1 />} />
-        <Route path="/blog/injuries-in-sport-structure-behind-the-incident" element={<BlogPost2 />} />
-        <Route path="/blog/efficiency-factor-decoupling-what-your-data-is-telling-you" element={<BlogPost3 />} />
-        <Route path="/blog/hrv-misread-data-right-interpretation-wrong" element={<BlogPost4 />} />
-        <Route path="/about" element={<AboutPage />} />
-      </Routes>
-    </BrowserRouter>
+    <BookingModalProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/tendon-nutrition-collagen-vitamin-c" element={<BlogPost1 />} />
+          <Route path="/blog/injuries-in-sport-structure-behind-the-incident" element={<BlogPost2 />} />
+          <Route path="/blog/efficiency-factor-decoupling-what-your-data-is-telling-you" element={<BlogPost3 />} />
+          <Route path="/blog/hrv-misread-data-right-interpretation-wrong" element={<BlogPost4 />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Routes>
+      </BrowserRouter>
+      <BookingModal />
+    </BookingModalProvider>
   )
 }

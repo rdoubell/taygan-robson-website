@@ -1,10 +1,12 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { ArrowRight } from "lucide-react"
+import { useBookingModal } from "../lib/booking-modal-context"
 
 export default function WhatIs1Inc() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-60px" })
+  const { open } = useBookingModal()
 
   return (
     <section
@@ -78,10 +80,8 @@ export default function WhatIs1Inc() {
                   Online Consultation
                 </p>
               </div>
-              <a
-                href="https://appointmentguru.co/taygan"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={open}
                 className="inline-flex items-center gap-2.5 px-7 py-3.5 text-[11px] tracking-[0.2em] uppercase font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
                 style={{
                   fontFamily: "var(--font-display)",
@@ -92,7 +92,7 @@ export default function WhatIs1Inc() {
               >
                 Book a 1INC Consultation
                 <ArrowRight size={13} />
-              </a>
+              </button>
             </div>
           </div>
         </motion.div>
