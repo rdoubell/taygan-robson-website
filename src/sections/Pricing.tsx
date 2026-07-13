@@ -386,8 +386,6 @@ export default function Pricing() {
               <div>
                 <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Email</p>
                 <a href="mailto:taygan@1inc.co.za" className="text-white hover:text-[#C7A14C] transition-colors text-[15px]" style={{ fontFamily: "var(--font-body)" }}>taygan@1inc.co.za</a>
-                <br />
-                <a href="mailto:mail@1inc.co.za" className="hover:text-[#C7A14C] transition-colors text-[13px]" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)" }}>mail@1inc.co.za</a>
               </div>
               <div>
                 <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Bookings</p>
