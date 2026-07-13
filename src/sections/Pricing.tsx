@@ -349,7 +349,7 @@ export default function Pricing() {
       {/* ── Contact / CTA block ── */}
       <div id="contact" className="mt-0" style={{ background: "var(--color-navy)", padding: "4rem 0" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-[1fr_1px_1fr] gap-10 lg:gap-0 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -374,28 +374,16 @@ export default function Pricing() {
               </p>
             </motion.div>
 
-            <div className="hidden lg:block w-px self-stretch" style={{ background: "rgba(255,255,255,0.08)" }} />
-
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="lg:pl-16 flex flex-col"
+              className="flex justify-center lg:justify-center"
             >
-              <div className="flex flex-col gap-5 mb-8">
-                <div>
-                  <p className="text-[9px] tracking-[0.25em] uppercase mb-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Email</p>
-                  <a href="mailto:taygan@1inc.co.za" className="text-white hover:text-[#C7A14C] transition-colors text-[15px]" style={{ fontFamily: "var(--font-body)" }}>taygan@1inc.co.za</a>
-                </div>
-                <div className="pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-                  <p className="text-[9px] tracking-[0.25em] uppercase mb-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>Location</p>
-                  <p className="text-white/70 text-[15px]" style={{ fontFamily: "var(--font-body)" }}>The Campus, Bryanston · Available Worldwide</p>
-                </div>
-              </div>
               <button
                 onClick={open}
-                className="self-start inline-flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
+                className="inline-flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
                 style={{
                   fontFamily: "var(--font-display)",
                   background: "var(--color-gold)",
@@ -403,7 +391,7 @@ export default function Pricing() {
                   borderRadius: "var(--radius-pill)",
                 }}
               >
-                Schedule Appointment
+                Book a 1INC Consultation
                 <ArrowRight size={13} />
               </button>
             </motion.div>
