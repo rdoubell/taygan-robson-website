@@ -23,17 +23,14 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <img src="/logo/1inc-navy.png" alt="1INC Consulting" className="h-12 w-auto object-contain object-left" />
             <p className="text-[12px] leading-relaxed max-w-xs" style={{ fontFamily: "var(--font-display)", color: "rgba(27,42,74,0.55)", letterSpacing: "0.01em" }}>
-              Sports Injuries &amp; Return-to-Performance Specialist · Clinical Sports Nutritionist · Performance Scientist
+              Pure Science Performance · Clinical Sports Nutrition · Prehab
             </p>
             <p className="text-[12px] leading-relaxed max-w-xs" style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)" }}>
-              Online · Global · In-house at The Campus Wellness Centre, Bryanston, South Africa
+              Data-driven consulting. Evidence-based direction.
             </p>
             <div className="flex flex-col gap-1.5 mt-1">
               <a href="mailto:taygan@1inc.co.za" className="text-[13px] hover:text-[#C7A14C] transition-colors" style={{ fontFamily: "var(--font-body)", color: "var(--color-navy)" }}>
                 taygan@1inc.co.za
-              </a>
-              <a href="mailto:mail@1inc.co.za" className="text-[13px] hover:text-[#C7A14C] transition-colors" style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)" }}>
-                mail@1inc.co.za
               </a>
               <p className="text-[13px]" style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)" }}>
                 Bookings via Appointment Guru

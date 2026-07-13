@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { BookOpen, Activity, Dumbbell, Quote } from "lucide-react"
+import { BookOpen, Activity, Dumbbell, Quote, Linkedin, ArrowRight } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
 
@@ -16,18 +16,49 @@ const fadeUp = (delay = 0) => ({
 const disciplines = [
   {
     num: "01",
-    title: "Sports Injury & Rehabilitation",
-    desc: "Evidence-based return-to-performance systems built around the individual — from initial movement screening and injury analysis through to full return-to-performance clearance. Available in-house at The Campus Wellness Centre and online via Physitrack globally.",
+    title: "Pure Science Performance",
+    subtitle: "Online endurance and sport-specific training via TrainingPeaks",
+    desc: "Periodised around your schedule, events, and performance goals. Data-driven total stress balance and chronic training load management, race preparation and performance analytics across all endurance disciplines.",
+    taygan: "BSc S&C · MSc Sports Injuries & Return to Performance",
+    team: "Sports-Specific S&C Trainer · Registered Biokineticist",
+    addOns: [
+      {
+        title: "Sports Specific and RAMP Mobility & Video Protocol Programme",
+        desc: "Structured sports specific training, pre-event or pre-session warm-up programme delivered via TrainingPeaks. Raise, Activate, Mobilise, Potentiate. Video-guided mobility and neuromuscular priming protocols designed around your sport, discipline, and event. Loaded alongside your training plan.",
+      },
+    ],
   },
   {
     num: "02",
     title: "Clinical Sports Nutrition",
-    desc: "Nutritional periodisation, race fuelling, supplementation strategy, and body composition analysis grounded in clinical sports nutrition science. Delivered online via Microsoft Teams with a written report included.",
+    subtitle: "Online one-on-one nutrition consulting",
+    desc: "Evidence-based fuelling, macro periodisation, race and competition nutrition strategy, and clinical body composition management. For GLP-1 users, protein periodisation and lean body mass preservation are central to every plan.",
+    taygan: "PG Dip Performance Nutrition · MSc Sports Nutrition (c)",
+    team: "Registered Dietitian",
+    addOns: [
+      {
+        title: "Race Nutrition Consultation",
+        desc: "Pre, intra, and post-race fuelling protocol designed around your event, discipline, and training load.",
+      },
+      {
+        title: "Clinical Nutrition Consultation",
+        desc: "Body composition, GLP-1 management, sarcopenia, Diabetic and bone health nutrition strategy.",
+      },
+    ],
   },
   {
     num: "03",
-    title: "Performance Science",
-    desc: "Structured online performance consulting via TrainingPeaks. Training load monitoring, periodised annual planning, race-taper design, and data-driven programme adjustments — every session reviewed, every plan tailored.",
+    title: "Prehab | Sports Injury & Rehabilitation",
+    subtitle: "In-house at The Campus Wellness Centre, Bryanston · Online via Physitrack globally",
+    desc: "Movement screening, injuries & rehabilitation and return-to-performance programming. Supporting GLP-1-related muscle loss, osteoporosis, and low skeletal mass with structured strength programming to rebuild and protect.",
+    taygan: "MSc Sports Injuries & Return to Performance · BSc S&C",
+    team: "Registered Biokineticist",
+    addOns: [
+      {
+        title: "Sports Injury Assessment & Force Plate Screening",
+        desc: "Comprehensive sports injury analysis, functional movement screening, and VALD ForceDecks and DynaMo assessment. Quantifying force production asymmetries, strength deficits, and limb-to-limb imbalances. Baseline data informing all programme design and return-to-performance clearance.",
+      },
+    ],
   },
 ]
 
@@ -79,16 +110,18 @@ const quoteCard = {
 const allCards = [...credentials, quoteCard, ...credentials, quoteCard]
 
 export default function AboutPage() {
-  const heroRef    = useRef(null)
-  const bioRef     = useRef(null)
-  const credRef    = useRef(null)
-  const discRef    = useRef(null)
-  const quoteRef   = useRef(null)
+  const heroRef     = useRef(null)
+  const bioRef      = useRef(null)
+  const credRef     = useRef(null)
+  const discRef     = useRef(null)
+  const quoteRef    = useRef(null)
+  const linkedinRef = useRef(null)
 
-  const bioInView   = useInView(bioRef,   { once: true, margin: "-80px" })
-  const credInView  = useInView(credRef,  { once: true, margin: "-60px" })
-  const discInView  = useInView(discRef,  { once: true, margin: "-60px" })
-  const quoteInView = useInView(quoteRef, { once: true, margin: "-60px" })
+  const bioInView     = useInView(bioRef,     { once: true, margin: "-80px" })
+  const credInView    = useInView(credRef,    { once: true, margin: "-60px" })
+  const discInView    = useInView(discRef,    { once: true, margin: "-60px" })
+  const quoteInView   = useInView(quoteRef,   { once: true, margin: "-60px" })
+  const linkedinInView = useInView(linkedinRef, { once: true, margin: "-60px" })
 
   return (
     <div className="grain">
@@ -523,7 +556,7 @@ export default function AboutPage() {
 
                 {/* Title */}
                 <h3
-                  className="mb-4"
+                  className="mb-2"
                   style={{
                     fontFamily: "var(--font-display)",
                     fontWeight: 700,
@@ -536,9 +569,22 @@ export default function AboutPage() {
                   {disc.title}
                 </h3>
 
+                {/* Subtitle */}
+                <p
+                  className="mb-4 italic"
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    color: "rgba(255,255,255,0.38)",
+                    fontSize: "12px",
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {disc.subtitle}
+                </p>
+
                 {/* Description */}
                 <p
-                  className="leading-[1.85] flex-1"
+                  className="leading-[1.85] mb-6"
                   style={{
                     fontFamily: "var(--font-body)",
                     color: "rgba(255,255,255,0.52)",
@@ -547,9 +593,64 @@ export default function AboutPage() {
                 >
                   {disc.desc}
                 </p>
+
+                {/* Credentials */}
+                <div className="flex flex-col gap-3 mb-6 pt-5 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                  <div>
+                    <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}>
+                      Taygan
+                    </p>
+                    <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.6)", fontSize: "12.5px", lineHeight: 1.5 }}>
+                      {disc.taygan}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}>
+                      Team
+                    </p>
+                    <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.6)", fontSize: "12.5px", lineHeight: 1.5 }}>
+                      {disc.team}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Add-ons */}
+                <div className="flex flex-col gap-3 mt-auto">
+                  {disc.addOns.map((addOn) => (
+                    <div
+                      key={addOn.title}
+                      className="p-4"
+                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(199,161,76,0.15)", borderRadius: "var(--radius-sm)" }}
+                    >
+                      <p className="text-[9px] tracking-[0.25em] uppercase mb-2" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 700 }}>
+                        Add-On
+                      </p>
+                      <p className="mb-1.5" style={{ fontFamily: "var(--font-display)", fontWeight: 600, color: "#FFFFFF", fontSize: "12.5px", lineHeight: 1.4 }}>
+                        {addOn.title}
+                      </p>
+                      <p className="mb-2" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.48)", fontSize: "12px", lineHeight: 1.6 }}>
+                        {addOn.desc}
+                      </p>
+                      <p className="italic" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.35)", fontSize: "11.5px" }}>
+                        Pricing on request.
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </motion.div>
             ))}
           </div>
+
+          {/* Closing line */}
+          <motion.p
+            variants={fadeUp(0.4)}
+            initial="hidden"
+            animate={discInView ? "visible" : "hidden"}
+            className="text-center mt-10 text-[12.5px]"
+            style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}
+          >
+            All programmes overseen by Taygan throughout. &nbsp;|&nbsp; One consultation. Three practices. One Team.
+          </motion.p>
         </div>
       </section>
 
@@ -600,6 +701,74 @@ export default function AboutPage() {
             Taygan Robson · 1INC Consulting
           </motion.p>
 
+        </div>
+      </section>
+
+      {/* ── LinkedIn ── */}
+      <section
+        ref={linkedinRef}
+        className="py-16 lg:py-20"
+        style={{ background: "var(--color-cream, #F7F6EF)" }}
+      >
+        <div className="max-w-3xl mx-auto px-6 lg:px-12 text-center">
+          <motion.div
+            variants={fadeUp(0)}
+            initial="hidden"
+            animate={linkedinInView ? "visible" : "hidden"}
+            className="flex justify-center mb-6"
+          >
+            <div
+              className="w-14 h-14 flex items-center justify-center"
+              style={{ border: "1px solid rgba(27,42,74,0.15)", borderRadius: "var(--radius-sm)", color: "var(--color-navy)" }}
+            >
+              <Linkedin size={22} />
+            </div>
+          </motion.div>
+          <motion.h2
+            variants={fadeUp(0.06)}
+            initial="hidden"
+            animate={linkedinInView ? "visible" : "hidden"}
+            className="mb-4"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
+              fontSize: "clamp(1.6rem, 3vw, 2.2rem)",
+              color: "var(--color-navy)",
+              lineHeight: 1.15,
+            }}
+          >
+            Follow the conversation.
+          </motion.h2>
+          <motion.p
+            variants={fadeUp(0.12)}
+            initial="hidden"
+            animate={linkedinInView ? "visible" : "hidden"}
+            className="mb-8 max-w-xl mx-auto"
+            style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", fontSize: "0.97rem", lineHeight: 1.7 }}
+          >
+            Clinical insights, case studies, and evidence-based thinking — posted weekly.
+          </motion.p>
+          <motion.div
+            variants={fadeUp(0.18)}
+            initial="hidden"
+            animate={linkedinInView ? "visible" : "hidden"}
+          >
+            <a
+              href="https://www.linkedin.com/in/tayganrobson/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
+              style={{
+                fontFamily: "var(--font-display)",
+                background: "var(--color-navy)",
+                color: "#FFFFFF",
+                borderRadius: "var(--radius-pill)",
+              }}
+            >
+              Follow Taygan on LinkedIn
+              <ArrowRight size={13} />
+            </a>
+          </motion.div>
         </div>
       </section>
 
