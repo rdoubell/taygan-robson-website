@@ -465,7 +465,7 @@ export default function AboutPage() {
       {/* ── Three disciplines ── */}
       <section
         ref={discRef}
-        className="py-14 lg:py-20"
+        className="pt-14 lg:pt-20 pb-8 lg:pb-10"
         style={{ background: "var(--color-navy)" }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
