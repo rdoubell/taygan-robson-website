@@ -2,9 +2,8 @@ import { AnimatePresence, motion } from "framer-motion"
 import { ArrowRight, X } from "lucide-react"
 import { useBookingModal } from "../../lib/booking-modal-context"
 
-// TODO: replace with the real Google Form embed URL once the intake form is live
-// (Google Forms → Send → Embed <> tab → copy the src="..." value from the iframe)
-const GOOGLE_FORM_EMBED_URL = "REPLACE_WITH_GOOGLE_FORM_EMBED_URL"
+const GOOGLE_FORM_EMBED_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdKJLUFit4blaBbCklj64iSVdK-9S0o2o_NzkqKiuKQwKFC_Q/viewform?embedded=true"
 const APPOINTMENT_URL = "https://appointmentguru.co/taygan"
 
 export default function BookingModal() {
