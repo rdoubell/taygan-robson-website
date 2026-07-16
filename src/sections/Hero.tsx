@@ -167,7 +167,7 @@ export default function Hero() {
                   >
                     R 1 250
                   </div>
-                  <p className="text-[9px] tracking-[0.15em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)", fontWeight: 700 }}>
+                  <p className="text-[9px] tracking-[0.15em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.75)", fontWeight: 700 }}>
                     Online Consultation
                   </p>
                 </div>
