@@ -1,11 +1,13 @@
 import { useRef, useEffect } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { ArrowRight, Globe, Activity } from "lucide-react"
+import { ArrowRight } from "lucide-react"
+import { useBookingModal } from "../lib/booking-modal-context"
 
 export default function Hero() {
   const { scrollY } = useScroll()
   const contentOpacity = useTransform(scrollY, [0, 500], [1, 0])
   const contentY      = useTransform(scrollY, [0, 500], [0, -60])
+  const { open } = useBookingModal()
 
   // Slow the DNA video to a dramatic crawl — CSS can't control playback rate
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -120,135 +122,79 @@ export default function Hero() {
               </motion.div>
             </div>
 
-            {/* ── Right — 2×2 card grid (desktop only) ── */}
+            {/* ── Right — "What 1INC Is" card (desktop only) ── */}
             <motion.div
               initial={{ opacity: 0, x: 48 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.85, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="hidden lg:grid grid-cols-2 gap-4 flex-shrink-0"
-              style={{ width: "468px" }}
+              className="hidden lg:flex flex-col flex-shrink-0 p-7"
+              style={{
+                width: "468px",
+                borderRadius: "20px",
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(199,161,76,0.22)",
+                backdropFilter: "blur(8px)",
+                boxShadow: "0 16px 48px rgba(0,0,0,0.35)",
+              }}
             >
-
-              {/* ── Top Left — Image card ── */}
-              <div
-                className="overflow-hidden"
-                style={{ borderRadius: "20px", height: "218px", boxShadow: "0 16px 48px rgba(0,0,0,0.35)" }}
+              <p
+                className="text-[9px] tracking-[0.3em] uppercase mb-3"
+                style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
               >
-                <img
-                  src="/hero-block-top-left.png"
-                  alt="Sports science consultation"
-                  className="w-full h-full object-cover"
-                  style={{ objectPosition: "center center" }}
-                />
-              </div>
+                Data-driven conversation &middot; Evidence-based direction.
+              </p>
 
-              {/* ── Top Right — Info card ── */}
-              <div
-                className="flex flex-col justify-between p-5"
-                style={{
-                  borderRadius: "20px",
-                  height: "218px",
-                  background: "var(--color-gold)",
-                  boxShadow: "0 16px 48px rgba(199,161,76,0.30)",
-                }}
+              <p
+                className="mb-5"
+                style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.75)", fontSize: "0.87rem", lineHeight: 1.6 }}
               >
-                {/* Icon badge */}
-                <div
-                  className="w-9 h-9 flex items-center justify-center flex-shrink-0"
-                  style={{ background: "rgba(20,33,61,0.18)", borderRadius: "10px" }}
-                >
-                  <Globe size={17} color="#14213D" strokeWidth={1.8} />
-                </div>
+                Every client begins with a personal consultation with Taygan directly, covering your training load, injury history, nutrition, performance and training structure. From there, a written guidance report, a clear plan, and a programme. That is 1INC.
+              </p>
 
-                {/* Copy */}
+              <div className="flex items-end justify-between gap-4 mb-5 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
                 <div>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 700,
-                      fontSize: "clamp(0.85rem, 1.25vw, 1rem)",
-                      color: "#14213D",
-                      lineHeight: 1.45,
-                      letterSpacing: "-0.005em",
-                    }}
-                  >
-                    Helping athletes<br />around the world<br />perform, recover,<br />and thrive.
+                  <p className="text-[9px] tracking-[0.18em] uppercase mb-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.4)" }}>
+                    45-Minute Online Session
                   </p>
-                  <p
-                    className="mt-2"
+                  <div
                     style={{
                       fontFamily: "var(--font-display)",
-                      fontSize: "10px",
-                      letterSpacing: "0.08em",
-                      color: "rgba(20,33,61,0.6)",
+                      fontWeight: 800,
+                      fontSize: "clamp(1.8rem, 3vw, 2.2rem)",
+                      color: "var(--color-gold)",
+                      lineHeight: 1,
                     }}
                   >
-                    Global expertise. Personalised performance.
+                    R 1 250
+                  </div>
+                  <p className="text-[9px] tracking-[0.15em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
+                    Online Consultation
                   </p>
                 </div>
-              </div>
-
-              {/* ── Bottom Left — Info card ── */}
-              <div
-                className="flex flex-col justify-between p-5"
-                style={{
-                  borderRadius: "20px",
-                  height: "218px",
-                  background: "var(--color-gold)",
-                  boxShadow: "0 16px 48px rgba(199,161,76,0.30)",
-                }}
-              >
-                {/* Icon badge */}
-                <div
-                  className="w-9 h-9 flex items-center justify-center flex-shrink-0"
-                  style={{ background: "rgba(20,33,61,0.18)", borderRadius: "10px" }}
+                <button
+                  onClick={open}
+                  className="inline-flex items-center gap-2 px-5 py-3 text-[10px] tracking-[0.16em] uppercase font-bold transition-all duration-300 hover:scale-[1.02] flex-shrink-0"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    background: "#FFFFFF",
+                    color: "var(--color-navy)",
+                    borderRadius: "var(--radius-pill)",
+                  }}
                 >
-                  <Activity size={17} color="#14213D" strokeWidth={1.8} />
-                </div>
-
-                {/* Copy */}
-                <div>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 700,
-                      fontSize: "clamp(0.85rem, 1.25vw, 1rem)",
-                      color: "#14213D",
-                      lineHeight: 1.45,
-                      letterSpacing: "-0.005em",
-                    }}
-                  >
-                    Rehab.<br />Performance.<br />Nutrition.
-                  </p>
-                  <p
-                    className="mt-2"
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: "10px",
-                      letterSpacing: "0.08em",
-                      color: "rgba(20,33,61,0.6)",
-                    }}
-                  >
-                    Evidence-based strategies tailored to your goals.
-                  </p>
-                </div>
+                  Book Now
+                  <ArrowRight size={12} />
+                </button>
               </div>
 
-              {/* ── Bottom Right — Image card ── */}
-              <div
-                className="overflow-hidden"
-                style={{ borderRadius: "20px", height: "218px", boxShadow: "0 16px 48px rgba(0,0,0,0.35)" }}
-              >
-                <img
-                  src="/hero-block-bottom-right.png"
-                  alt="Athlete rehabilitation and recovery"
-                  className="w-full h-full object-cover"
-                  style={{ objectPosition: "center center" }}
-                />
-              </div>
+              <p className="text-[10.5px] italic mb-3" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
+                Invoice issued post-session. Payment due within 7 days. Booked via Appointment Guru. Delivered via Microsoft Teams.
+              </p>
 
+              <p className="text-[10.5px] italic" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
+                Taygan &nbsp;|&nbsp; BSc S&amp;C &middot; MSc Sports Injuries &amp; Return to Performance &middot; PG Dip Performance Nutrition &middot; MSc Sports Nutrition (c)
+              </p>
             </motion.div>
-            {/* ── end right grid ── */}
+            {/* ── end right card ── */}
 
           </div>
         </div>

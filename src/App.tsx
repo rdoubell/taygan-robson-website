@@ -4,7 +4,6 @@ import { BookingModalProvider } from "./lib/booking-modal-context"
 import BookingModal from "./components/ui/booking-modal"
 import Navbar from "./sections/Navbar"
 import Hero from "./sections/Hero"
-import WhatIs1Inc from "./sections/WhatIs1Inc"
 import Services from "./sections/Services"
 import Pricing from "./sections/Pricing"
 import WhoThisIsFor from "./sections/WhoThisIsFor"
@@ -40,7 +39,6 @@ function HomePage() {
         {/* Hero — full-bleed photo, transparent navbar sits on top */}
         <Hero />
         {/* Content flows normally below hero */}
-        <WhatIs1Inc />
         <Journey showHeading={false} />
         <Services />
         <WhoThisIsFor />
