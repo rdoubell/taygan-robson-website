@@ -213,10 +213,10 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 1.1 }}
           style={{ borderTop: "1px solid rgba(199,161,76,0.18)", flexShrink: 0 }}
         >
-          {/* Label */}
-          <div className="px-6 lg:px-12" style={{ paddingTop: "0.55rem", paddingBottom: "0.45rem" }}>
-            <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "8.5px", letterSpacing: "0.32em", fontWeight: 600 }}>
-              SOUND FAMILIAR?
+          {/* Heading */}
+          <div className="px-6 lg:px-12" style={{ paddingTop: "0.7rem", paddingBottom: "0.6rem" }}>
+            <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "clamp(1rem, 1.6vw, 1.4rem)", fontWeight: 800, letterSpacing: "-0.01em" }}>
+              Sound Familiar?
             </p>
           </div>
 
@@ -254,6 +254,9 @@ export default function Hero() {
               ))}
             </div>
           </div>
+
+          {/* Closing gold line */}
+          <div style={{ borderTop: "1px solid rgba(199,161,76,0.18)" }} />
         </motion.div>
 
       </motion.div>
