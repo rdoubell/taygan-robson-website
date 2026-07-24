@@ -74,14 +74,14 @@ export default function Hero() {
       {/* Navy overlay */}
       <div className="absolute inset-0" style={{ background: "rgba(14,24,50,0.68)" }} />
 
-      {/* Content — content centred in upper half, strip centred in lower half */}
+      {/* Content — small top spacer keeps content near nav, strip floats below, gold bar closes */}
       <motion.div
         style={{ opacity: contentOpacity, y: contentY }}
         className="absolute inset-0 flex flex-col"
       >
 
-        {/* Top spacer — pushes content to vertical centre */}
-        <div className="flex-1" />
+        {/* Top spacer — flex-[0.3] keeps content close to nav (≈ original feel) */}
+        <div style={{ flex: "0.3" }} />
 
         {/* ── Main content row ── */}
         <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
@@ -209,8 +209,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── Lower half: Sound Familiar strip, vertically centred ── */}
-        <div className="flex-1 flex flex-col justify-center">
+        {/* ── Lower half: Sound Familiar strip, centred above gold closing bar ── */}
+        <div className="flex-1 flex flex-col justify-center" style={{ paddingBottom: "2rem" }}>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -267,6 +267,12 @@ export default function Hero() {
 
           </motion.div>
         </div>
+
+        {/* Closing gold bar — pins to bottom with a small breathing gap */}
+        <div
+          className="absolute bottom-0 left-0 right-0"
+          style={{ borderTop: "1px solid rgba(199,161,76,0.18)", height: "1.75rem" }}
+        />
 
       </motion.div>
 
