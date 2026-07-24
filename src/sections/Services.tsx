@@ -52,7 +52,7 @@ export default function Services() {
             lineHeight: 1.1,
           }}
         >
-          What we can offer you.
+          Three Practices<span style={{ color: "var(--color-gold)" }}>:</span>
         </motion.h2>
 
       </div>

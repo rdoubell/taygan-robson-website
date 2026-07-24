@@ -4,9 +4,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 
 const mainLinks = [
-  { label: "Services", href: "/#services",  sectionId: "services" },
-  { label: "Pricing",  href: "/#pricing",   sectionId: "pricing"  },
-  { label: "Contact",  href: "/#contact",   sectionId: "contact"  },
+  { label: "Process",   href: "/#process",   sectionId: "process"   },
+  { label: "Practices", href: "/#services",  sectionId: "services"  },
 ]
 
 const secondaryLinks = [
@@ -14,7 +13,7 @@ const secondaryLinks = [
   { label: "About", href: "/about" },
 ]
 
-const ALL_SECTION_IDS   = ["hero", "services", "pricing", "trusted-by", "contact"]
+const ALL_SECTION_IDS   = ["hero", "process", "services"]
 
 export default function Navbar() {
   const { pathname }   = useLocation()

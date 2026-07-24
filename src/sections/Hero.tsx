@@ -74,14 +74,17 @@ export default function Hero() {
       {/* Navy overlay */}
       <div className="absolute inset-0" style={{ background: "rgba(14,24,50,0.68)" }} />
 
-      {/* Content — vertically centred as a single block (content + strip together) */}
+      {/* Content — content centred in upper half, strip centred in lower half */}
       <motion.div
         style={{ opacity: contentOpacity, y: contentY }}
-        className="absolute inset-0 flex flex-col justify-center"
+        className="absolute inset-0 flex flex-col"
       >
 
+        {/* Top spacer — pushes content to vertical centre */}
+        <div className="flex-1" />
+
         {/* ── Main content row ── */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full mb-5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
           {/* items-stretch: right card matches the left column height exactly */}
           <div className="flex items-stretch gap-12 xl:gap-20">
 
@@ -206,77 +209,63 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── Sound Familiar strip — flows directly below content ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.1 }}
-          style={{ borderTop: "1px solid rgba(199,161,76,0.18)", flexShrink: 0 }}
-        >
-          {/* Heading */}
-          <div className="px-6 lg:px-12 text-center" style={{ paddingTop: "0.7rem", paddingBottom: "0.6rem" }}>
-            <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "clamp(1rem, 1.6vw, 1.4rem)", fontWeight: 800, letterSpacing: "-0.01em" }}>
-              Sound Familiar?
-            </p>
-          </div>
-
-          {/* Scrolling cards — seamless infinite loop, 4 visible */}
-          <div
-            ref={stripRef}
-            className="[&::-webkit-scrollbar]:hidden"
-            style={{ overflowX: "scroll", scrollbarWidth: "none", paddingBottom: "0.9rem" } as React.CSSProperties}
-            onMouseEnter={() => { pauseRef.current = true }}
-            onMouseLeave={() => { pauseRef.current = false }}
+        {/* ── Lower half: Sound Familiar strip, vertically centred ── */}
+        <div className="flex-1 flex flex-col justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.1 }}
+            style={{ borderTop: "1px solid rgba(199,161,76,0.18)", flexShrink: 0 }}
           >
-            <div style={{ display: "flex", gap: "0.75rem", paddingLeft: "1.5rem", paddingRight: "1.5rem" }}>
-              {[...soundFamiliarCards, ...soundFamiliarCards].map((card, i) => (
-                <div
-                  key={i}
-                  style={{
-                    width: "25vw",
-                    minWidth: "220px",
-                    flexShrink: 0,
-                    padding: "0.9rem 1.2rem 1rem",
-                    borderRadius: "14px",
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(199,161,76,0.22)",
-                    backdropFilter: "blur(8px)",
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.28)",
-                    height: "118px",
-                    display: "flex",
-                    flexDirection: "column",
-                    overflow: "hidden",
-                  }}
-                >
-                  <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "7.5px", letterSpacing: "0.24em", textTransform: "uppercase", fontWeight: 600, marginBottom: "0.45rem", flexShrink: 0 }}>
-                    {card.category}
-                  </p>
-                  <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", lineHeight: 1.55, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical" } as React.CSSProperties}>
-                    {card.quote}
-                  </p>
-                </div>
-              ))}
+            {/* Heading */}
+            <div className="px-6 lg:px-12 text-center" style={{ paddingTop: "0.7rem", paddingBottom: "0.6rem" }}>
+              <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "clamp(1rem, 1.6vw, 1.4rem)", fontWeight: 800, letterSpacing: "-0.01em" }}>
+                Sound Familiar?
+              </p>
             </div>
-          </div>
 
-        </motion.div>
+            {/* Scrolling cards — seamless infinite loop, 4 visible */}
+            <div
+              ref={stripRef}
+              className="[&::-webkit-scrollbar]:hidden"
+              style={{ overflowX: "scroll", scrollbarWidth: "none", paddingBottom: "0.9rem" } as React.CSSProperties}
+              onMouseEnter={() => { pauseRef.current = true }}
+              onMouseLeave={() => { pauseRef.current = false }}
+            >
+              <div style={{ display: "flex", gap: "0.75rem", paddingLeft: "1.5rem", paddingRight: "1.5rem" }}>
+                {[...soundFamiliarCards, ...soundFamiliarCards].map((card, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      width: "25vw",
+                      minWidth: "220px",
+                      flexShrink: 0,
+                      padding: "0.9rem 1.2rem 1rem",
+                      borderRadius: "14px",
+                      background: "rgba(255,255,255,0.05)",
+                      border: "1px solid rgba(199,161,76,0.22)",
+                      backdropFilter: "blur(8px)",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.28)",
+                      height: "118px",
+                      display: "flex",
+                      flexDirection: "column",
+                      overflow: "hidden",
+                    }}
+                    onMouseEnter={() => { pauseRef.current = true }}
+                    onMouseLeave={() => { pauseRef.current = false }}
+                  >
+                    <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "7.5px", letterSpacing: "0.24em", textTransform: "uppercase", fontWeight: 600, marginBottom: "0.45rem", flexShrink: 0 }}>
+                      {card.category}
+                    </p>
+                    <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", lineHeight: 1.55, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical" } as React.CSSProperties}>
+                      {card.quote}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-        {/* Process flow — gold top border acts as the closing line; text is centred between it and the page bottom */}
-        <div
-          className="absolute bottom-0 left-0 right-0 text-center"
-          style={{ borderTop: "1px solid rgba(199,161,76,0.18)", paddingTop: "1.25rem", paddingBottom: "1.25rem" }}
-        >
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.6vw, 1.4rem)", fontWeight: 800, letterSpacing: "-0.01em" }}>
-            <span style={{ color: "#FFFFFF" }}>Consult</span>
-            <span style={{ color: "var(--color-gold)" }}> → </span>
-            <span style={{ color: "#FFFFFF" }}>Analysis</span>
-            <span style={{ color: "var(--color-gold)" }}> → </span>
-            <span style={{ color: "#FFFFFF" }}>Report</span>
-            <span style={{ color: "var(--color-gold)" }}> → </span>
-            <span style={{ color: "#FFFFFF" }}>Plan</span>
-            <span style={{ color: "var(--color-gold)" }}> → </span>
-            <span style={{ color: "#FFFFFF" }}>Programme</span>
-          </p>
+          </motion.div>
         </div>
 
       </motion.div>

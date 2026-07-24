@@ -43,7 +43,7 @@ export default function Journey({ showHeading = true }: { showHeading?: boolean 
   const inView = useInView(ref, { once: true, margin: "-80px" })
 
   return (
-    <section className="section-pad" style={{ background: "var(--color-cream)" }} ref={ref}>
+    <section id="process" className="section-pad" style={{ background: "var(--color-cream)" }} ref={ref}>
       <div className="max-w-5xl mx-auto px-6 lg:px-12">
 
         {showHeading && (
