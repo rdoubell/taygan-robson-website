@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { useBookingModal } from "../lib/booking-modal-context"
 
 const soundFamiliarCards = [
@@ -34,8 +34,8 @@ export default function Hero() {
   }, [])
 
   // Auto-scroll strip
-  const stripRef  = useRef<HTMLDivElement>(null)
-  const pauseRef  = useRef(false)
+  const stripRef = useRef<HTMLDivElement>(null)
+  const pauseRef = useRef(false)
 
   useEffect(() => {
     const el = stripRef.current
@@ -59,127 +59,125 @@ export default function Hero() {
     return () => cancelAnimationFrame(raf)
   }, [])
 
-  const scrollStrip = (dir: 1 | -1) => {
-    const el = stripRef.current
-    if (!el) return
-    const cardWidth = el.offsetWidth / 4
-    el.scrollBy({ left: dir * cardWidth, behavior: "smooth" })
-  }
-
   return (
     <section id="hero" className="relative w-full h-screen min-h-[640px] overflow-hidden" style={{ background: "#14213D" }}>
 
-      {/* DNA video — full-hero background */}
+      {/* DNA video */}
       <video
         ref={videoRef}
         autoPlay loop muted playsInline
         src="/dna-loop.mp4"
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{
-          opacity: 0.55,
-          transform: "scale(1.08)",
-          filter: "blur(6px) brightness(0.45) saturate(0.6)",
-        }}
+        style={{ opacity: 0.55, transform: "scale(1.08)", filter: "blur(6px) brightness(0.45) saturate(0.6)" }}
       />
 
       {/* Navy overlay */}
       <div className="absolute inset-0" style={{ background: "rgba(14,24,50,0.68)" }} />
 
-      {/* Content wrapper — column: upper fills remaining space, strip pins to bottom */}
+      {/* Content — vertically centred as a single block (content + strip together) */}
       <motion.div
         style={{ opacity: contentOpacity, y: contentY }}
-        className="absolute inset-0 flex flex-col"
+        className="absolute inset-0 flex flex-col justify-center"
       >
 
-        {/* ── Upper: main hero content, vertically centred in remaining space ── */}
-        <div className="flex-1 flex items-center">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
-            <div className="flex items-center gap-12 xl:gap-20">
+        {/* ── Main content row ── */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full mb-5">
+          {/* items-stretch: right card matches the left column height exactly */}
+          <div className="flex items-stretch gap-12 xl:gap-20">
 
-              {/* Left — text block */}
-              <div className="flex-1 min-w-0">
+            {/* Left — text block */}
+            <div className="flex-1 min-w-0">
 
-                <div className="mb-6 overflow-hidden">
-                  {[
-                    { text: "ONE CONVERSATION.", gold: true },
-                    { text: "THREE PRACTICES.", gold: false },
-                    { text: "ONE STRATEGY.", gold: true },
-                  ].map(({ text, gold }, i) => (
-                    <div key={text} style={{ overflow: "clip" }}>
-                      <motion.h1
-                        initial={{ x: "-105%", opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 0.72, delay: 0.2 + i * 0.14, ease: [0.22, 1, 0.36, 1] }}
-                        style={{
-                          fontFamily: "var(--font-display)",
-                          fontSize: "clamp(1.75rem, 4vw, 3.8rem)",
-                          fontWeight: 800,
-                          lineHeight: 1.1,
-                          letterSpacing: "-0.01em",
-                          whiteSpace: "nowrap",
-                          color: gold ? "var(--color-gold)" : "#FFFFFF",
-                        }}
-                      >
-                        {text}
-                      </motion.h1>
-                    </div>
-                  ))}
-                </div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.65, delay: 0.75 }}
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: "clamp(0.85rem, 1.45vw, 0.98rem)",
-                    color: "rgba(255,255,255,0.55)",
-                    lineHeight: 1.7,
-                    maxWidth: "52ch",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.75rem",
-                  }}
-                >
-                  <p>Injured. Undertrained. Under fuelled. Managing GLP-1 related muscle loss. Your numbers are dropping. Lost and need someone to be accountable to.</p>
-                  <p>Whatever brought you here — your training load, injury history, nutrition, endurance data numbers and performance goals assessed in a personal online consultation with Taygan directly.</p>
-                  <p>A written report, a clear plan and a programme built around your findings.</p>
-                  <p>One conversation. That is 1INC.</p>
-                </motion.div>
+              {/* Headline — font size reduced so "ONE CONVERSATION." never clips on any desktop */}
+              <div className="mb-6 overflow-hidden">
+                {[
+                  { text: "ONE CONVERSATION.", gold: true },
+                  { text: "THREE PRACTICES.", gold: false },
+                  { text: "ONE STRATEGY.", gold: true },
+                ].map(({ text, gold }, i) => (
+                  <div key={text} style={{ overflow: "clip" }}>
+                    <motion.h1
+                      initial={{ x: "-105%", opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ duration: 0.72, delay: 0.2 + i * 0.14, ease: [0.22, 1, 0.36, 1] }}
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "clamp(1.6rem, 3.5vw, 3.5rem)",
+                        fontWeight: 800,
+                        lineHeight: 1.1,
+                        letterSpacing: "-0.01em",
+                        whiteSpace: "nowrap",
+                        color: gold ? "var(--color-gold)" : "#FFFFFF",
+                      }}
+                    >
+                      {text}
+                    </motion.h1>
+                  </div>
+                ))}
               </div>
 
-              {/* Right — pricing card (desktop only) */}
               <motion.div
-                initial={{ opacity: 0, x: 48 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.85, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="hidden lg:flex flex-col flex-shrink-0 p-7"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.65, delay: 0.75 }}
                 style={{
-                  width: "468px",
-                  borderRadius: "20px",
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(199,161,76,0.22)",
-                  backdropFilter: "blur(8px)",
-                  boxShadow: "0 16px 48px rgba(0,0,0,0.35)",
+                  fontFamily: "var(--font-body)",
+                  fontSize: "clamp(0.85rem, 1.45vw, 0.98rem)",
+                  color: "rgba(255,255,255,0.55)",
+                  lineHeight: 1.7,
+                  maxWidth: "52ch",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
                 }}
               >
-                <p className="text-[9px] tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}>
+                <p>Injured. Undertrained. Under fuelled. Managing GLP-1 related muscle loss. Your numbers are dropping. Lost and need someone to be accountable to.</p>
+                <p>Whatever brought you here — your training load, injury history, nutrition, endurance data numbers and performance goals assessed in a personal online consultation with Taygan directly.</p>
+                <p>A written report, a clear plan and a programme built around your findings.</p>
+                <p>One conversation. That is 1INC.</p>
+              </motion.div>
+
+            </div>
+
+            {/* Right — pricing card, stretches to match left column height via items-stretch on parent */}
+            <motion.div
+              initial={{ opacity: 0, x: 48 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.85, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="hidden lg:flex flex-col flex-shrink-0 p-8 justify-between"
+              style={{
+                width: "468px",
+                borderRadius: "20px",
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(199,161,76,0.22)",
+                backdropFilter: "blur(8px)",
+                boxShadow: "0 16px 48px rgba(0,0,0,0.35)",
+              }}
+            >
+              {/* Top — eyebrow + description */}
+              <div>
+                <p
+                  className="text-[10px] tracking-[0.3em] uppercase mb-4"
+                  style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
+                >
                   Data-driven conversation &middot; Evidence-based direction.
                 </p>
-
-                <p className="mb-5" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.75)", fontSize: "0.87rem", lineHeight: 1.6 }}>
+                <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.75)", fontSize: "0.92rem", lineHeight: 1.7 }}>
                   Every client begins with a personal consultation with Taygan directly, covering your training load, injury history, nutrition, performance and training structure. From there, a written guidance report, a clear plan, and a programme. That is 1INC.
                 </p>
+              </div>
 
-                <div className="flex items-end justify-between gap-4 mb-5 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+              {/* Middle — pricing row */}
+              <div className="pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+                <p className="text-[10px] tracking-[0.18em] uppercase mb-2" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.4)" }}>
+                  45-Minute Online Session
+                </p>
+                <div className="flex items-end justify-between gap-4">
                   <div>
-                    <p className="text-[9px] tracking-[0.18em] uppercase mb-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.4)" }}>
-                      45-Minute Online Session
-                    </p>
-                    <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(1.8rem, 3vw, 2.2rem)", color: "var(--color-gold)", lineHeight: 1 }}>
+                    <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(2rem, 3.2vw, 2.6rem)", color: "var(--color-gold)", lineHeight: 1 }}>
                       R 1 250
                     </div>
-                    <p className="text-[9px] tracking-[0.15em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
+                    <p className="text-[10px] tracking-[0.15em] uppercase mt-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
                       Online Consultation
                     </p>
                   </div>
@@ -192,50 +190,37 @@ export default function Hero() {
                     <ArrowRight size={12} />
                   </button>
                 </div>
+              </div>
 
-                <p className="text-[10.5px] italic mb-3" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
+              {/* Bottom — fine print + credentials */}
+              <div>
+                <p className="text-[11.5px] italic mb-2.5" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
                   Payment due on completion of the intake form. Booked via Appointment Guru. Delivered online via Microsoft Teams.
                 </p>
-
-                <p className="text-[10.5px] italic" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
+                <p className="text-[11.5px] italic" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
                   Taygan &nbsp;|&nbsp; BSc S&amp;C &middot; MSc Sports Injuries &amp; Return to Performance &middot; PG Dip Performance Nutrition &middot; MSc Sports Nutrition (c)
                 </p>
-              </motion.div>
+              </div>
+            </motion.div>
 
-            </div>
           </div>
         </div>
 
-        {/* ── Sound Familiar strip — pinned to bottom ── */}
+        {/* ── Sound Familiar strip — flows directly below content ── */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.1 }}
           style={{ borderTop: "1px solid rgba(199,161,76,0.18)", flexShrink: 0 }}
         >
-          {/* Label + nav */}
-          <div
-            className="flex items-center justify-between px-6 lg:px-12"
-            style={{ paddingTop: "0.55rem", paddingBottom: "0.45rem" }}
-          >
+          {/* Label */}
+          <div className="px-6 lg:px-12" style={{ paddingTop: "0.55rem", paddingBottom: "0.45rem" }}>
             <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "8.5px", letterSpacing: "0.32em", fontWeight: 600 }}>
               SOUND FAMILIAR?
             </p>
-            <div className="flex gap-2">
-              {([[-1, ChevronLeft], [1, ChevronRight]] as const).map(([dir, Icon]) => (
-                <button
-                  key={dir}
-                  onClick={() => scrollStrip(dir as 1 | -1)}
-                  className="flex items-center justify-center transition-opacity opacity-50 hover:opacity-100"
-                  style={{ width: 26, height: 26, border: "1px solid rgba(199,161,76,0.28)", borderRadius: "50%", background: "rgba(255,255,255,0.04)" }}
-                >
-                  <Icon size={13} color="rgba(199,161,76,0.85)" />
-                </button>
-              ))}
-            </div>
           </div>
 
-          {/* Scrolling cards — 4 visible at a time, seamless loop */}
+          {/* Scrolling cards — seamless infinite loop, 4 visible */}
           <div
             ref={stripRef}
             className="[&::-webkit-scrollbar]:hidden"
@@ -259,28 +244,10 @@ export default function Hero() {
                     overflow: "hidden",
                   }}
                 >
-                  <p style={{
-                    fontFamily: "var(--font-display)",
-                    color: "var(--color-gold)",
-                    fontSize: "7.5px",
-                    letterSpacing: "0.24em",
-                    textTransform: "uppercase",
-                    fontWeight: 600,
-                    marginBottom: "0.4rem",
-                    flexShrink: 0,
-                  }}>
+                  <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "7.5px", letterSpacing: "0.24em", textTransform: "uppercase", fontWeight: 600, marginBottom: "0.4rem", flexShrink: 0 }}>
                     {card.category}
                   </p>
-                  <p style={{
-                    fontFamily: "var(--font-body)",
-                    color: "rgba(255,255,255,0.42)",
-                    fontSize: "0.72rem",
-                    lineHeight: 1.55,
-                    overflow: "hidden",
-                    display: "-webkit-box",
-                    WebkitLineClamp: 4,
-                    WebkitBoxOrient: "vertical",
-                  } as React.CSSProperties}>
+                  <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.42)", fontSize: "0.72rem", lineHeight: 1.55, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical" } as React.CSSProperties}>
                     {card.quote}
                   </p>
                 </div>
