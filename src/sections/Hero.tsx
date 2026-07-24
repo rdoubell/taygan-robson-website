@@ -5,20 +5,20 @@ import { useBookingModal } from "../lib/booking-modal-context"
 
 const soundFamiliarCards = [
   { category: "Performance & Training", quote: "I have entered the ABSA Cape Epic to be competitive in my age category and I have no structured training plan. I do not know if I can ride hard for 8 days, let alone race it." },
-  { category: "Performance & Training", quote: "I am 45 and want to run my first Comrades. I have never had my training load, recovery capacity, or physiological age assessed against my training. I do not know what my body can actually handle before I start building." },
-  { category: "Performance & Training", quote: "I have been told I am overtraining, doing too much millage, but I do not know what to cut, what to keep, or how to structure my week." },
-  { category: "Performance & Training", quote: "I am training for 500 to 1000km gravel races and have no idea how to structure the volume and intensity across a week without breaking down or burning out." },
   { category: "Nutrition & Fuelling", quote: "I know I should eat before and after training but I never know the right timing, the right amount, or what type of food actually supports recovery versus performance." },
-  { category: "Nutrition & Fuelling", quote: "I eat well during the week but on race morning I have no idea what to eat, how much, or how long before I start. I always feel either too full or completely empty at the start line." },
-  { category: "Nutrition & Fuelling", quote: "I race Motocross early morning fasted. By gate drop I have no energy and my reactions are slow. Nobody has built a fuelling plan around my start time." },
-  { category: "Nutrition & Fuelling", quote: "I do 5-hour rides and have no idea how many carbs to take per hour or why the ratio of glucose to fructose matters. I just take whatever gel is cheapest and wonder why I blow up at hour four." },
   { category: "Injury & Rehabilitation", quote: "I fractured my collarbone in a mountain bike crash and lost strength while I could not train. I do not know how to rebuild the muscle." },
-  { category: "Injury & Rehabilitation", quote: "I tore my ACL two years ago. I was cleared to return but I do not trust my knee and my nutrition during recovery has been non-existent." },
-  { category: "Injury & Rehabilitation", quote: "I have a rotator cuff tear and I have been told to rest from swimming. I have lost fitness, lost muscle, and nobody has given me a structured plan to rebuild either." },
-  { category: "Injury & Rehabilitation", quote: "My back goes into spasm while playing golf. I have changed my clubs but need to fix my strength, posture and core." },
   { category: "GLP-1 & Recovery", quote: "I am on GLP-1 medication and have no appetite. I know I am not eating enough protein but I do not know how much I need or when to eat it." },
+  { category: "Performance & Training", quote: "I am 45 and want to run my first Comrades. I have never had my training load, recovery capacity, or physiological age assessed against my training. I do not know what my body can actually handle before I start building." },
+  { category: "Nutrition & Fuelling", quote: "I eat well during the week but on race morning I have no idea what to eat, how much, or how long before I start. I always feel either too full or completely empty at the start line." },
+  { category: "Injury & Rehabilitation", quote: "I tore my ACL two years ago. I was cleared to return but I do not trust my knee and my nutrition during recovery has been non-existent." },
   { category: "GLP-1 & Recovery", quote: "I have been on Ozempic for eight months. I have lost weight but my body composition looks worse. I have no muscle tone and I am weaker than before I started." },
+  { category: "Performance & Training", quote: "I have been told I am overtraining, doing too much millage, but I do not know what to cut, what to keep, or how to structure my week." },
+  { category: "Nutrition & Fuelling", quote: "I race Motocross early morning fasted. By gate drop I have no energy and my reactions are slow. Nobody has built a fuelling plan around my start time." },
+  { category: "Injury & Rehabilitation", quote: "I have a rotator cuff tear and I have been told to rest from swimming. I have lost fitness, lost muscle, and nobody has given me a structured plan to rebuild either." },
   { category: "GLP-1 & Recovery", quote: "I am on GLP-1 medication and my resting heart rate has been 10 beats higher than normal for months. I do not know why or how it is affecting my training and racing." },
+  { category: "Performance & Training", quote: "I am training for 500 to 1000km gravel races and have no idea how to structure the volume and intensity across a week without breaking down or burning out." },
+  { category: "Nutrition & Fuelling", quote: "I do 5-hour rides and have no idea how many carbs to take per hour or why the ratio of glucose to fructose matters. I just take whatever gel is cheapest and wonder why I blow up at hour four." },
+  { category: "Injury & Rehabilitation", quote: "My back goes into spasm while playing golf. I have changed my clubs but need to fix my strength, posture and core." },
   { category: "GLP-1 & Recovery", quote: "I started GLP-1 medication six months ago. My weight is down but I feel I am getting slower on my rides. Nobody has connected my medication, my strength, and my nutrition into one conversation." },
 ]
 
@@ -257,6 +257,21 @@ export default function Hero() {
 
           {/* Closing gold line */}
           <div style={{ borderTop: "1px solid rgba(199,161,76,0.18)" }} />
+
+          {/* Process flow */}
+          <div className="text-center" style={{ paddingTop: "0.65rem", paddingBottom: "0.65rem" }}>
+            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.6vw, 1.4rem)", fontWeight: 800, letterSpacing: "-0.01em" }}>
+              <span style={{ color: "#FFFFFF" }}>Consult</span>
+              <span style={{ color: "var(--color-gold)" }}> → </span>
+              <span style={{ color: "#FFFFFF" }}>Analysis</span>
+              <span style={{ color: "var(--color-gold)" }}> → </span>
+              <span style={{ color: "#FFFFFF" }}>Report</span>
+              <span style={{ color: "var(--color-gold)" }}> → </span>
+              <span style={{ color: "#FFFFFF" }}>Plan</span>
+              <span style={{ color: "var(--color-gold)" }}> → </span>
+              <span style={{ color: "#FFFFFF" }}>Programme</span>
+            </p>
+          </div>
         </motion.div>
 
       </motion.div>
