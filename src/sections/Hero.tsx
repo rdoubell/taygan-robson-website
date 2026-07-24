@@ -209,8 +209,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── Lower half: Sound Familiar strip, centred above gold closing bar ── */}
-        <div className="flex-1 flex flex-col justify-center" style={{ paddingBottom: "2rem" }}>
+        {/* ── Lower half: Sound Familiar strip + gold closing bar, centred as a unit ── */}
+        <div className="flex-1 flex flex-col justify-center">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -266,13 +266,10 @@ export default function Hero() {
             </div>
 
           </motion.div>
-        </div>
 
-        {/* Closing gold bar — pins to bottom with a small breathing gap */}
-        <div
-          className="absolute bottom-0 left-0 right-0"
-          style={{ borderTop: "1px solid rgba(199,161,76,0.18)", height: "1.75rem" }}
-        />
+          {/* Gold closing bar — sits directly below the cards */}
+          <div style={{ borderTop: "1px solid rgba(199,161,76,0.18)", height: "1.75rem", flexShrink: 0 }} />
+        </div>
 
       </motion.div>
 

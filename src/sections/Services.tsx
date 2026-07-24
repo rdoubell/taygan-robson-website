@@ -105,7 +105,7 @@ export default function Services() {
           className="text-center mb-12"
           style={{
             fontFamily: "var(--font-display)",
-            fontWeight: 700,
+            fontWeight: 800,
             fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
             color: "var(--color-navy)",
             lineHeight: 1.1,
