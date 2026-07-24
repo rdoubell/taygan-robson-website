@@ -56,7 +56,7 @@ export default function Hero() {
               {/* Three-line headline — each phrase forced onto a single line */}
               <div className="mb-8 overflow-hidden">
                 {[
-                  { text: "TWO DECADES.", gold: true },
+                  { text: "ONE CONVERSATION.", gold: true },
                   { text: "THREE PRACTICES.", gold: false },
                   { text: "ONE STRATEGY.", gold: true },
                 ].map(({ text, gold }, i) => (
@@ -85,40 +85,26 @@ export default function Hero() {
                 ))}
               </div>
 
-              <motion.p
+              <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65, delay: 0.75 }}
-                className="text-white/55 leading-relaxed mb-10"
+                className="mb-10"
                 style={{
                   fontFamily: "var(--font-body)",
-                  fontSize: "clamp(0.95rem, 1.7vw, 1.1rem)",
-                  maxWidth: "42ch",
+                  fontSize: "clamp(0.9rem, 1.6vw, 1.05rem)",
+                  color: "rgba(255,255,255,0.55)",
+                  lineHeight: 1.75,
+                  maxWidth: "52ch",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
                 }}
               >
-                Wherever you are in the world — structured, evidence-based support for your performance, nutrition, and recovery.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.92 }}
-                className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
-              >
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    background: "var(--color-gold)",
-                    color: "#14213D",
-                    borderRadius: "var(--radius-pill)",
-                    boxShadow: "0 8px 32px rgba(199,161,76,0.38)",
-                  }}
-                >
-                  Book a 1INC Consultation
-                  <ArrowRight size={14} />
-                </a>
+                <p>Injured. Undertrained. Under fuelled. Managing GLP-1 related muscle loss. Your numbers are dropping. Lost and need someone to be accountable to.</p>
+                <p>Whatever brought you here — your training load, injury history, nutrition, endurance data numbers and performance goals assessed in a personal online consultation with Taygan directly.</p>
+                <p>A written report, a clear plan and a programme built around your findings.</p>
+                <p>One conversation. That is 1INC.</p>
               </motion.div>
             </div>
 
@@ -187,7 +173,7 @@ export default function Hero() {
               </div>
 
               <p className="text-[10.5px] italic mb-3" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
-                Invoice issued post-session. Payment due within 7 days. Booked via Appointment Guru. Delivered via Microsoft Teams.
+                Payment due on completion of the intake form. Booked via Appointment Guru. Delivered online via Microsoft Teams.
               </p>
 
               <p className="text-[10.5px] italic" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
