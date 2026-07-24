@@ -197,27 +197,7 @@ export default function Hero() {
                 className="text-[8px] tracking-[0.14em] uppercase mb-5"
                 style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.38)", fontWeight: 600 }}
               >
-                South Africa
-              </p>
-
-              {/* International price */}
-              <div
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 800,
-                  fontSize: "clamp(1.1rem, 1.8vw, 1.5rem)",
-                  color: "rgba(255,255,255,0.7)",
-                  lineHeight: 1,
-                  marginBottom: "0.35rem",
-                }}
-              >
-                $150 USD
-              </div>
-              <p
-                className="text-[8px] tracking-[0.14em] uppercase mb-6"
-                style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.38)", fontWeight: 600 }}
-              >
-                International
+                Online Consultation
               </p>
 
               {/* Book button */}
@@ -241,7 +221,7 @@ export default function Hero() {
                   className="italic mb-2"
                   style={{ fontFamily: "var(--font-body)", fontSize: "0.61rem", color: "rgba(255,255,255,0.3)", lineHeight: 1.6 }}
                 >
-                  Payment due on completion of the intake form. Booked via Appointment Guru. Delivered online via Microsoft Teams. Available globally.
+                  Payment due on completion of the intake form. Booked via Appointment Guru. Delivered online via Microsoft Teams.
                 </p>
                 <p
                   className="italic"
