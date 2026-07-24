@@ -7,7 +7,7 @@ import { useBookingModal } from "../lib/booking-modal-context"
 export default function Pricing() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-60px" })
-  const { open } = useBookingModal()
+  const { open, openFollowUp } = useBookingModal()
 
   return (
     <section id="pricing" className="bg-white" style={{ paddingTop: "5rem", paddingBottom: 0 }} ref={ref}>
@@ -208,7 +208,7 @@ export default function Pricing() {
             </div>
 
             <button
-              onClick={open}
+              onClick={openFollowUp}
               className="mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-[10px] tracking-[0.18em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
               style={{
                 fontFamily: "var(--font-display)",

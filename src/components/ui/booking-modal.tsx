@@ -9,16 +9,18 @@ const GOOGLE_FORM_URL =
 const APPT_GURU_URL = "https://book.appt.guru/?s=2529"
 
 export default function BookingModal() {
-  const { isOpen, close } = useBookingModal()
-  const [step, setStep] = useState<"form" | "booking">("form")
+  const { isOpen, startStep, close } = useBookingModal()
+  const [step, setStep] = useState<"form" | "booking">(startStep)
 
-  // Reset to form step each time the modal is closed
+  // When modal opens use startStep; when it closes reset after exit animation
   useEffect(() => {
-    if (!isOpen) {
+    if (isOpen) {
+      setStep(startStep)
+    } else {
       const t = setTimeout(() => setStep("form"), 300)
       return () => clearTimeout(t)
     }
-  }, [isOpen])
+  }, [isOpen, startStep])
 
   return (
     <AnimatePresence>

@@ -2,11 +2,12 @@ import { Linkedin } from "lucide-react"
 import { useBookingModal } from "../lib/booking-modal-context"
 
 const footerLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" },
-  { label: "Blog", href: "/blog" },
-  { label: "About", href: "/about" },
+  { label: "Process",   href: "/#process"   },
+  { label: "Practices", href: "/#services"  },
+  { label: "Pricing",   href: "/#pricing"   },
+  { label: "Contact",   href: "/#contact"   },
+  { label: "Blog",      href: "/blog"       },
+  { label: "About",     href: "/about"      },
 ]
 
 export default function Footer() {
