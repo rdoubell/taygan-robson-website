@@ -255,24 +255,25 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Closing gold line */}
-          <div style={{ borderTop: "1px solid rgba(199,161,76,0.18)" }} />
-
-          {/* Process flow */}
-          <div className="text-center" style={{ paddingTop: "0.65rem", paddingBottom: "0.65rem" }}>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.6vw, 1.4rem)", fontWeight: 800, letterSpacing: "-0.01em" }}>
-              <span style={{ color: "#FFFFFF" }}>Consult</span>
-              <span style={{ color: "var(--color-gold)" }}> → </span>
-              <span style={{ color: "#FFFFFF" }}>Analysis</span>
-              <span style={{ color: "var(--color-gold)" }}> → </span>
-              <span style={{ color: "#FFFFFF" }}>Report</span>
-              <span style={{ color: "var(--color-gold)" }}> → </span>
-              <span style={{ color: "#FFFFFF" }}>Plan</span>
-              <span style={{ color: "var(--color-gold)" }}> → </span>
-              <span style={{ color: "#FFFFFF" }}>Programme</span>
-            </p>
-          </div>
         </motion.div>
+
+        {/* Process flow — gold top border acts as the closing line; text is centred between it and the page bottom */}
+        <div
+          className="absolute bottom-0 left-0 right-0 text-center"
+          style={{ borderTop: "1px solid rgba(199,161,76,0.18)", paddingTop: "1.25rem", paddingBottom: "1.25rem" }}
+        >
+          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.6vw, 1.4rem)", fontWeight: 800, letterSpacing: "-0.01em" }}>
+            <span style={{ color: "#FFFFFF" }}>Consult</span>
+            <span style={{ color: "var(--color-gold)" }}> → </span>
+            <span style={{ color: "#FFFFFF" }}>Analysis</span>
+            <span style={{ color: "var(--color-gold)" }}> → </span>
+            <span style={{ color: "#FFFFFF" }}>Report</span>
+            <span style={{ color: "var(--color-gold)" }}> → </span>
+            <span style={{ color: "#FFFFFF" }}>Plan</span>
+            <span style={{ color: "var(--color-gold)" }}> → </span>
+            <span style={{ color: "#FFFFFF" }}>Programme</span>
+          </p>
+        </div>
 
       </motion.div>
 
