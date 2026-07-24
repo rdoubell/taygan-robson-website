@@ -225,7 +225,7 @@ export default function Pricing() {
         </div>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div id="contact" className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Footer note */}
         <motion.p
           initial={{ opacity: 0 }}
@@ -240,47 +240,6 @@ export default function Pricing() {
         </motion.p>
       </div>
 
-      {/* ── Contact / CTA block ── */}
-      <div id="contact" className="mt-0" style={{ background: "var(--color-navy)", padding: "2.5rem 0" }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7 }}
-            className="flex flex-col items-center text-center"
-          >
-            <p
-              className="text-[10px] tracking-[0.38em] uppercase mb-4"
-              style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
-            >
-              Get in Touch
-            </p>
-            <h2
-              className="text-white mb-5"
-              style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", lineHeight: 1.1 }}
-            >
-              Start the conversation.
-            </h2>
-            <p className="mb-8" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.97rem", lineHeight: 1.7, maxWidth: "48ch" }}>
-              Whether you're an amateur or professional athlete, a team, an active individual, or simply someone seeking clarity on your training, nutrition, or recovery — every client starts with one conversation. A 1INC consultation with Taygan directly. The rest follows from there.
-            </p>
-            <button
-              onClick={open}
-              className="inline-flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
-              style={{
-                fontFamily: "var(--font-display)",
-                background: "var(--color-gold)",
-                color: "#14213D",
-                borderRadius: "var(--radius-pill)",
-              }}
-            >
-              Book a 1INC Consultation
-              <ArrowRight size={13} />
-            </button>
-          </motion.div>
-        </div>
-      </div>
     </section>
   )
 }
