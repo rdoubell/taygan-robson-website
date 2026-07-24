@@ -214,7 +214,7 @@ export default function Hero() {
           style={{ borderTop: "1px solid rgba(199,161,76,0.18)", flexShrink: 0 }}
         >
           {/* Heading */}
-          <div className="px-6 lg:px-12" style={{ paddingTop: "0.7rem", paddingBottom: "0.6rem" }}>
+          <div className="px-6 lg:px-12 text-center" style={{ paddingTop: "0.7rem", paddingBottom: "0.6rem" }}>
             <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "clamp(1rem, 1.6vw, 1.4rem)", fontWeight: 800, letterSpacing: "-0.01em" }}>
               Sound Familiar?
             </p>
