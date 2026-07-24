@@ -52,8 +52,6 @@ const credentials = [
   },
 ]
 
-// Duplicate for seamless infinite scroll
-const allCards = [...credentials, ...credentials]
 
 export default function AboutPage() {
   const heroRef     = useRef(null)
@@ -276,31 +274,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Credentials carousel ── */}
+      {/* ── Credentials ── */}
       <section
         ref={credRef}
         className="py-14 lg:py-20"
         style={{ background: "var(--color-cream, #F7F6EF)" }}
       >
-        <style>{`
-          @keyframes cred-scroll-about {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-          .cred-track-about {
-            animation: cred-scroll-about 32s linear infinite;
-          }
-          .cred-track-about:hover {
-            animation-play-state: paused;
-          }
-          .cred-mask-about {
-            mask: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-            -webkit-mask: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-          }
-        `}</style>
-
         {/* Section heading */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-8 text-center">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-10 text-center">
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={credInView ? { opacity: 1, y: 0 } : {}}
@@ -336,55 +317,51 @@ export default function AboutPage() {
           </motion.p>
         </div>
 
-        {/* Scrolling track */}
+        {/* Static three-column grid */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={credInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="cred-mask-about overflow-hidden"
+          className="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch"
         >
-          <div className="cred-track-about flex gap-5 w-max">
-            {allCards.map((cred, i) => {
-              return (
+          {credentials.map((cred) => (
+            <div
+              key={cred.category}
+              className="flex flex-col p-7"
+              style={{ background: "var(--color-navy)" }}
+            >
+              <div className="flex items-center gap-3 mb-6">
                 <div
-                  key={`${cred.category}-${i}`}
-                  className="flex-shrink-0 w-72 p-7"
-                  style={{ background: "var(--color-navy)" }}
+                  className="w-9 h-9 flex items-center justify-center flex-shrink-0"
+                  style={{ border: "1px solid rgba(255,255,255,0.22)" }}
                 >
-                  <div className="flex items-center gap-3 mb-6">
-                    <div
-                      className="w-9 h-9 flex items-center justify-center flex-shrink-0"
-                      style={{ border: "1px solid rgba(255,255,255,0.22)" }}
-                    >
-                      <cred.icon size={14} className="text-white" />
-                    </div>
-                    <span
-                      className="text-[10px] tracking-[0.22em] uppercase"
-                      style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.55)" }}
-                    >
-                      {cred.category}
-                    </span>
-                  </div>
-                  <div className="w-6 h-[1.5px] mb-5" style={{ background: "rgba(199,161,76,0.55)" }} />
-                  <ul className="flex flex-col gap-3">
-                    {cred.items.map((item) => (
-                      <li
-                        key={item}
-                        className="text-[13px] leading-snug flex items-start gap-2.5"
-                        style={{ color: "rgba(255,255,255,0.78)" }}
-                      >
-                        <span
-                          className="mt-[7px] w-1 h-1 rounded-full flex-shrink-0"
-                          style={{ background: "rgba(199,161,76,0.6)" }}
-                        />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                  <cred.icon size={14} className="text-white" />
                 </div>
-              )
-            })}
-          </div>
+                <span
+                  className="text-[10px] tracking-[0.22em] uppercase"
+                  style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.55)" }}
+                >
+                  {cred.category}
+                </span>
+              </div>
+              <div className="w-6 h-[1.5px] mb-5" style={{ background: "rgba(199,161,76,0.55)" }} />
+              <ul className="flex flex-col gap-3">
+                {cred.items.map((item) => (
+                  <li
+                    key={item}
+                    className="text-[13px] leading-snug flex items-start gap-2.5"
+                    style={{ color: "rgba(255,255,255,0.78)" }}
+                  >
+                    <span
+                      className="mt-[7px] w-1 h-1 rounded-full flex-shrink-0"
+                      style={{ background: "rgba(199,161,76,0.6)" }}
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </motion.div>
       </section>
 
@@ -392,7 +369,7 @@ export default function AboutPage() {
       <section
         ref={linkedinRef}
         className="py-16 lg:py-20"
-        style={{ background: "var(--color-cream, #F7F6EF)" }}
+        style={{ background: "#FFFFFF" }}
       >
         <div className="max-w-3xl mx-auto px-6 lg:px-12 text-center">
           <motion.div
