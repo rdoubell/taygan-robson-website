@@ -227,33 +227,18 @@ export default function Services() {
                     transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                     style={{ background: "#FFFFFF" }}
                   >
-                    <div className="max-w-7xl mx-auto px-8 lg:px-14 py-12 lg:py-16">
-                      <div className="grid lg:grid-cols-[280px_1fr] gap-10 lg:gap-20">
+                    <div className="max-w-7xl mx-auto px-8 lg:px-14 py-6 lg:py-8">
+                      <div className="grid lg:grid-cols-[210px_1fr_260px] gap-6 lg:gap-10 items-start">
 
-                        {/* Left — identity + credentials */}
+                        {/* Col 1 — identity + credentials */}
                         <div className="flex flex-col">
-                          <span
-                            className="mb-4 leading-none select-none"
-                            style={{
-                              fontFamily: "var(--font-display)",
-                              fontSize: "3rem",
-                              fontWeight: 800,
-                              color: "rgba(27,42,74,0.07)",
-                              letterSpacing: "-0.03em",
-                            }}
-                            aria-hidden="true"
-                          >
-                            {detail.num}
-                          </span>
-
-                          <div className="w-7 h-[2px] mb-5" style={{ background: "var(--color-gold)" }} />
-
+                          <div className="w-6 h-[2px] mb-4" style={{ background: "var(--color-gold)" }} />
                           <h3
-                            className="mb-2"
+                            className="mb-1.5"
                             style={{
                               fontFamily: "var(--font-display)",
                               fontWeight: 700,
-                              fontSize: "clamp(1.1rem, 1.8vw, 1.35rem)",
+                              fontSize: "clamp(0.95rem, 1.4vw, 1.1rem)",
                               color: "var(--color-navy)",
                               lineHeight: 1.25,
                               letterSpacing: "-0.005em",
@@ -261,76 +246,63 @@ export default function Services() {
                           >
                             {svc.title}
                           </h3>
-
                           <p
-                            className="mb-6 italic"
-                            style={{
-                              fontFamily: "var(--font-body)",
-                              color: "rgba(27,42,74,0.45)",
-                              fontSize: "12px",
-                              lineHeight: 1.5,
-                            }}
+                            className="mb-5 italic"
+                            style={{ fontFamily: "var(--font-body)", color: "rgba(27,42,74,0.45)", fontSize: "11.5px", lineHeight: 1.5 }}
                           >
                             {detail.subtitle}
                           </p>
-
-                          <div className="flex flex-col gap-4 mt-auto">
+                          <div className="flex flex-col gap-3">
                             <div>
-                              <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}>
+                              <p className="text-[9px] tracking-[0.25em] uppercase mb-0.5" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}>
                                 Taygan
                               </p>
-                              <p style={{ fontFamily: "var(--font-body)", color: "rgba(27,42,74,0.65)", fontSize: "12.5px", lineHeight: 1.5 }}>
+                              <p style={{ fontFamily: "var(--font-body)", color: "rgba(27,42,74,0.65)", fontSize: "12px", lineHeight: 1.5 }}>
                                 {detail.taygan}
                               </p>
                             </div>
                             <div>
-                              <p className="text-[9px] tracking-[0.25em] uppercase mb-1" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}>
+                              <p className="text-[9px] tracking-[0.25em] uppercase mb-0.5" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}>
                                 Team
                               </p>
-                              <p style={{ fontFamily: "var(--font-body)", color: "rgba(27,42,74,0.65)", fontSize: "12.5px", lineHeight: 1.5 }}>
+                              <p style={{ fontFamily: "var(--font-body)", color: "rgba(27,42,74,0.65)", fontSize: "12px", lineHeight: 1.5 }}>
                                 {detail.team}
                               </p>
                             </div>
                           </div>
                         </div>
 
-                        {/* Right — description + add-ons */}
-                        <div className="flex flex-col">
-                          <p
-                            className="leading-[1.85] mb-8"
-                            style={{
-                              fontFamily: "var(--font-body)",
-                              color: "rgba(27,42,74,0.62)",
-                              fontSize: "0.97rem",
-                              maxWidth: "60ch",
-                            }}
-                          >
-                            {detail.desc}
-                          </p>
+                        {/* Col 2 — description */}
+                        <p
+                          className="leading-[1.8]"
+                          style={{ fontFamily: "var(--font-body)", color: "rgba(27,42,74,0.62)", fontSize: "0.9rem" }}
+                        >
+                          {detail.desc}
+                        </p>
 
-                          <div className={`grid gap-4 ${detail.addOns.length > 1 ? "sm:grid-cols-2" : "sm:grid-cols-1 max-w-xl"}`}>
-                            {detail.addOns.map((addOn) => (
-                              <div
-                                key={addOn.title}
-                                className="p-5 flex flex-col"
-                                style={{
-                                  background: "var(--color-cream, #F7F6EF)",
-                                  border: "1px solid rgba(199,161,76,0.2)",
-                                  borderRadius: "var(--radius-sm)",
-                                }}
-                              >
-                                <p className="text-[9px] tracking-[0.25em] uppercase mb-2" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 700 }}>
-                                  Add-On
-                                </p>
-                                <p className="mb-1.5" style={{ fontFamily: "var(--font-display)", fontWeight: 600, color: "var(--color-navy)", fontSize: "12.5px", lineHeight: 1.4 }}>
-                                  {addOn.title}
-                                </p>
-                                <p style={{ fontFamily: "var(--font-body)", color: "rgba(27,42,74,0.55)", fontSize: "12px", lineHeight: 1.6 }}>
-                                  {addOn.desc}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
+                        {/* Col 3 — add-ons */}
+                        <div className="flex flex-col gap-3">
+                          {detail.addOns.map((addOn) => (
+                            <div
+                              key={addOn.title}
+                              className="p-4 flex flex-col"
+                              style={{
+                                background: "var(--color-cream, #F7F6EF)",
+                                border: "1px solid rgba(199,161,76,0.2)",
+                                borderRadius: "var(--radius-sm)",
+                              }}
+                            >
+                              <p className="text-[9px] tracking-[0.25em] uppercase mb-1.5" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 700 }}>
+                                Add-On
+                              </p>
+                              <p className="mb-1" style={{ fontFamily: "var(--font-display)", fontWeight: 600, color: "var(--color-navy)", fontSize: "12px", lineHeight: 1.4 }}>
+                                {addOn.title}
+                              </p>
+                              <p style={{ fontFamily: "var(--font-body)", color: "rgba(27,42,74,0.55)", fontSize: "11.5px", lineHeight: 1.55 }}>
+                                {addOn.desc}
+                              </p>
+                            </div>
+                          ))}
                         </div>
 
                       </div>
