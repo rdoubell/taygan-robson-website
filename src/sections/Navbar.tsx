@@ -6,6 +6,8 @@ import { Menu, X } from "lucide-react"
 const mainLinks = [
   { label: "Process",   href: "/#process",   sectionId: "process"   },
   { label: "Practices", href: "/#services",  sectionId: "services"  },
+  { label: "Pricing",   href: "/#pricing",   sectionId: "pricing"   },
+  { label: "Contact",   href: "/#contact",   sectionId: "contact"   },
 ]
 
 const secondaryLinks = [
@@ -13,7 +15,7 @@ const secondaryLinks = [
   { label: "About", href: "/about" },
 ]
 
-const ALL_SECTION_IDS   = ["hero", "process", "services"]
+const ALL_SECTION_IDS   = ["hero", "process", "services", "pricing", "contact"]
 
 export default function Navbar() {
   const { pathname }   = useLocation()
