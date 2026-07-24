@@ -224,30 +224,34 @@ export default function Hero() {
           <div
             ref={stripRef}
             className="[&::-webkit-scrollbar]:hidden"
-            style={{ overflowX: "scroll", scrollbarWidth: "none" } as React.CSSProperties}
+            style={{ overflowX: "scroll", scrollbarWidth: "none", paddingBottom: "0.9rem" } as React.CSSProperties}
             onMouseEnter={() => { pauseRef.current = true }}
             onMouseLeave={() => { pauseRef.current = false }}
           >
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", gap: "0.75rem", paddingLeft: "1.5rem", paddingRight: "1.5rem" }}>
               {[...soundFamiliarCards, ...soundFamiliarCards].map((card, i) => (
                 <div
                   key={i}
                   style={{
                     width: "25vw",
-                    minWidth: "200px",
+                    minWidth: "220px",
                     flexShrink: 0,
-                    padding: "0.7rem 1.1rem 0.9rem",
-                    borderRight: "1px solid rgba(255,255,255,0.06)",
-                    height: "110px",
+                    padding: "0.9rem 1.2rem 1rem",
+                    borderRadius: "14px",
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(199,161,76,0.22)",
+                    backdropFilter: "blur(8px)",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.28)",
+                    height: "118px",
                     display: "flex",
                     flexDirection: "column",
                     overflow: "hidden",
                   }}
                 >
-                  <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "7.5px", letterSpacing: "0.24em", textTransform: "uppercase", fontWeight: 600, marginBottom: "0.4rem", flexShrink: 0 }}>
+                  <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "7.5px", letterSpacing: "0.24em", textTransform: "uppercase", fontWeight: 600, marginBottom: "0.45rem", flexShrink: 0 }}>
                     {card.category}
                   </p>
-                  <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.42)", fontSize: "0.72rem", lineHeight: 1.55, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical" } as React.CSSProperties}>
+                  <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", lineHeight: 1.55, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical" } as React.CSSProperties}>
                     {card.quote}
                   </p>
                 </div>
