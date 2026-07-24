@@ -39,7 +39,7 @@ function HomePage() {
         {/* Hero — full-bleed photo, transparent navbar sits on top */}
         <Hero />
         {/* Content flows normally below hero */}
-        <Journey showHeading={false} />
+        <Journey />
         <Services />
         <WhoThisIsFor />
         <Pricing />
