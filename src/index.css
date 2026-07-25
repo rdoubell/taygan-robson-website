@@ -81,6 +81,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #1B2A4A; /* navy shows on iOS overscroll/safe-area instead of white */
 }
 
 body {
