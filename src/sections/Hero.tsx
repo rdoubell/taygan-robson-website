@@ -137,7 +137,9 @@ export default function Hero() {
                 <p>Injured. Undertrained. Under fuelled. Managing GLP-1 related muscle loss. Your numbers are dropping. Lost and need someone to be accountable to.</p>
                 <p>Whatever brought you here — your training load, injury history, nutrition, endurance data numbers and performance goals assessed in a personal online consultation with Taygan directly.</p>
                 <p>A written report, a clear plan and a programme built around your findings.</p>
-                <p>One conversation. That is 1INC.</p>
+                <p style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(1rem, 1.7vw, 1.15rem)", color: "rgba(255,255,255,0.92)", lineHeight: 1.3 }}>
+                  Three practices in one. That is 1INC.
+                </p>
               </motion.div>
 
             </div>
