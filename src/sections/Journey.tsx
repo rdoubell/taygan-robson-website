@@ -63,91 +63,99 @@ export default function Journey({ showHeading = true }: { showHeading?: boolean 
           initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-          style={{ overflowX: "auto" }}
+          style={{ border: `1.5px solid ${NAVY}` }}
         >
-          <table style={{ width: "100%", borderCollapse: "collapse", border: `1.5px solid ${NAVY}`, tableLayout: "fixed" }}>
+          {/* Desktop header — hidden on mobile */}
+          <div
+            className="hidden md:grid"
+            style={{
+              gridTemplateColumns: "80px 200px 1fr",
+              background: GOLD,
+              borderBottom: `1.5px solid ${NAVY}`,
+            }}
+          >
+            {(["Step", "Stage", "What You Get"] as const).map((col, ci) => (
+              <div
+                key={col}
+                style={{
+                  padding: "0.75rem 1.1rem",
+                  borderRight: ci < 2 ? `1px solid ${NAVY}` : undefined,
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.68rem",
+                  fontWeight: 700,
+                  color: NAVY,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.12em",
+                }}
+              >
+                {col}
+              </div>
+            ))}
+          </div>
 
-            {/* Header row — gold background, navy text */}
-            <thead>
-              <tr style={{ background: GOLD }}>
-                {(["Step", "Stage", "What You Get"] as const).map((col, ci) => (
-                  <th
-                    key={col}
-                    style={{
-                      width: ci === 0 ? "80px" : ci === 1 ? "200px" : undefined,
-                      padding: "0.75rem 1.1rem",
-                      borderBottom: `1.5px solid ${NAVY}`,
-                      borderRight: ci < 2 ? `1px solid ${NAVY}` : undefined,
-                      fontFamily: "var(--font-display)",
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      color: NAVY,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.12em",
-                      textAlign: "left",
-                    }}
-                  >
-                    {col}
-                  </th>
-                ))}
-              </tr>
-            </thead>
+          {/* Data rows */}
+          {steps.map((step, i) => {
+            const isLast = i === steps.length - 1
+            const rowBorder = isLast ? "none" : ROW_BORDER
+            return (
+              <div key={step.num} style={{ background: "#FFFFFF", borderBottom: rowBorder }}>
 
-            {/* Data rows */}
-            <tbody>
-              {steps.map((step, i) => {
-                const isLast = i === steps.length - 1
-                const rowBorder = isLast ? "none" : ROW_BORDER
-                return (
-                  <tr key={step.num} style={{ background: "#FFFFFF" }}>
-
-                    {/* Step number — gold */}
-                    <td style={{
-                      padding: "0.9rem 1.1rem",
-                      borderBottom: rowBorder,
-                      borderRight: `1px solid ${NAVY}`,
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 800,
-                      fontSize: "1.15rem",
-                      color: GOLD,
-                      verticalAlign: "top",
-                    }}>
+                {/* ── Mobile layout: stacked card ── */}
+                <div className="md:hidden" style={{ padding: "1rem 1.1rem" }}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.65rem", marginBottom: "0.45rem" }}>
+                    <span style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "1rem", color: GOLD, flexShrink: 0 }}>
                       {step.num}
-                    </td>
-
-                    {/* Stage — navy bold */}
-                    <td style={{
-                      padding: "0.9rem 1.1rem",
-                      borderBottom: rowBorder,
-                      borderRight: `1px solid ${NAVY}`,
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 700,
-                      fontSize: "0.88rem",
-                      color: NAVY,
-                      verticalAlign: "top",
-                      lineHeight: 1.4,
-                    }}>
+                    </span>
+                    <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.9rem", color: NAVY, lineHeight: 1.3 }}>
                       {step.stage}
-                    </td>
+                    </span>
+                  </div>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.85rem", color: NAVY, lineHeight: 1.65, opacity: 0.75, paddingLeft: "1.65rem" }}>
+                    {step.whatYouGet}
+                  </p>
+                </div>
 
-                    {/* What you get — navy body text */}
-                    <td style={{
-                      padding: "0.9rem 1.1rem",
-                      borderBottom: rowBorder,
-                      fontFamily: "var(--font-body)",
-                      fontSize: "0.88rem",
-                      color: NAVY,
-                      verticalAlign: "top",
-                      lineHeight: 1.65,
-                    }}>
-                      {step.whatYouGet}
-                    </td>
+                {/* ── Desktop layout: 3-column grid ── */}
+                <div
+                  className="hidden md:grid"
+                  style={{ gridTemplateColumns: "80px 200px 1fr" }}
+                >
+                  <div style={{
+                    padding: "0.9rem 1.1rem",
+                    borderRight: `1px solid ${NAVY}`,
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 800,
+                    fontSize: "1.15rem",
+                    color: GOLD,
+                    verticalAlign: "top",
+                  }}>
+                    {step.num}
+                  </div>
+                  <div style={{
+                    padding: "0.9rem 1.1rem",
+                    borderRight: `1px solid ${NAVY}`,
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "0.88rem",
+                    color: NAVY,
+                    lineHeight: 1.4,
+                  }}>
+                    {step.stage}
+                  </div>
+                  <div style={{
+                    padding: "0.9rem 1.1rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.88rem",
+                    color: NAVY,
+                    lineHeight: 1.65,
+                  }}>
+                    {step.whatYouGet}
+                  </div>
+                </div>
 
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+              </div>
+            )
+          })}
         </motion.div>
 
       </div>
