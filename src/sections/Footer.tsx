@@ -30,8 +30,8 @@ export default function Footer() {
               Data-driven consulting. Evidence-based direction.
             </p>
             <div className="flex flex-col gap-1.5 mt-1">
-              <a href="mailto:taygan@1inc.co.za" className="text-[13px] hover:text-[#C7A14C] transition-colors" style={{ fontFamily: "var(--font-body)", color: "var(--color-navy)" }}>
-                taygan@1inc.co.za
+              <a href="mailto:hello@1inc.co.za" className="text-[13px] hover:text-[#C7A14C] transition-colors" style={{ fontFamily: "var(--font-body)", color: "var(--color-navy)" }}>
+                hello@1inc.co.za
               </a>
               <p className="text-[13px]" style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)" }}>
                 Bookings via Appointment Guru
