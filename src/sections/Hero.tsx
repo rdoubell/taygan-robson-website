@@ -256,10 +256,10 @@ export default function Hero() {
                     onMouseEnter={() => { pauseRef.current = true }}
                     onMouseLeave={() => { pauseRef.current = false }}
                   >
-                    <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "7.5px", letterSpacing: "0.24em", textTransform: "uppercase", fontWeight: 600, marginBottom: "0.45rem", flexShrink: 0 }}>
+                    <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "7.5px", letterSpacing: "0.24em", textTransform: "uppercase", fontWeight: 800, marginBottom: "0.45rem", flexShrink: 0 }}>
                       {card.category}
                     </p>
-                    <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", lineHeight: 1.55, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical" } as React.CSSProperties}>
+                    <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.92)", fontSize: "0.76rem", lineHeight: 1.55, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical" } as React.CSSProperties}>
                       {card.quote}
                     </p>
                   </div>
