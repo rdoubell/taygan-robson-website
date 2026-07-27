@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { BookingModalProvider } from "./lib/booking-modal-context"
+import { RegionProvider } from "./lib/region-context"
 import BookingModal from "./components/ui/booking-modal"
 import Navbar from "./sections/Navbar"
 import Hero from "./sections/Hero"
@@ -52,6 +53,7 @@ function HomePage() {
 
 export default function App() {
   return (
+    <RegionProvider>
     <BookingModalProvider>
       <BrowserRouter>
         <Routes>
@@ -66,5 +68,6 @@ export default function App() {
       </BrowserRouter>
       <BookingModal />
     </BookingModalProvider>
+    </RegionProvider>
   )
 }

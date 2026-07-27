@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { useBookingModal } from "../lib/booking-modal-context"
+import { useRegion } from "../lib/region-context"
 
 const soundFamiliarCards = [
   { category: "Performance & Training", quote: "I have entered the ABSA Cape Epic to be competitive in my age category and I have no structured training plan. I do not know if I can ride hard for 8 days, let alone race it." },
@@ -27,6 +28,9 @@ export default function Hero() {
   const contentOpacity = useTransform(scrollY, [0, 500], [1, 0])
   const contentY      = useTransform(scrollY, [0, 500], [0, -60])
   const { open } = useBookingModal()
+
+  const region = useRegion()
+  const consultPrice = region === "intl" ? "$150" : "R 1 250"
 
   const videoRef = useRef<HTMLVideoElement>(null)
   useEffect(() => {
@@ -180,7 +184,7 @@ export default function Hero() {
                 <div className="flex items-end justify-between gap-4">
                   <div>
                     <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(2rem, 3.2vw, 2.6rem)", color: "var(--color-gold)", lineHeight: 1 }}>
-                      R 1 250
+                      {consultPrice}
                     </div>
                     <p className="text-[10px] tracking-[0.15em] uppercase mt-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
                       Online Consultation

@@ -2,12 +2,21 @@ import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { ArrowRight, Check } from "lucide-react"
 import { useBookingModal } from "../lib/booking-modal-context"
+import { useRegion } from "../lib/region-context"
 
 // ── Main section ───────────────────────────────────────────────
 export default function Pricing() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-60px" })
   const { open, openFollowUp } = useBookingModal()
+  const region = useRegion()
+  const isIntl = region === "intl"
+  const consultPrice = isIntl ? "$150" : "R 1 250"
+  const followUpPrice = isIntl ? "$90" : "R 750"
+  const priceLabel = isIntl ? "Online Consultation" : "Online Consultation"
+  const footerNote = isIntl
+    ? "All ongoing programme pricing follows the initial 1INC consultation. $150 all-in."
+    : "All ongoing programme pricing follows the initial 1INC consultation. R 1 250 all-in."
 
   return (
     <section id="pricing" className="bg-white" style={{ paddingTop: "5rem", paddingBottom: 0 }} ref={ref}>
@@ -122,10 +131,10 @@ export default function Pricing() {
                       lineHeight: 1,
                     }}
                   >
-                    R 1 250
+                    {consultPrice}
                   </div>
                   <p className="text-[10px] tracking-[0.2em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
-                    Online Consultation
+                    {priceLabel}
                   </p>
                 </div>
                 <button
@@ -187,7 +196,7 @@ export default function Pricing() {
                     lineHeight: 1,
                   }}
                 >
-                  R 750
+                  {followUpPrice}
                 </div>
                 <p className="text-[10px] tracking-[0.2em] uppercase mt-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
                   30-Minute Session
@@ -235,7 +244,7 @@ export default function Pricing() {
           className="text-center text-[12px] py-6 border-t"
           style={{ fontFamily: "var(--font-body)", color: "var(--text-muted)", borderColor: "var(--border)" }}
         >
-          All ongoing programme pricing follows the initial 1INC consultation. R 1 250 all-in.{" "}
+          {footerNote}{" "}
           Booked via <a href="https://appointmentguru.co/taygan" target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-gold)" }}>Appointment Guru</a> · Delivered via Microsoft Teams · Invoice issued post-session, payable within 7 days.
         </motion.p>
       </div>
