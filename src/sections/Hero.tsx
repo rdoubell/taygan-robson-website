@@ -237,6 +237,8 @@ export default function Hero() {
               style={{ overflowX: "scroll", scrollbarWidth: "none", paddingBottom: "0.9rem" } as React.CSSProperties}
               onMouseEnter={() => { pauseRef.current = true }}
               onMouseLeave={() => { pauseRef.current = false }}
+              onTouchStart={() => { pauseRef.current = true }}
+              onTouchEnd={() => { pauseRef.current = false }}
             >
               <div style={{ display: "flex", gap: "0.75rem", paddingLeft: "1.5rem", paddingRight: "1.5rem" }}>
                 {[...soundFamiliarCards, ...soundFamiliarCards].map((card, i) => (

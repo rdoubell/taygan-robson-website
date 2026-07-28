@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import { motion, useInView } from "framer-motion"
 import { Target, TrendingDown, Timer, Trophy, Compass, Flame, Briefcase, GraduationCap, RotateCcw, Award } from "lucide-react"
 import PersonaFanCarousel from "../components/ui/persona-fan-carousel"
@@ -81,6 +81,31 @@ export default function WhoThisIsFor() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-60px" })
 
+  const stripRef = useRef<HTMLDivElement>(null)
+  const pauseRef = useRef(false)
+
+  useEffect(() => {
+    const el = stripRef.current
+    if (!el) return
+    let lastTime = 0
+    let raf: number
+    const speed = 0.04
+
+    const tick = (now: number) => {
+      if (lastTime) {
+        if (!pauseRef.current) {
+          el.scrollLeft += speed * (now - lastTime)
+          const half = el.scrollWidth / 2
+          if (el.scrollLeft >= half) el.scrollLeft -= half
+        }
+      }
+      lastTime = now
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
   return (
     <section
       id="who-this-is-for"
@@ -129,13 +154,19 @@ export default function WhoThisIsFor() {
       </div>
 
       {/* ── Mobile: horizontal scroll strip ── */}
-      <div className="md:hidden w-full overflow-x-auto pb-4" style={{ WebkitOverflowScrolling: "touch" }}>
+      <div
+        ref={stripRef}
+        className="md:hidden w-full [&::-webkit-scrollbar]:hidden"
+        style={{ overflowX: "scroll", scrollbarWidth: "none", paddingBottom: "1rem" } as React.CSSProperties}
+        onTouchStart={() => { pauseRef.current = true }}
+        onTouchEnd={() => { pauseRef.current = false }}
+      >
         <div className="flex gap-3 px-6" style={{ width: "max-content" }}>
-          {personas.map((persona) => {
+          {[...personas, ...personas].map((persona, i) => {
             const Icon = persona.icon
             return (
               <div
-                key={persona.id}
+                key={`${persona.id}-${i}`}
                 className="flex flex-col flex-shrink-0"
                 style={{
                   width: "220px",
