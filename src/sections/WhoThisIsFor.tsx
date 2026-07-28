@@ -102,7 +102,7 @@ export default function WhoThisIsFor() {
             className="text-[10px] tracking-[0.42em] uppercase mb-3"
             style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
           >
-            Who This Is For
+            From Injury to Active or Performance: For Everyone Who Moves.
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
@@ -116,9 +116,7 @@ export default function WhoThisIsFor() {
               lineHeight: 1.1,
             }}
           >
-            From Injury to Active or Performance:
-            <br />
-            For Everyone Who Moves.
+            Who This Is For
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
