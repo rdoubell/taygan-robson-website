@@ -234,8 +234,6 @@ export default function Hero() {
                       display: "flex",
                       flexDirection: "column",
                     }}
-                    onMouseEnter={() => { pauseRef.current = true }}
-                    onMouseLeave={() => { pauseRef.current = false }}
                   >
                     <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "7.5px", letterSpacing: "0.24em", textTransform: "uppercase", fontWeight: 800, marginBottom: "0.45rem", flexShrink: 0 }}>
                       {card.category}
