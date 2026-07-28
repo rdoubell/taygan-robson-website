@@ -37,31 +37,9 @@ export default function Hero() {
     if (videoRef.current) videoRef.current.playbackRate = 0.35
   }, [])
 
-  // Auto-scroll strip
-  const stripRef = useRef<HTMLDivElement>(null)
-  const pauseRef = useRef(false)
-
-  useEffect(() => {
-    const el = stripRef.current
-    if (!el) return
-    let lastTime = 0
-    let raf: number
-    const speed = 0.05 // px / ms ≈ 48 px / s
-
-    const tick = (now: number) => {
-      if (lastTime) {
-        if (!pauseRef.current) {
-          el.scrollLeft += speed * (now - lastTime)
-          const half = el.scrollWidth / 2
-          if (el.scrollLeft >= half) el.scrollLeft -= half
-        }
-      }
-      lastTime = now
-      raf = requestAnimationFrame(tick)
-    }
-    raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
-  }, [])
+  const innerStripRef = useRef<HTMLDivElement>(null)
+  const pauseStrip  = () => { if (innerStripRef.current) innerStripRef.current.style.animationPlayState = "paused" }
+  const resumeStrip = () => { if (innerStripRef.current) innerStripRef.current.style.animationPlayState = "running" }
 
   return (
     <section id="hero" className="relative w-full h-screen min-h-[640px] overflow-hidden" style={{ background: "#14213D" }}>
@@ -232,15 +210,13 @@ export default function Hero() {
 
             {/* Scrolling cards — seamless infinite loop, 4 visible */}
             <div
-              ref={stripRef}
-              className="[&::-webkit-scrollbar]:hidden"
-              style={{ overflowX: "scroll", scrollbarWidth: "none", paddingBottom: "0.9rem" } as React.CSSProperties}
-              onMouseEnter={() => { pauseRef.current = true }}
-              onMouseLeave={() => { pauseRef.current = false }}
-              onTouchStart={() => { pauseRef.current = true }}
-              onTouchEnd={() => { pauseRef.current = false }}
+              style={{ overflow: "hidden", paddingBottom: "0.9rem" }}
+              onMouseEnter={pauseStrip}
+              onMouseLeave={resumeStrip}
+              onTouchStart={pauseStrip}
+              onTouchEnd={resumeStrip}
             >
-              <div style={{ display: "flex", gap: "0.75rem", paddingLeft: "1.5rem", paddingRight: "1.5rem" }}>
+              <div ref={innerStripRef} style={{ display: "flex", gap: "0.75rem", paddingLeft: "1.5rem", paddingRight: "1.5rem", width: "max-content", animation: "scroll-left 70s linear infinite" }}>
                 {[...soundFamiliarCards, ...soundFamiliarCards].map((card, i) => (
                   <div
                     key={i}

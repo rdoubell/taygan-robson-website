@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react"
+import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { Target, TrendingDown, Timer, Trophy, Compass, Flame, Briefcase, GraduationCap, RotateCcw, Award } from "lucide-react"
 import PersonaFanCarousel from "../components/ui/persona-fan-carousel"
@@ -81,30 +81,9 @@ export default function WhoThisIsFor() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-60px" })
 
-  const stripRef = useRef<HTMLDivElement>(null)
-  const pauseRef = useRef(false)
-
-  useEffect(() => {
-    const el = stripRef.current
-    if (!el) return
-    let lastTime = 0
-    let raf: number
-    const speed = 0.04
-
-    const tick = (now: number) => {
-      if (lastTime) {
-        if (!pauseRef.current) {
-          el.scrollLeft += speed * (now - lastTime)
-          const half = el.scrollWidth / 2
-          if (el.scrollLeft >= half) el.scrollLeft -= half
-        }
-      }
-      lastTime = now
-      raf = requestAnimationFrame(tick)
-    }
-    raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
-  }, [])
+  const innerStripRef = useRef<HTMLDivElement>(null)
+  const pauseStrip  = () => { if (innerStripRef.current) innerStripRef.current.style.animationPlayState = "paused" }
+  const resumeStrip = () => { if (innerStripRef.current) innerStripRef.current.style.animationPlayState = "running" }
 
   return (
     <section
@@ -155,13 +134,12 @@ export default function WhoThisIsFor() {
 
       {/* ── Mobile: horizontal scroll strip ── */}
       <div
-        ref={stripRef}
-        className="md:hidden w-full [&::-webkit-scrollbar]:hidden"
-        style={{ overflowX: "scroll", scrollbarWidth: "none", paddingBottom: "1rem" } as React.CSSProperties}
-        onTouchStart={() => { pauseRef.current = true }}
-        onTouchEnd={() => { pauseRef.current = false }}
+        className="md:hidden w-full"
+        style={{ overflow: "hidden", paddingBottom: "1rem" }}
+        onTouchStart={pauseStrip}
+        onTouchEnd={resumeStrip}
       >
-        <div className="flex gap-3 px-6" style={{ width: "max-content" }}>
+        <div ref={innerStripRef} className="flex gap-3 px-6" style={{ width: "max-content", animation: "scroll-left 50s linear infinite" }}>
           {[...personas, ...personas].map((persona, i) => {
             const Icon = persona.icon
             return (
