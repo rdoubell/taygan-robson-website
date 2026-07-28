@@ -230,10 +230,9 @@ export default function Hero() {
                       border: "1px solid rgba(199,161,76,0.22)",
                       backdropFilter: "blur(8px)",
                       boxShadow: "0 8px 24px rgba(0,0,0,0.28)",
-                      height: "118px",
+                      minHeight: "118px",
                       display: "flex",
                       flexDirection: "column",
-                      overflow: "hidden",
                     }}
                     onMouseEnter={() => { pauseRef.current = true }}
                     onMouseLeave={() => { pauseRef.current = false }}
