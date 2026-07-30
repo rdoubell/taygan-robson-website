@@ -408,10 +408,27 @@ export default function AboutPage() {
               fontWeight: 700,
               lineHeight: 1.55,
               letterSpacing: "-0.01em",
+              color: "rgba(255,255,255,0.88)",
             }}
           >
-            <span style={{ color: "rgba(255,255,255,0.88)" }}>Where rehabilitation, performance science and nutrition are not separate conversations — </span>
-            <span style={{ color: "var(--color-gold)" }}>they are 3 in 1. That is 1INC.</span>
+            Where rehabilitation, performance science and nutrition are not separate conversations.
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={closingInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-3"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(1.2rem, 2.4vw, 1.75rem)",
+              fontWeight: 700,
+              lineHeight: 1.55,
+              letterSpacing: "-0.01em",
+              color: "var(--color-gold)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            They are 3 in 1. That is 1INC.
           </motion.p>
         </div>
       </section>
