@@ -59,7 +59,7 @@ function getSlotConfig(totalCards: number, slot: number) {
   };
 }
 
-export default function PersonaFanCarousel({ personas, trigger = true }: { personas: PersonaItem[]; trigger?: boolean }) {
+export default function PersonaFanCarousel({ personas, trigger = true, onCardClick }: { personas: PersonaItem[]; trigger?: boolean; onCardClick?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isAnimating = useRef(false);
   const hasEntered = useRef(false);
@@ -243,6 +243,7 @@ export default function PersonaFanCarousel({ personas, trigger = true }: { perso
             <div
               key={persona.id}
               className="fan-card absolute"
+              onClick={onCardClick}
               style={{
                 width: `${CARD_W}rem`,
                 height: `${CARD_H}rem`,
@@ -258,7 +259,7 @@ export default function PersonaFanCarousel({ personas, trigger = true }: { perso
                 flexDirection: "column",
                 backdropFilter: "blur(6px)",
                 boxShadow: "0 12px 40px rgba(0,0,0,0.35)",
-                cursor: "default",
+                cursor: onCardClick ? "pointer" : "default",
               }}
             >
               {/* Gold icon */}

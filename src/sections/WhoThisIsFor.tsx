@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion"
 import { Target, TrendingDown, Timer, Trophy, Compass, Flame, Briefcase, GraduationCap, RotateCcw, Award } from "lucide-react"
 import PersonaFanCarousel from "../components/ui/persona-fan-carousel"
 import type { PersonaItem } from "../components/ui/persona-fan-carousel"
+import { useBookingModal } from "../lib/booking-modal-context"
 
 const personas: PersonaItem[] = [
   {
@@ -80,6 +81,7 @@ const personas: PersonaItem[] = [
 export default function WhoThisIsFor() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-60px" })
+  const { open } = useBookingModal()
 
   const innerStripRef = useRef<HTMLDivElement>(null)
   const pauseStrip  = () => { if (innerStripRef.current) innerStripRef.current.style.animationPlayState = "paused" }
@@ -144,6 +146,7 @@ export default function WhoThisIsFor() {
               <div
                 key={`${persona.id}-${i}`}
                 className="flex flex-col flex-shrink-0"
+                onClick={open}
                 style={{
                   width: "220px",
                   background: "rgba(255,255,255,0.06)",
@@ -151,6 +154,7 @@ export default function WhoThisIsFor() {
                   borderRadius: "var(--radius-md)",
                   padding: "1.25rem",
                   backdropFilter: "blur(6px)",
+                  cursor: "pointer",
                 }}
               >
                 <div style={{ marginBottom: "0.7rem" }}>
@@ -209,7 +213,7 @@ export default function WhoThisIsFor() {
 
       {/* ── Desktop: fan carousel ── */}
       <div className="hidden md:block w-full mb-6">
-        <PersonaFanCarousel personas={personas} trigger={inView} />
+        <PersonaFanCarousel personas={personas} trigger={inView} onCardClick={open} />
       </div>
 
     </section>
