@@ -57,7 +57,7 @@ const methods = [
   {
     category: "Physical Profile Assessment",
     description:
-      "Strength deficits, force production asymmetries and limb-to-limb imbalances quantified before any programme commences. Working alongside Dr Peter van der Meulen, specialist prosthodontist, analysing RFD, peak force, RSI, balance and concentric strength — with custom performance mouth guards designed around individual athlete bite and jaw alignment data.",
+      "Strength deficits, force production asymmetries and limb-to-limb imbalances quantified before any programme commences. Working alongside Dr Peter van der Meulen, specialist prosthodontist, assessing high-performing athletes using VALD ForceDecks to analyse rate of force development (RFD), peak force and power, reactive strength index (RSI), balance and concentric strength. Custom performance mouth guards designed around individual athlete bite and jaw alignment data.",
     tools: "VALD ForceDecks · VALD DynaMo · FMS · Posture Grid",
   },
   {
@@ -244,7 +244,7 @@ export default function AboutPage() {
               >
                 <div className="w-8 h-[2px] mb-6" style={{ background: "var(--color-gold)" }} />
                 <p className="leading-[1.9]" style={{ fontFamily: "var(--font-body)", color: "rgba(0,0,0,0.65)", fontSize: "clamp(1rem, 1.6vw, 1.1rem)" }}>
-                  I have been an athlete my entire life. Competitive club 1st team rugby, football from five to thirteen — A team, provincial colours in youth dinghy sailing, then racing competitively and placing in mountain biking across more than 50 events over fifteen years including ABSA Cape Epic, Joberg2c, and other three to four-day stage race events, Xterra off-road triathlon and adventure racing across South Africa from 2006 to 2024. The last two years have been my own rehabilitation, managing a significant back injury from Muay Thai training and navigating return-to-performance firsthand. That experience shapes every consultation.
+                  I have been an athlete my entire life. Played football (soccer) from age 5 to 13, progressing to 1st team junior level; competed in rugby at school and club 1st team level. I earned provincial colours in youth dinghy sailing, then moved to competitive racing mountain biking across more than 50 events over 15 years — including ABSA Cape Epic, Joberg2c, and other three to four-day stage race events — as well as Xterra off-road triathlon and adventure racing across South Africa from 2006 to 2024.
                 </p>
               </motion.div>
 
@@ -255,7 +255,7 @@ export default function AboutPage() {
                 className="leading-[1.9]"
                 style={{ fontFamily: "var(--font-body)", color: "rgba(0,0,0,0.65)", fontSize: "clamp(1rem, 1.6vw, 1.1rem)" }}
               >
-                I founded and direct <span style={{ color: "var(--color-navy)", fontWeight: 600 }}>1INC Consulting</span> across three specialist practices with a multi-disciplinary team: sports injury and rehabilitation, performance science, and clinical sports nutrition. Every client begins with a personal online consultation with me directly. Training load, injury history, nutrition, and performance goals assessed — then mapped to a written report, a clear plan, and a programme. Data-driven consulting. Evidence-based direction.
+                From competing at that level, I know what it means when an injury derails months of structured work. The last two years have been my own rehabilitation journey, managing a significant back injury from Muay Thai training and navigating return-to-performance firsthand. That experience — working with physiotherapists, psychologists and specialists in my own multi-disciplinary team — has shaped every consultation and rehab session I run.
               </motion.p>
 
               <motion.p
@@ -265,7 +265,17 @@ export default function AboutPage() {
                 className="leading-[1.9]"
                 style={{ fontFamily: "var(--font-body)", color: "rgba(0,0,0,0.65)", fontSize: "clamp(1rem, 1.6vw, 1.1rem)" }}
               >
-                This includes athletes, active individuals, and those managing GLP-1-related muscle loss, sarcopenia, or bone health concerns — where rehabilitation, nutrition, and structured load management intersect.
+                This is why I founded and direct <span style={{ color: "var(--color-navy)", fontWeight: 600 }}>1INC Consulting</span> across three specialist practices with a multi-disciplinary team: sports injury and rehabilitation, performance science and clinical sports nutrition. Every client begins with a personal online consultation with me directly. Training load, injury history, nutrition and performance goals assessed, then mapped to a written report, a clear plan and a programme. Data-driven consulting. Evidence-based direction.
+              </motion.p>
+
+              <motion.p
+                variants={fadeUp(0.30)}
+                initial="hidden"
+                animate={bioInView ? "visible" : "hidden"}
+                className="leading-[1.9]"
+                style={{ fontFamily: "var(--font-body)", color: "rgba(0,0,0,0.65)", fontSize: "clamp(1rem, 1.6vw, 1.1rem)" }}
+              >
+                This includes athletes, active individuals and those managing GLP-1-related muscle loss, sarcopenia, or bone health concerns, where rehabilitation, nutrition and structured load management intersect.
               </motion.p>
 
 
