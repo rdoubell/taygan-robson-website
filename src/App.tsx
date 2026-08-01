@@ -17,6 +17,14 @@ import BlogPost1 from "./pages/BlogPost1"
 import BlogPost2 from "./pages/BlogPost2"
 import BlogPost3 from "./pages/BlogPost3"
 import BlogPost4 from "./pages/BlogPost4"
+import BlogPost5 from "./pages/BlogPost5"
+import BlogPost6 from "./pages/BlogPost6"
+import BlogPost7 from "./pages/BlogPost7"
+import BlogPost8 from "./pages/BlogPost8"
+import BlogPost9 from "./pages/BlogPost9"
+import BlogPost10 from "./pages/BlogPost10"
+import BlogPost11 from "./pages/BlogPost11"
+import BlogPost12 from "./pages/BlogPost12"
 
 function HomePage() {
   // Coming from another page via a link like "/#services" — scroll to that
@@ -63,6 +71,14 @@ export default function App() {
           <Route path="/blog/injuries-in-sport-structure-behind-the-incident" element={<BlogPost2 />} />
           <Route path="/blog/efficiency-factor-decoupling-what-your-data-is-telling-you" element={<BlogPost3 />} />
           <Route path="/blog/hrv-misread-data-right-interpretation-wrong" element={<BlogPost4 />} />
+          <Route path="/blog/physiology-based-warmup-why-sequence-matters" element={<BlogPost5 />} />
+          <Route path="/blog/carbohydrate-periodisation-fuelling-for-the-work-required" element={<BlogPost6 />} />
+          <Route path="/blog/rate-of-force-development-what-maximal-strength-does-not-tell-you" element={<BlogPost7 />} />
+          <Route path="/blog/periodisation-fatigue-and-the-architecture-of-athletic-adaptation" element={<BlogPost8 />} />
+          <Route path="/blog/injury-to-the-foot-and-ankle" element={<BlogPost9 />} />
+          <Route path="/blog/re-evaluating-re-injury-risk-in-sports-rehabilitation" element={<BlogPost10 />} />
+          <Route path="/blog/load-tendon-ligament-tissue-engineering-tendinopathy" element={<BlogPost11 />} />
+          <Route path="/blog/training-load-injury-illness-ultramarathon-runners" element={<BlogPost12 />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
       </BrowserRouter>

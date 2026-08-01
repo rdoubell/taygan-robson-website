@@ -53,6 +53,86 @@ const posts: Post[] = [
     image:         "https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=900&q=85&auto=format&fit=crop",
     imagePosition: "center bottom",
   },
+  {
+    slug:          "/blog/physiology-based-warmup-why-sequence-matters",
+    category:      "Performance Science",
+    date:          "August 2025",
+    title:         "The Physiology-Based Warm-Up: Why Sequence Matters",
+    excerpt:       "Most warm-up protocols are built around time. This one is built around physiology. Each phase targets a distinct mechanism — sequence them correctly and the athlete arrives at the gun sharp.",
+    readTime:      "5 min read",
+    image:         "https://plus.unsplash.com/premium_photo-1664301432574-9b4e85c2b2d3?w=900&q=85&auto=format&fit=crop",
+    imagePosition: "center center",
+  },
+  {
+    slug:          "/blog/carbohydrate-periodisation-fuelling-for-the-work-required",
+    category:      "Sports Nutrition · Performance Science",
+    date:          "August 2025",
+    title:         "Carbohydrate Periodisation: Fuelling for the Work Required",
+    excerpt:       "Not every training session deserves the same fuel. Structured carbohydrate availability — matched to the objective of each session — amplifies adaptation in ways uniform fuelling cannot.",
+    readTime:      "5 min read",
+    image:         "https://images.unsplash.com/photo-1535914254981-b5012eebbd15?w=900&q=85&auto=format&fit=crop",
+    imagePosition: "center center",
+  },
+  {
+    slug:          "/blog/rate-of-force-development-what-maximal-strength-does-not-tell-you",
+    category:      "Performance Science · Rehabilitation",
+    date:          "August 2025",
+    title:         "Rate of Force Development: What Maximal Strength Does Not Tell You",
+    excerpt:       "An athlete clears their strength criteria and re-tears their ACL two weeks later. The strength test was fine. The rate of force development was never measured.",
+    readTime:      "6 min read",
+    image:         "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&q=85&auto=format&fit=crop",
+    imagePosition: "center center",
+  },
+  {
+    slug:          "/blog/periodisation-fatigue-and-the-architecture-of-athletic-adaptation",
+    category:      "Performance Science",
+    date:          "August 2025",
+    title:         "Periodisation, Fatigue, and the Architecture of Athletic Adaptation",
+    excerpt:       "Adaptation does not happen during training. It happens during rest — and that is the detail most athletes get wrong. Three models explain why structured load-recovery cycling is non-negotiable.",
+    readTime:      "7 min read",
+    image:         "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=900&q=85&auto=format&fit=crop",
+    imagePosition: "center center",
+  },
+  {
+    slug:          "/blog/injury-to-the-foot-and-ankle",
+    category:      "Sports Injury · Rehabilitation",
+    date:          "August 2025",
+    title:         "Injury to the Foot and Ankle",
+    excerpt:       "Lateral ankle sprains account for 60% of all sports-related injuries. Time-based return-to-play decisions — not criteria-based ones — are why 30 to 50% of athletes develop chronic instability.",
+    readTime:      "5 min read",
+    image:         "https://images.unsplash.com/photo-1715801903235-4d779e90d7d0?w=900&q=85&auto=format&fit=crop",
+    imagePosition: "center center",
+  },
+  {
+    slug:          "/blog/re-evaluating-re-injury-risk-in-sports-rehabilitation",
+    category:      "Sports Injury · Rehabilitation",
+    date:          "August 2025",
+    title:         "Re-evaluating Re-injury Risk in Sports Rehabilitation",
+    excerpt:       "Higher re-injury rates do not equate to rehabilitation failure. How 'complete rehabilitation' is defined determines whether that conclusion is even answerable — and three definitions produce three very different answers.",
+    readTime:      "5 min read",
+    image:         "https://images.unsplash.com/photo-1649751361457-01d3a696c7e6?w=900&q=85&auto=format&fit=crop",
+    imagePosition: "center center",
+  },
+  {
+    slug:          "/blog/load-tendon-ligament-tissue-engineering-tendinopathy",
+    category:      "Sports Injury · Research",
+    date:          "August 2025",
+    title:         "Load, Tissue Engineering, and the Future of Tendon Repair",
+    excerpt:       "You cannot rest a tendon into function. You can only load it into function — and new evidence from fibrin-based tissue engineering makes the biological mechanism behind that principle more precise than ever.",
+    readTime:      "6 min read",
+    image:         "https://images.unsplash.com/photo-1615505368758-8a3af2a4c379?w=900&q=85&auto=format&fit=crop",
+    imagePosition: "center center",
+  },
+  {
+    slug:          "/blog/training-load-injury-illness-ultramarathon-runners",
+    category:      "Endurance · Performance Science",
+    date:          "August 2025",
+    title:         "Training Load, Injury and Illness in Ultramarathon Runners",
+    excerpt:       "Injury in ultramarathon runners is not random — it is predictable. The acute:chronic workload ratio reveals when an athlete's training week has outpaced what their chronic fitness can safely absorb.",
+    readTime:      "6 min read",
+    image:         "https://images.unsplash.com/photo-1590333748338-d629e4564ad9?w=900&q=85&auto=format&fit=crop",
+    imagePosition: "center center",
+  },
 ]
 
 function RealBlogCard({ post }: { post: Post }) {
@@ -61,7 +141,6 @@ function RealBlogCard({ post }: { post: Post }) {
       href={post.slug}
       className="group flex flex-col overflow-hidden bg-white/10 border border-white/10 transition-all duration-300 hover:border-[rgba(199,161,76,0.35)]"
     >
-      {/* Image */}
       <div className="h-52 relative overflow-hidden">
         <img
           src={post.image}
@@ -80,7 +159,6 @@ function RealBlogCard({ post }: { post: Post }) {
         </div>
       </div>
 
-      {/* Card body */}
       <div className="p-6 flex flex-col flex-1 gap-3">
         <div className="flex items-center gap-3">
           <span className="text-[9px] tracking-[0.2em] text-white/35" style={{ fontFamily: "var(--font-display)" }}>{post.date}</span>
@@ -150,62 +228,6 @@ function RealBlogCardLight({ post }: { post: Post }) {
   )
 }
 
-function PlaceholderBlogCard({ dark }: { dark: boolean }) {
-  return (
-    <div className={`flex flex-col overflow-hidden ${dark ? "bg-white/10 border border-white/10" : "bg-white border border-[#E2E8E4]"}`}>
-      {/* Image placeholder */}
-      <div className={`h-52 flex items-center justify-center ${dark ? "bg-white/5" : "bg-[#F7F7F5]"}`}>
-        <span
-          className={`text-[9px] tracking-[0.3em] uppercase ${dark ? "text-white/25" : "text-black/25"}`}
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Coming Soon
-        </span>
-      </div>
-
-      {/* Card body */}
-      <div className="p-6 flex flex-col flex-1 gap-3">
-        {/* Tag + date row */}
-        <div className="flex items-center gap-3">
-          <span
-            className={`text-[9px] tracking-[0.28em] uppercase px-2.5 py-1 rounded-full ${dark ? "bg-white/10 text-white/40" : "bg-[#F7F7F5] text-black/30"}`}
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Article
-          </span>
-          <span
-            className={`text-[9px] tracking-[0.2em] ${dark ? "text-white/20" : "text-black/20"}`}
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            2025
-          </span>
-        </div>
-
-        {/* Title lines */}
-        <div className="space-y-2">
-          <div className={`h-4 rounded ${dark ? "bg-white/12" : "bg-black/6"} w-4/5`} />
-          <div className={`h-4 rounded ${dark ? "bg-white/8" : "bg-black/4"} w-3/5`} />
-        </div>
-
-        {/* Excerpt lines */}
-        <div className="space-y-1.5 flex-1">
-          <div className={`h-3 rounded ${dark ? "bg-white/6" : "bg-black/4"} w-full`} />
-          <div className={`h-3 rounded ${dark ? "bg-white/5" : "bg-black/3"} w-5/6`} />
-          <div className={`h-3 rounded ${dark ? "bg-white/5" : "bg-black/3"} w-4/6`} />
-        </div>
-
-        {/* Read more */}
-        <span
-          className={`self-start text-[10px] tracking-[0.2em] uppercase mt-2 ${dark ? "text-[#C7A14C]/50" : "text-[#C7A14C]/60"}`}
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Coming Soon →
-        </span>
-      </div>
-    </div>
-  )
-}
-
 export default function BlogPage() {
   return (
     <div className="grain">
@@ -234,7 +256,7 @@ export default function BlogPage() {
         </h1>
       </div>
 
-      {/* Row 1 — dark */}
+      {/* Row 1 — dark — posts 0–2 */}
       <div style={{ background: "var(--color-navy)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 pb-12 pt-2 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           <RealBlogCard post={posts[0]} />
@@ -243,11 +265,30 @@ export default function BlogPage() {
         </div>
       </div>
 
-      {/* Row 2 — light */}
+      {/* Row 2 — light — posts 3–5 */}
       <div className="bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           <RealBlogCardLight post={posts[3]} />
-          <PlaceholderBlogCard dark={false} />
+          <RealBlogCardLight post={posts[4]} />
+          <RealBlogCardLight post={posts[5]} />
+        </div>
+      </div>
+
+      {/* Row 3 — dark — posts 6–8 */}
+      <div style={{ background: "var(--color-navy)" }}>
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <RealBlogCard post={posts[6]} />
+          <RealBlogCard post={posts[7]} />
+          <RealBlogCard post={posts[8]} />
+        </div>
+      </div>
+
+      {/* Row 4 — light — posts 9–11 */}
+      <div className="bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <RealBlogCardLight post={posts[9]} />
+          <RealBlogCardLight post={posts[10]} />
+          <RealBlogCardLight post={posts[11]} />
         </div>
       </div>
 
