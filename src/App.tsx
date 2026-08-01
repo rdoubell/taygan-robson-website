@@ -11,6 +11,7 @@ import WhoThisIsFor from "./sections/WhoThisIsFor"
 import Journey from "./sections/Journey"
 // import TrustedBy from "./sections/TrustedBy" // hidden per request — kept for later re-enable
 import Footer from "./sections/Footer"
+import FAQ from "./sections/FAQ"
 import BlogPage from "./pages/Blog"
 import AboutPage from "./pages/About"
 import BlogPost1 from "./pages/BlogPost1"
@@ -52,6 +53,7 @@ function HomePage() {
         <Services />
         <WhoThisIsFor />
         <Pricing />
+        <FAQ />
         {/* <TrustedBy /> hidden per request — kept for later re-enable */}
       </main>
       <Footer />
