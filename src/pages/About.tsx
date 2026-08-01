@@ -173,31 +173,57 @@ export default function AboutPage() {
           {/* Top row: photo + bio paragraphs */}
           <div className="grid lg:grid-cols-[400px_1fr] gap-12 lg:gap-20 items-start">
 
-            {/* Photo */}
-            <motion.div
-              variants={fadeUp(0.06)}
-              initial="hidden"
-              animate={bioInView ? "visible" : "hidden"}
-              className="relative"
-            >
-              <div className="overflow-hidden" style={{ aspectRatio: "3/4", maxHeight: "520px" }}>
-                <img
-                  src="/about-photo.png"
-                  alt="Taygan Robson"
-                  className="w-full h-full object-cover"
-                  style={{ objectPosition: "50% 18%", transform: "scale(1.35)", transformOrigin: "50% 18%" }}
-                />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 h-[3px]" style={{ background: "var(--color-gold)" }} />
-              <div className="absolute bottom-5 left-5 px-4 py-2" style={{ background: "rgba(20,33,61,0.85)", backdropFilter: "blur(8px)" }}>
-                <p className="text-white text-[10px] tracking-[0.22em] uppercase" style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>
-                  Taygan Robson
-                </p>
-                <p className="uppercase mt-0.5" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "8px", letterSpacing: "0.16em" }}>
-                  Director &amp; Founder · 1INC Consulting
-                </p>
-              </div>
-            </motion.div>
+            {/* Photo + stats */}
+            <div className="flex flex-col">
+              <motion.div
+                variants={fadeUp(0.06)}
+                initial="hidden"
+                animate={bioInView ? "visible" : "hidden"}
+                className="relative"
+              >
+                <div className="overflow-hidden" style={{ aspectRatio: "3/4", maxHeight: "520px" }}>
+                  <img
+                    src="/about-photo.png"
+                    alt="Taygan Robson"
+                    className="w-full h-full object-cover"
+                    style={{ objectPosition: "50% 18%", transform: "scale(1.35)", transformOrigin: "50% 18%" }}
+                  />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-[3px]" style={{ background: "var(--color-gold)" }} />
+                <div className="absolute bottom-5 left-5 px-4 py-2" style={{ background: "rgba(20,33,61,0.85)", backdropFilter: "blur(8px)" }}>
+                  <p className="text-white text-[10px] tracking-[0.22em] uppercase" style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>
+                    Taygan Robson
+                  </p>
+                  <p className="uppercase mt-0.5" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "8px", letterSpacing: "0.16em" }}>
+                    Director &amp; Founder · 1INC Consulting
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Stats — right-aligned under photo */}
+              <motion.div
+                variants={fadeUp(0.22)}
+                initial="hidden"
+                animate={bioInView ? "visible" : "hidden"}
+                className="flex flex-col items-end gap-0 mt-6 pt-6 border-t"
+                style={{ borderColor: "rgba(0,0,0,0.08)" }}
+              >
+                {stats.map(({ value, label }, i) => (
+                  <div
+                    key={label}
+                    className="flex flex-col items-end w-full py-4"
+                    style={{ borderBottom: i < stats.length - 1 ? "1px solid rgba(0,0,0,0.06)" : "none" }}
+                  >
+                    <span style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "clamp(1.6rem, 2.4vw, 2.2rem)", fontWeight: 800, lineHeight: 1 }}>
+                      {value}
+                    </span>
+                    <span className="uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(0,0,0,0.38)", fontSize: "9px", letterSpacing: "0.24em" }}>
+                      {label}
+                    </span>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
 
             {/* Bio text */}
             <div className="flex flex-col justify-center gap-6 py-2">
@@ -235,26 +261,6 @@ export default function AboutPage() {
 
             </div>
           </div>
-
-          {/* Stats — horizontal row */}
-          <motion.div
-            variants={fadeUp(0.40)}
-            initial="hidden"
-            animate={bioInView ? "visible" : "hidden"}
-            className="grid grid-cols-3 gap-4 pt-6 mt-6 border-t"
-            style={{ borderColor: "rgba(0,0,0,0.08)" }}
-          >
-            {stats.map(({ value, label }) => (
-              <div key={label} className="flex flex-col gap-1">
-                <span style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "clamp(1.5rem, 2.5vw, 2.1rem)", fontWeight: 800, lineHeight: 1 }}>
-                  {value}
-                </span>
-                <span className="uppercase" style={{ fontFamily: "var(--font-display)", color: "rgba(0,0,0,0.38)", fontSize: "9px", letterSpacing: "0.24em" }}>
-                  {label}
-                </span>
-              </div>
-            ))}
-          </motion.div>
 
         </div>
       </section>
