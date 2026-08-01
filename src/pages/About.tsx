@@ -168,7 +168,7 @@ export default function AboutPage() {
         className="bg-white"
         style={{ boxShadow: "0 -20px 60px rgba(0,0,0,0.10)" }}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 lg:py-14">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 lg:py-12">
 
           {/* Top row: photo + bio paragraphs */}
           <div className="grid lg:grid-cols-[400px_1fr] gap-12 lg:gap-20 items-stretch">
@@ -205,8 +205,7 @@ export default function AboutPage() {
                 variants={fadeUp(0.22)}
                 initial="hidden"
                 animate={bioInView ? "visible" : "hidden"}
-                className="flex flex-col flex-1 justify-between mt-6 pt-6 border-t"
-                style={{ borderColor: "rgba(0,0,0,0.08)" }}
+                className="flex flex-col flex-1 justify-between mt-6"
               >
                 {stats.map(({ value, label }, i) => (
                   <div
@@ -226,7 +225,7 @@ export default function AboutPage() {
             </div>
 
             {/* Bio text */}
-            <div className="flex flex-col justify-center gap-6 py-2">
+            <div className="flex flex-col justify-between gap-6">
 
               <motion.div
                 variants={fadeUp(0.12)}
@@ -266,7 +265,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── What I Work With — expanded ── */}
-      <section ref={methodsRef} className="py-14 lg:py-20 bg-white">
+      <section ref={methodsRef} className="py-14 lg:py-20" style={{ background: "var(--color-cream, #F7F6EF)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="text-center mb-12">
             <motion.p
@@ -322,7 +321,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Credentials ── */}
-      <section ref={credRef} className="py-14 lg:py-20" style={{ background: "var(--color-cream, #F7F6EF)" }}>
+      <section ref={credRef} className="py-14 lg:py-20" style={{ background: "#FFFFFF" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-10 text-center">
           <motion.p
             initial={{ opacity: 0, y: 8 }}
