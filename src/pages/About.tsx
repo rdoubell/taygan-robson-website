@@ -168,18 +168,18 @@ export default function AboutPage() {
         className="bg-white"
         style={{ boxShadow: "0 -20px 60px rgba(0,0,0,0.10)" }}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14 lg:py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 lg:py-14">
 
           {/* Top row: photo + bio paragraphs */}
-          <div className="grid lg:grid-cols-[400px_1fr] gap-12 lg:gap-20 items-start">
+          <div className="grid lg:grid-cols-[400px_1fr] gap-12 lg:gap-20 items-stretch">
 
-            {/* Photo + stats */}
+            {/* Photo + stats — flex-col so stats fill remaining height */}
             <div className="flex flex-col">
               <motion.div
                 variants={fadeUp(0.06)}
                 initial="hidden"
                 animate={bioInView ? "visible" : "hidden"}
-                className="relative"
+                className="relative flex-shrink-0"
               >
                 <div className="overflow-hidden" style={{ aspectRatio: "3/4", maxHeight: "520px" }}>
                   <img
@@ -200,21 +200,21 @@ export default function AboutPage() {
                 </div>
               </motion.div>
 
-              {/* Stats — right-aligned under photo */}
+              {/* Stats — left-aligned, fill remaining height with justify-between */}
               <motion.div
                 variants={fadeUp(0.22)}
                 initial="hidden"
                 animate={bioInView ? "visible" : "hidden"}
-                className="flex flex-col items-end gap-0 mt-6 pt-6 border-t"
+                className="flex flex-col flex-1 justify-between mt-6 pt-6 border-t"
                 style={{ borderColor: "rgba(0,0,0,0.08)" }}
               >
                 {stats.map(({ value, label }, i) => (
                   <div
                     key={label}
-                    className="flex flex-col items-end w-full py-4"
-                    style={{ borderBottom: i < stats.length - 1 ? "1px solid rgba(0,0,0,0.06)" : "none" }}
+                    className="flex flex-col items-start"
+                    style={{ borderBottom: i < stats.length - 1 ? "1px solid rgba(0,0,0,0.06)" : "none", paddingBottom: i < stats.length - 1 ? "1rem" : 0, paddingTop: i > 0 ? "1rem" : 0 }}
                   >
-                    <span style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "clamp(1.6rem, 2.4vw, 2.2rem)", fontWeight: 800, lineHeight: 1 }}>
+                    <span style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "clamp(1.3rem, 2vw, 1.8rem)", fontWeight: 800, lineHeight: 1 }}>
                       {value}
                     </span>
                     <span className="uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(0,0,0,0.38)", fontSize: "9px", letterSpacing: "0.24em" }}>
@@ -265,6 +265,62 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ── What I Work With — expanded ── */}
+      <section ref={methodsRef} className="py-14 lg:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="text-center mb-12">
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={methodsInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="text-[9px] tracking-[0.48em] uppercase mb-3"
+              style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
+            >
+              Methods &amp; Tools
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 14 }}
+              animate={methodsInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.05 }}
+              style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", color: "var(--color-navy)", lineHeight: 1.1, letterSpacing: "-0.01em" }}
+            >
+              What I Work With
+            </motion.h2>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={methodsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
+            {methods.map((method, i) => (
+              <motion.div
+                key={method.category}
+                initial={{ opacity: 0, y: 18 }}
+                animate={methodsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.15 + i * 0.07 }}
+                whileHover={{ y: -6, boxShadow: "0 20px 48px rgba(0,0,0,0.32)", transition: { duration: 0.22, ease: "easeOut" } }}
+                className="flex flex-col p-7 cursor-default"
+                style={{ background: "var(--color-navy)", borderTop: "2px solid var(--color-gold)" }}
+              >
+                <p className="text-[9px] tracking-[0.28em] uppercase mb-4 font-bold" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)" }}>
+                  {method.category}
+                </p>
+                <p className="text-[13.5px] leading-relaxed flex-1" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.65)" }}>
+                  {method.description}
+                </p>
+                <div className="mt-5 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                  <p className="text-[10px] tracking-[0.16em] uppercase" style={{ fontFamily: "var(--font-display)", color: "rgba(199,161,76,0.55)" }}>
+                    {method.tools}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── Credentials ── */}
       <section ref={credRef} className="py-14 lg:py-20" style={{ background: "var(--color-cream, #F7F6EF)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-10 text-center">
@@ -302,8 +358,13 @@ export default function AboutPage() {
           transition={{ duration: 0.7, delay: 0.15 }}
           className="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch"
         >
-          {credentials.map((cred) => (
-            <div key={cred.category} className="flex flex-col p-7" style={{ background: "var(--color-navy)" }}>
+          {credentials.map((cred, i) => (
+            <motion.div
+              key={cred.category}
+              whileHover={{ y: -6, boxShadow: "0 20px 48px rgba(0,0,0,0.32)", transition: { duration: 0.22, ease: "easeOut" } }}
+              className="flex flex-col p-7 cursor-default"
+              style={{ background: "var(--color-navy)" }}
+            >
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-9 h-9 flex items-center justify-center flex-shrink-0" style={{ border: "1px solid rgba(255,255,255,0.22)" }}>
                   <cred.icon size={14} className="text-white" />
@@ -321,64 +382,9 @@ export default function AboutPage() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
-      </section>
-
-      {/* ── What I Work With — expanded ── */}
-      <section ref={methodsRef} className="py-14 lg:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-12">
-            <motion.p
-              initial={{ opacity: 0, y: 8 }}
-              animate={methodsInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
-              className="text-[9px] tracking-[0.48em] uppercase mb-3"
-              style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
-            >
-              Methods &amp; Tools
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: 14 }}
-              animate={methodsInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.05 }}
-              style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", color: "var(--color-navy)", lineHeight: 1.1, letterSpacing: "-0.01em" }}
-            >
-              What I Work With
-            </motion.h2>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={methodsInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-          >
-            {methods.map((method, i) => (
-              <motion.div
-                key={method.category}
-                initial={{ opacity: 0, y: 18 }}
-                animate={methodsInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.15 + i * 0.07 }}
-                className="flex flex-col p-7"
-                style={{ background: "var(--color-navy)", borderTop: "2px solid var(--color-gold)" }}
-              >
-                <p className="text-[9px] tracking-[0.28em] uppercase mb-4 font-bold" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)" }}>
-                  {method.category}
-                </p>
-                <p className="text-[13.5px] leading-relaxed flex-1" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.65)" }}>
-                  {method.description}
-                </p>
-                <div className="mt-5 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-                  <p className="text-[10px] tracking-[0.16em] uppercase" style={{ fontFamily: "var(--font-display)", color: "rgba(199,161,76,0.55)" }}>
-                    {method.tools}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
       </section>
 
       {/* ── Closing mission statement ── */}
