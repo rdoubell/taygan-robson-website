@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "How long does the consultation take?",
-    a: "Initial consultations typically run 60 to 90 minutes. The session is conducted fully online via Microsoft Teams — you'll receive a link when your booking is confirmed.",
+    a: "Initial consultations are 45 minutes, conducted fully online via Microsoft Teams. You'll receive a Teams link when your booking is confirmed.",
   },
   {
     q: "Do I need to be based in South Africa?",
