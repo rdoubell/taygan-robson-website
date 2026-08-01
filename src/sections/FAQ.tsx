@@ -33,7 +33,7 @@ const faqs = [
   },
   {
     q: "How does payment work?",
-    a: "An invoice is issued after your consultation, payable within 7 days. Payment details are included in the invoice. For international clients, payment is in USD and processed via standard bank transfer or card.",
+    a: "All payments are processed through Appointment Guru at the time of booking. You will be prompted to pay when you select your appointment slot.",
   },
   {
     q: "How quickly will I receive my report?",
