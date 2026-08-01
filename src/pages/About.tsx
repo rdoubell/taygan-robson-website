@@ -236,22 +236,6 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Full-width founding paragraph */}
-          <motion.p
-            variants={fadeUp(0.34)}
-            initial="hidden"
-            animate={bioInView ? "visible" : "hidden"}
-            className="mt-8 pt-8 leading-[1.9] border-t"
-            style={{
-              fontFamily: "var(--font-body)",
-              color: "rgba(0,0,0,0.65)",
-              fontSize: "clamp(1rem, 1.6vw, 1.1rem)",
-              borderColor: "rgba(0,0,0,0.08)",
-            }}
-          >
-            I founded and direct 1INC Consulting across three specialist practices. Sports injury and rehabilitation, performance science and clinical sports nutrition. Every client begins with a personal online consultation with me directly. Training load, injury history, nutrition and performance goals assessed, then mapped to a written report, a clear plan and a programme. Data-driven consulting. Evidence-based direction.
-          </motion.p>
-
           {/* Stats — horizontal row */}
           <motion.div
             variants={fadeUp(0.40)}
