@@ -245,7 +245,7 @@ export default function AboutPage() {
                 className="leading-[1.9]"
                 style={{ fontFamily: "var(--font-body)", color: "rgba(0,0,0,0.65)", fontSize: "clamp(1rem, 1.6vw, 1.1rem)" }}
               >
-                From participating sports at a competitive level, I know what it means when an injury derails months of structured work. The last two years have been my own rehabilitation journey, managing a significant back injury from Muay Thai training and navigating return-to-performance firsthand. That experience of extensive rehabilitation, working with physiotherapists, psychologists and specialists in my own personal multi-disciplinary team, has shaped every consultation and rehab session I run.
+                From participating in sports at a competitive level, I know what it means when an injury derails months of structured work. The last two years have been my own rehabilitation journey, managing a significant back injury from Muay Thai training and navigating return-to-performance firsthand. That experience of extensive rehabilitation, working with physiotherapists, psychologists and specialists in my own personal multi-disciplinary team, has shaped every consultation and rehab session I run.
               </motion.p>
 
               <motion.p
