@@ -3,6 +3,36 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { BookingModalProvider } from "./lib/booking-modal-context"
 import { RegionProvider } from "./lib/region-context"
 import BookingModal from "./components/ui/booking-modal"
+import { useBookingModal } from "./lib/booking-modal-context"
+
+function StickyBookButton() {
+  const { open } = useBookingModal()
+  return (
+    <button
+      onClick={open}
+      style={{
+        position: "fixed",
+        bottom: "24px",
+        right: "24px",
+        zIndex: 9999,
+        background: "var(--color-gold)",
+        color: "var(--color-navy)",
+        fontFamily: "var(--font-display)",
+        fontWeight: 700,
+        fontSize: "0.78rem",
+        letterSpacing: "0.08em",
+        textTransform: "uppercase",
+        padding: "14px 22px",
+        border: "none",
+        cursor: "pointer",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.35)",
+        whiteSpace: "nowrap",
+      }}
+    >
+      Book a Consultation
+    </button>
+  )
+}
 import Navbar from "./sections/Navbar"
 import Hero from "./sections/Hero"
 import Services from "./sections/Services"
@@ -85,6 +115,7 @@ export default function App() {
         </Routes>
       </BrowserRouter>
       <BookingModal />
+      <StickyBookButton />
     </BookingModalProvider>
     </RegionProvider>
   )

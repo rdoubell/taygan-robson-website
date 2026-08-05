@@ -5,7 +5,7 @@ import { Plus, Minus } from "lucide-react"
 const faqs = [
   {
     q: "What happens in the initial 1INC consultation?",
-    a: "The consultation covers your full picture — training load and history, injury background and rehabilitation status, nutritional tracking, race fuelling, and performance goals. Taygan works across any or all three disciplines in a single session. Within 3–5 business days you receive a written Specialised Report with findings, recommendations, and a clear direction for the programme ahead.",
+    a: "The consultation covers your full picture — training load and history, injury background and rehabilitation status, nutritional tracking, race fuelling, and performance goals. Taygan works across any or all three disciplines in a single session. Within 7 working days you receive a written Specialised Report with findings, recommendations, and a clear direction for the programme ahead.",
   },
   {
     q: "How long does the consultation take?",
@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     q: "How quickly will I receive my report?",
-    a: "The written Specialised Report is delivered within 3–5 business days of your consultation. Follow-up written summaries are delivered within 3 business days.",
+    a: "The written Specialised Report is delivered within 7 working days of your consultation. Follow-up written summaries are delivered within 3 working days.",
   },
   {
     q: "What if I need to reschedule or cancel?",
