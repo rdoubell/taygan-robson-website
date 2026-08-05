@@ -24,6 +24,7 @@ function StickyBookButton() {
         textTransform: "uppercase",
         padding: "14px 22px",
         border: "none",
+        borderRadius: "var(--radius-pill)",
         cursor: "pointer",
         boxShadow: "0 4px 24px rgba(0,0,0,0.35)",
         whiteSpace: "nowrap",

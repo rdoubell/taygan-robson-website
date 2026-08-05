@@ -77,7 +77,7 @@ export default function Hero() {
               <div className="mb-6 overflow-hidden">
                 {[
                   { text: "ONE CONVERSATION", gold: true },
-                  { text: "ONLINE - GLOBAL", gold: false },
+                  { text: "ONLINE · GLOBAL", gold: false },
                 ].map(({ text, gold }, i) => (
                   <div key={text} style={{ overflow: "clip" }}>
                     <motion.h1
