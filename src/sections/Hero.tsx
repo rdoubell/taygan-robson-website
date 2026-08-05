@@ -76,8 +76,8 @@ export default function Hero() {
               {/* Headline — font size reduced so "ONE CONVERSATION." never clips on any desktop */}
               <div className="mb-6 overflow-hidden">
                 {[
-                  { text: "ONE conversation", gold: true },
-                  { text: "Online - Global", gold: false },
+                  { text: "ONE CONVERSATION", gold: true },
+                  { text: "ONLINE - GLOBAL", gold: false },
                 ].map(({ text, gold }, i) => (
                   <div key={text} style={{ overflow: "clip" }}>
                     <motion.h1
