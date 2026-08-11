@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -38,6 +40,18 @@ export default function BlogPost12() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="Training Load, Injury & Illness in Ultras"
+      description="High training loads in ultramarathon preparation elevate both injury and illness risk. Evidence-based load management strategies for long-distance trail runners."
+      canonical="/blog/training-load-injury-illness-ultramarathon-runners"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="Training Load, Injury & Illness in Ultras"
+      description="High training loads in ultramarathon preparation elevate both injury and illness risk. Evidence-based load management strategies."
+      url="/blog/training-load-injury-illness-ultramarathon-runners"
+    />
     <div className="grain">
       <Navbar />
 
@@ -149,5 +163,6 @@ export default function BlogPost12() {
       </article>
       <Footer />
     </div>
+    </>
   )
 }

@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -18,6 +20,18 @@ export default function BlogPost3() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="Efficiency Factor, Decoupling & Variability"
+      description="A breakdown of EF, aerobic decoupling, and variability index — three endurance metrics that reveal whether your aerobic base is built to race. By 1INC Consulting."
+      canonical="/blog/efficiency-factor-decoupling-what-your-data-is-telling-you"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="Efficiency Factor, Decoupling & Variability"
+      description="A breakdown of EF, aerobic decoupling, and variability index — three endurance metrics that reveal whether your aerobic base is built to race."
+      url="/blog/efficiency-factor-decoupling-what-your-data-is-telling-you"
+    />
     <div className="grain">
       <Navbar />
 
@@ -258,5 +272,6 @@ export default function BlogPost3() {
 
       <Footer />
     </div>
+    </>
   )
 }

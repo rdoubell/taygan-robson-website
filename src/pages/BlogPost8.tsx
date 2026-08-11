@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -38,6 +40,18 @@ export default function BlogPost8() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="Periodisation, Fatigue & Athletic Adaptation"
+      description="How training load, fatigue, and supercompensation interact to build athletic capacity — and how to structure a programme that produces results without breakdown."
+      canonical="/blog/periodisation-fatigue-and-the-architecture-of-athletic-adaptation"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="Periodisation, Fatigue & Athletic Adaptation"
+      description="How training load, fatigue, and supercompensation interact to build athletic capacity without breakdown."
+      url="/blog/periodisation-fatigue-and-the-architecture-of-athletic-adaptation"
+    />
     <div className="grain">
       <Navbar />
 
@@ -148,5 +162,6 @@ export default function BlogPost8() {
       </article>
       <Footer />
     </div>
+    </>
   )
 }

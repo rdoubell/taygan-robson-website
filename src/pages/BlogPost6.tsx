@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -38,6 +40,18 @@ export default function BlogPost6() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="Carbohydrate Periodisation: Fuel the Work"
+      description="Fuelling every session the same way leaves performance on the table. Taygan Robson explains carbohydrate periodisation and how to match intake to training demand."
+      canonical="/blog/carbohydrate-periodisation-fuelling-for-the-work-required"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="Carbohydrate Periodisation: Fuel the Work"
+      description="Fuelling every session the same way leaves performance on the table. How to match carbohydrate intake to training demand."
+      url="/blog/carbohydrate-periodisation-fuelling-for-the-work-required"
+    />
     <div className="grain">
       <Navbar />
 
@@ -157,5 +171,6 @@ export default function BlogPost6() {
       </article>
       <Footer />
     </div>
+    </>
   )
 }

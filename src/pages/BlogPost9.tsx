@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -28,6 +30,18 @@ export default function BlogPost9() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="Foot & Ankle Injury: Load, Rehab & Return"
+      description="A clinical look at foot and ankle injuries in sport — common presentations, load management principles, and evidence-based return-to-sport criteria."
+      canonical="/blog/injury-to-the-foot-and-ankle"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="Foot & Ankle Injury: Load, Rehab & Return"
+      description="A clinical look at foot and ankle injuries in sport — common presentations, load management principles, and return-to-sport criteria."
+      url="/blog/injury-to-the-foot-and-ankle"
+    />
     <div className="grain">
       <Navbar />
 
@@ -140,5 +154,6 @@ export default function BlogPost9() {
       </article>
       <Footer />
     </div>
+    </>
   )
 }

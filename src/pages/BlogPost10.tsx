@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -38,6 +40,18 @@ export default function BlogPost10() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="Re-Injury Risk in Sports Rehabilitation"
+      description="Re-injury is the most preventable outcome in sports rehabilitation — and the most common. Taygan Robson examines why return-to-sport criteria fail and what to do instead."
+      canonical="/blog/re-evaluating-re-injury-risk-in-sports-rehabilitation"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="Re-Injury Risk in Sports Rehabilitation"
+      description="Re-injury is the most preventable outcome in sports rehabilitation. Why return-to-sport criteria fail and what to do instead."
+      url="/blog/re-evaluating-re-injury-risk-in-sports-rehabilitation"
+    />
     <div className="grain">
       <Navbar />
 
@@ -142,5 +156,6 @@ export default function BlogPost10() {
       </article>
       <Footer />
     </div>
+    </>
   )
 }

@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -18,6 +20,18 @@ export default function BlogPost1() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="Tendon Nutrition: Collagen & Vitamin C"
+      description="How collagen synthesis and vitamin C interact to support tendon repair and injury prevention in athletes. Evidence-based analysis by Taygan Robson, 1INC Consulting."
+      canonical="/blog/tendon-nutrition-collagen-vitamin-c"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="Tendon Nutrition: Collagen & Vitamin C"
+      description="How collagen synthesis and vitamin C interact to support tendon repair and injury prevention in athletes."
+      url="/blog/tendon-nutrition-collagen-vitamin-c"
+    />
     <div className="grain">
       <Navbar />
 
@@ -283,5 +297,6 @@ export default function BlogPost1() {
 
       <Footer />
     </div>
+    </>
   )
 }

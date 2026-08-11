@@ -4,6 +4,8 @@ import { BookingModalProvider } from "./lib/booking-modal-context"
 import { RegionProvider } from "./lib/region-context"
 import BookingModal from "./components/ui/booking-modal"
 import { useBookingModal } from "./lib/booking-modal-context"
+import SEOMeta from "./components/SEOMeta"
+import { HomeSchema } from "./components/SchemaOrg"
 
 function StickyBookButton() {
   const { open } = useBookingModal()
@@ -74,6 +76,13 @@ function HomePage() {
   }, [])
 
   return (
+    <>
+    <SEOMeta
+      title="1INC Consulting — Sports Performance & Rehabilitation"
+      description="Evidence-based online consultations across sports injury, rehabilitation, performance science, and clinical nutrition. Book with Taygan Robson globally."
+      canonical="/"
+    />
+    <HomeSchema />
     <div className="grain">
       <Navbar />
       <main>
@@ -89,6 +98,7 @@ function HomePage() {
       </main>
       <Footer />
     </div>
+    </>
   )
 }
 

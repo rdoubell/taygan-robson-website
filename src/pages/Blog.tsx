@@ -1,5 +1,6 @@
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
 
 type Post = {
   slug: string
@@ -230,6 +231,12 @@ function RealBlogCardLight({ post }: { post: Post }) {
 
 export default function BlogPage() {
   return (
+    <>
+    <SEOMeta
+      title="Blog — Sports Science & Rehabilitation Insights"
+      description="Evidence-based articles on sports injury, performance science, and clinical nutrition from 1INC Consulting. Written by Taygan Robson."
+      canonical="/blog"
+    />
     <div className="grain">
       <Navbar />
 
@@ -294,5 +301,6 @@ export default function BlogPage() {
 
       <Footer />
     </div>
+    </>
   )
 }

@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -18,6 +20,18 @@ export default function BlogPost2() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="Injuries in Sport: The Structure Behind"
+      description="83% of sport injuries are non-contact. Taygan Robson examines the biomechanical, training load, and psychological factors that predict and prevent sports injuries."
+      canonical="/blog/injuries-in-sport-structure-behind-the-incident"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="Injuries in Sport: The Structure Behind"
+      description="83% of sport injuries are non-contact. An examination of the biomechanical, training load, and psychological factors that predict and prevent sports injuries."
+      url="/blog/injuries-in-sport-structure-behind-the-incident"
+    />
     <div className="grain">
       <Navbar />
 
@@ -281,5 +295,6 @@ export default function BlogPost2() {
 
       <Footer />
     </div>
+    </>
   )
 }

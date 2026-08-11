@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -20,6 +22,18 @@ export default function BlogPost4() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="HRV Misread: Right Data, Wrong Interpretation"
+      description="Heart rate variability is widely tracked and widely misread. Taygan Robson explains how to interpret HRV in the context of training load, recovery, and performance."
+      canonical="/blog/hrv-misread-data-right-interpretation-wrong"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="HRV Misread: Right Data, Wrong Interpretation"
+      description="Heart rate variability is widely tracked and widely misread. How to interpret HRV in the context of training load, recovery, and performance."
+      url="/blog/hrv-misread-data-right-interpretation-wrong"
+    />
     <div className="grain">
       <Navbar />
 
@@ -269,5 +283,6 @@ export default function BlogPost4() {
 
       <Footer />
     </div>
+    </>
   )
 }

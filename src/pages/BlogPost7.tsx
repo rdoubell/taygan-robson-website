@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -38,6 +40,18 @@ export default function BlogPost7() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="Rate of Force Development: Beyond Maximal"
+      description="Maximal strength is only part of the picture. Rate of force development reveals how quickly that strength is expressed — the number that determines athletic performance."
+      canonical="/blog/rate-of-force-development-what-maximal-strength-does-not-tell-you"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="Rate of Force Development: Beyond Maximal"
+      description="Maximal strength is only part of the picture. Rate of force development reveals how quickly that strength is expressed in athletic performance."
+      url="/blog/rate-of-force-development-what-maximal-strength-does-not-tell-you"
+    />
     <div className="grain">
       <Navbar />
 
@@ -141,5 +155,6 @@ export default function BlogPost7() {
       </article>
       <Footer />
     </div>
+    </>
   )
 }

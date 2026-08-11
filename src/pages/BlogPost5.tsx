@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -53,6 +55,18 @@ export default function BlogPost5() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="Physiology-Based Warm-Up: Sequence Matters"
+      description="A properly sequenced warm-up changes your physiology before the session starts. Evidence-based approach to pre-training preparation from 1INC Consulting."
+      canonical="/blog/physiology-based-warmup-why-sequence-matters"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="Physiology-Based Warm-Up: Sequence Matters"
+      description="A properly sequenced warm-up changes your physiology before the session starts. Evidence-based approach to pre-training preparation."
+      url="/blog/physiology-based-warmup-why-sequence-matters"
+    />
     <div className="grain">
       <Navbar />
 
@@ -273,5 +287,6 @@ export default function BlogPost5() {
 
       <Footer />
     </div>
+    </>
   )
 }

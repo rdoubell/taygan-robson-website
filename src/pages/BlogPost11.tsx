@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
+import { ArticleSchema } from "../components/SchemaOrg"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -38,6 +40,18 @@ export default function BlogPost11() {
   const inView  = useInView(bodyRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="Tendinopathy: Load & Tissue Management"
+      description="Tendons respond to load — the question is how much, at what rate, and in what direction. A clinical framework for tendinopathy management from 1INC Consulting."
+      canonical="/blog/load-tendon-ligament-tissue-engineering-tendinopathy"
+      ogType="article"
+    />
+    <ArticleSchema
+      title="Tendinopathy: Load & Tissue Management"
+      description="Tendons respond to load — the question is how much, at what rate, and in what direction. A clinical framework for tendinopathy management."
+      url="/blog/load-tendon-ligament-tissue-engineering-tendinopathy"
+    />
     <div className="grain">
       <Navbar />
 
@@ -142,5 +156,6 @@ export default function BlogPost11() {
       </article>
       <Footer />
     </div>
+    </>
   )
 }

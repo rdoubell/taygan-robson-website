@@ -1,6 +1,7 @@
 import { useRef, useState } from "react"
 import { motion, useInView, AnimatePresence } from "framer-motion"
 import { Plus, Minus } from "lucide-react"
+import { FAQSchema } from "../components/SchemaOrg"
 
 const faqs = [
   {
@@ -121,6 +122,8 @@ export default function FAQ() {
   const inView = useInView(ref, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <FAQSchema />
     <section
       ref={ref}
       style={{ background: "var(--color-navy)", paddingTop: "5rem", paddingBottom: "5rem" }}
@@ -166,5 +169,6 @@ export default function FAQ() {
         </div>
       </div>
     </section>
+    </>
   )
 }

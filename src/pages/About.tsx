@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion"
 import { BookOpen, Activity, Dumbbell, Linkedin, ArrowRight } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
+import SEOMeta from "../components/SEOMeta"
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 22 },
@@ -106,6 +107,12 @@ export default function AboutPage() {
   const linkedinInView = useInView(linkedinRef, { once: true, margin: "-60px" })
 
   return (
+    <>
+    <SEOMeta
+      title="About Taygan Robson — Sports Scientist & Coach"
+      description="Taygan Robson is a sports scientist, S&C coach, and clinical sports nutritionist with MSc qualifications. Evidence-based online consultations globally."
+      canonical="/about"
+    />
     <div className="grain">
       <Navbar />
 
@@ -502,5 +509,6 @@ export default function AboutPage() {
 
       <Footer />
     </div>
+    </>
   )
 }
