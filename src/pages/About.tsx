@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { BookOpen, Activity, Dumbbell, Linkedin, ArrowRight } from "lucide-react"
+import { BookOpen, Activity, Dumbbell, Linkedin, Instagram, ArrowRight } from "lucide-react"
 import Navbar from "../sections/Navbar"
 import Footer from "../sections/Footer"
 import SEOMeta from "../components/SEOMeta"
@@ -461,13 +461,19 @@ export default function AboutPage() {
             variants={fadeUp(0)}
             initial="hidden"
             animate={linkedinInView ? "visible" : "hidden"}
-            className="flex justify-center mb-6"
+            className="flex justify-center gap-3 mb-6"
           >
             <div
               className="w-14 h-14 flex items-center justify-center"
               style={{ border: "1px solid rgba(27,42,74,0.15)", borderRadius: "var(--radius-sm)", color: "var(--color-navy)" }}
             >
               <Linkedin size={22} />
+            </div>
+            <div
+              className="w-14 h-14 flex items-center justify-center"
+              style={{ border: "1px solid rgba(27,42,74,0.15)", borderRadius: "var(--radius-sm)", color: "var(--color-navy)" }}
+            >
+              <Instagram size={22} />
             </div>
           </motion.div>
           <motion.h2
@@ -492,6 +498,7 @@ export default function AboutPage() {
             variants={fadeUp(0.18)}
             initial="hidden"
             animate={linkedinInView ? "visible" : "hidden"}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <a
               href="https://www.linkedin.com/in/tayganrobson/"
@@ -501,6 +508,16 @@ export default function AboutPage() {
               style={{ fontFamily: "var(--font-display)", background: "var(--color-navy)", color: "#FFFFFF", borderRadius: "var(--radius-pill)" }}
             >
               Follow Taygan on LinkedIn
+              <ArrowRight size={13} />
+            </a>
+            <a
+              href="https://www.instagram.com/1inc.consulting/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
+              style={{ fontFamily: "var(--font-display)", background: "var(--color-gold)", color: "var(--color-navy)", borderRadius: "var(--radius-pill)" }}
+            >
+              Follow on Instagram
               <ArrowRight size={13} />
             </a>
           </motion.div>
