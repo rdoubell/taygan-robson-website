@@ -1,4 +1,4 @@
-import { Linkedin } from "lucide-react"
+import { Linkedin, Instagram } from "lucide-react"
 import { useBookingModal } from "../lib/booking-modal-context"
 
 const footerLinks = [
@@ -76,6 +76,23 @@ export default function Footer() {
                 <Linkedin size={14} className="group-hover:text-[#C7A14C] transition-colors" />
               </div>
               <span className="text-[12px] group-hover:text-[#C7A14C] transition-colors" style={{ fontFamily: "var(--font-display)", color: "var(--color-navy)" }}>LinkedIn</span>
+            </a>
+
+            <a
+              href="https://www.instagram.com/1inc.consulting/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="flex items-center gap-2.5 group"
+              style={{ color: "var(--text-muted)" }}
+            >
+              <div
+                className="w-9 h-9 flex items-center justify-center transition-colors duration-200 group-hover:border-[#C7A14C]"
+                style={{ border: "1px solid var(--border)", borderRadius: "var(--radius-sm)" }}
+              >
+                <Instagram size={14} className="group-hover:text-[#C7A14C] transition-colors" />
+              </div>
+              <span className="text-[12px] group-hover:text-[#C7A14C] transition-colors" style={{ fontFamily: "var(--font-display)", color: "var(--color-navy)" }}>Instagram</span>
             </a>
 
             <button
