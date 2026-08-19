@@ -134,6 +134,16 @@ const posts: Post[] = [
     image:         "https://images.unsplash.com/photo-1590333748338-d629e4564ad9?w=900&q=85&auto=format&fit=crop",
     imagePosition: "center center",
   },
+  {
+    slug:          "/blog/lean-mass-preservation-strength-programming-glp1",
+    category:      "Clinical Nutrition · Strength & Conditioning",
+    date:          "August 2026",
+    title:         "Lean Mass Preservation After GLP-1-Assisted Weight Loss",
+    excerpt:       "Between 25 and 39% of weight lost on GLP-1 therapy is lean mass without managed resistance programming and protein intake. A case study in what comes next.",
+    readTime:      "7 min read",
+    image:         "/blog-post-13.jpg",
+    imagePosition: "center center",
+  },
 ]
 
 function RealBlogCard({ post }: { post: Post }) {
@@ -296,6 +306,13 @@ export default function BlogPage() {
           <RealBlogCardLight post={posts[9]} />
           <RealBlogCardLight post={posts[10]} />
           <RealBlogCardLight post={posts[11]} />
+        </div>
+      </div>
+
+      {/* Row 5 — dark — posts 12– */}
+      <div style={{ background: "var(--color-navy)" }}>
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <RealBlogCard post={posts[12]} />
         </div>
       </div>
 
