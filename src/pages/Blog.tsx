@@ -142,7 +142,7 @@ const posts: Post[] = [
     excerpt:       "Between 25 and 39% of weight lost on GLP-1 therapy is lean mass without managed resistance programming and protein intake. A case study in what comes next.",
     readTime:      "7 min read",
     image:         "/blog-post-13.jpg",
-    imagePosition: "center center",
+    imagePosition: "center top",
   },
 ]
 
