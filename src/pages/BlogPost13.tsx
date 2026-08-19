@@ -50,14 +50,14 @@ export default function BlogPost13() {
   return (
     <>
     <SEOMeta
-      title="Lean Mass Preservation After GLP-1-Assisted Weight Loss"
-      description="Between 25 and 39% of weight lost on GLP-1 therapy is lean mass without managed resistance programming and protein intake. A case study in what comes next."
+      title="Rebuilding Strength and Lean Muscle After Significant GLP-1 Weight Loss"
+      description="Combining structured resistance loading, protein-targeted nutrition, and progressive load to protect skeletal muscle. A case study in what comes after GLP-1-assisted weight loss."
       canonical="/blog/lean-mass-preservation-strength-programming-glp1"
       ogType="article"
     />
     <ArticleSchema
-      title="Lean Mass Preservation After GLP-1-Assisted Weight Loss"
-      description="Between 25 and 39% of weight lost on GLP-1 therapy is lean mass without managed resistance programming and protein intake. A case study in what comes next."
+      title="Rebuilding Strength and Lean Muscle After Significant GLP-1 Weight Loss"
+      description="Combining structured resistance loading, protein-targeted nutrition, and progressive load to protect skeletal muscle. A case study in what comes after GLP-1-assisted weight loss."
       url="/blog/lean-mass-preservation-strength-programming-glp1"
     />
     <div className="grain">
@@ -77,8 +77,8 @@ export default function BlogPost13() {
           </motion.div>
 
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, delay: 0.2, ease: [0.22, 1, 0.36, 1] }} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.9rem, 4.5vw, 3.4rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.015em", color: "#FFFFFF" }}>
-            Lean Mass Preservation After{" "}
-            <span style={{ color: "var(--color-gold)" }}>GLP-1-Assisted Weight Loss</span>
+            Rebuilding Strength and Lean Muscle After Significant{" "}
+            <span style={{ color: "var(--color-gold)" }}>GLP-1 Weight Loss</span>
           </motion.h1>
 
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.32 }} className="flex items-center gap-4 mt-6">
