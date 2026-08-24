@@ -144,6 +144,16 @@ const posts: Post[] = [
     image:         "/blog-post-13.jpg",
     imagePosition: "center top",
   },
+  {
+    slug:          "/blog/semaglutide-field-sport-strength-football",
+    category:      "Clinical Nutrition · Strength & Conditioning",
+    date:          "August 2026",
+    title:         "GLP-1, Five-a-Side Football, and a Strength Programme Built for the Sport",
+    excerpt:       "A 38-year-old on semaglutide playing two matches a week. Eccentric hamstring loading, single-leg stability, rotational core control — and a match-day nutrition protocol timed to the medication.",
+    readTime:      "7 min read",
+    image:         "/blog-post-14.jpg",
+    imagePosition: "center center",
+  },
 ]
 
 function RealBlogCard({ post }: { post: Post }) {
@@ -309,10 +319,11 @@ export default function BlogPage() {
         </div>
       </div>
 
-      {/* Row 5 — dark — posts 12– */}
+      {/* Row 5 — dark — posts 12–13 */}
       <div style={{ background: "var(--color-navy)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           <RealBlogCard post={posts[12]} />
+          <RealBlogCard post={posts[13]} />
         </div>
       </div>
 
