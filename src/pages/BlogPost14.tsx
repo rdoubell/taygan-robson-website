@@ -82,7 +82,7 @@ export default function BlogPost14() {
 
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }} className="mb-5">
             <span className="text-[9px] tracking-[0.3em] uppercase px-3 py-1.5" style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", background: "rgba(199,161,76,0.12)", border: "1px solid rgba(199,161,76,0.3)" }}>
-              Clinical Nutrition · Strength &amp; Conditioning
+              Clinical Nutrition · Performance Management
             </span>
           </motion.div>
 

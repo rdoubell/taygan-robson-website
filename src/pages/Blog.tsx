@@ -136,7 +136,7 @@ const posts: Post[] = [
   },
   {
     slug:          "/blog/lean-mass-preservation-strength-programming-glp1",
-    category:      "Clinical Nutrition · Strength & Conditioning",
+    category:      "Clinical Nutrition · Performance Management",
     date:          "August 2026",
     title:         "Rebuilding Strength and Lean Muscle After Significant GLP-1 Weight Loss",
     excerpt:       "Combining structured resistance loading, protein-targeted nutrition, and progressive load to protect skeletal muscle. A case study in what comes after GLP-1-assisted weight loss.",
@@ -146,7 +146,7 @@ const posts: Post[] = [
   },
   {
     slug:          "/blog/semaglutide-field-sport-strength-football",
-    category:      "Clinical Nutrition · Strength & Conditioning",
+    category:      "Clinical Nutrition · Performance Management",
     date:          "August 2026",
     title:         "GLP-1, Five-a-Side Football, and a Strength Programme Built for the Sport",
     excerpt:       "A 38-year-old on semaglutide playing two matches a week. Eccentric hamstring loading, single-leg stability, rotational core control — and a match-day nutrition protocol timed to the medication.",
