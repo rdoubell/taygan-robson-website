@@ -30,7 +30,7 @@ export default function Hero() {
   const { open } = useBookingModal()
 
   const region = useRegion()
-  const consultPrice = region === "intl" ? "$150" : "R 1 250"
+  const consultPrice = region === "intl" ? "$320" : "R 2 250"
 
   const videoRef = useRef<HTMLVideoElement>(null)
   useEffect(() => {
