@@ -11,12 +11,12 @@ export default function Pricing() {
   const { open, openFollowUp } = useBookingModal()
   const region = useRegion()
   const isIntl = region === "intl"
-  const consultPrice = isIntl ? "$150" : "R 1 250"
-  const followUpPrice = isIntl ? "$90" : "R 750"
+  const consultPrice = isIntl ? "$320" : "R 2 250"
+  const followUpPrice = isIntl ? "$220" : "R 1 250"
   const priceLabel = isIntl ? "Online Consultation" : "Online Consultation"
   const footerNote = isIntl
-    ? "All ongoing programme pricing follows the initial 1INC consultation. $150 all-in."
-    : "All ongoing programme pricing follows the initial 1INC consultation. R 1 250 all-in."
+    ? "All ongoing programme pricing follows the initial 1INC consultation. $320 all-in."
+    : "All ongoing programme pricing follows the initial 1INC consultation. R 2 250 all-in."
 
   return (
     <section id="pricing" className="bg-white" style={{ paddingTop: "5rem", paddingBottom: 0 }} ref={ref}>
