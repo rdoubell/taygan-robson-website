@@ -53,6 +53,20 @@ export default function BookingModal() {
                 >
                   Book your consultation.
                 </h3>
+                <p
+                  className="mt-2"
+                  style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.38)", fontSize: "0.72rem", lineHeight: 1.5 }}
+                >
+                  For booking assistance, contact{" "}
+                  <a
+                    href="mailto:hello@1inc.co.za"
+                    style={{ color: "rgba(199,161,76,0.7)", textDecoration: "none" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--color-gold)" }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(199,161,76,0.7)" }}
+                  >
+                    hello@1inc.co.za
+                  </a>
+                </p>
               </div>
               <button
                 onClick={close}

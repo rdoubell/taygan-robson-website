@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { BookingModalProvider } from "./lib/booking-modal-context"
 import { RegionProvider } from "./lib/region-context"
@@ -8,7 +8,19 @@ import SEOMeta from "./components/SEOMeta"
 import { HomeSchema } from "./components/SchemaOrg"
 
 function StickyBookButton() {
-  const { open } = useBookingModal()
+  const { open, isOpen } = useBookingModal()
+  const [nearPricing, setNearPricing] = useState(false)
+
+  useEffect(() => {
+    const el = document.getElementById("pricing")
+    if (!el) return
+    const obs = new IntersectionObserver(([e]) => setNearPricing(e.isIntersecting), { threshold: 0.05 })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
+  if (isOpen || nearPricing) return null
+
   return (
     <button
       onClick={open}
