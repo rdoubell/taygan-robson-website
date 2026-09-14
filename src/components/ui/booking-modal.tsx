@@ -1,11 +1,15 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { X } from "lucide-react"
 import { useBookingModal } from "../../lib/booking-modal-context"
+import { useRegion } from "../../lib/region-context"
 
-const APPT_GURU_URL = "https://book.appt.guru/?s=2529"
+const APPT_GURU_SA_URL = "https://book.appt.guru/?s=2529"
+const APPT_GURU_INTL_URL = "https://book.appt.guru/?s=2594"
 
 export default function BookingModal() {
   const { isOpen, close } = useBookingModal()
+  const region = useRegion()
+  const widgetUrl = region === "intl" ? APPT_GURU_INTL_URL : APPT_GURU_SA_URL
 
   return (
     <AnimatePresence>
@@ -83,7 +87,7 @@ export default function BookingModal() {
             {/* ── Body ── */}
             <div className="flex-1 overflow-y-auto" style={{ background: "#FFFFFF" }}>
               <iframe
-                src={APPT_GURU_URL}
+                src={widgetUrl}
                 title="Book with Appointment Guru"
                 width="100%"
                 height="600"
