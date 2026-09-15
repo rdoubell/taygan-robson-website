@@ -154,6 +154,16 @@ const posts: Post[] = [
     image:         "/blog-post-14.jpg",
     imagePosition: "center center",
   },
+  {
+    slug:          "/blog/force-not-fatigue-rethinking-strength-work-for-endurance-sport",
+    category:      "Performance Science · Endurance",
+    date:          "September 2026",
+    title:         "Force, Not Fatigue: Rethinking Strength Work for Endurance Sport",
+    excerpt:       "Strength training does not compete with endurance performance — it amplifies it. Three sessions across lower body, upper body, and plyometric loading explain why, and what each one looks like in practice.",
+    readTime:      "8 min read",
+    image:         "/blog-post-15.png",
+    imagePosition: "center center",
+  },
 ]
 
 function RealBlogCard({ post }: { post: Post }) {
@@ -250,6 +260,7 @@ function RealBlogCardLight({ post }: { post: Post }) {
 }
 
 export default function BlogPage() {
+  const sorted = [...posts].reverse()
   return (
     <>
     <SEOMeta
@@ -283,47 +294,48 @@ export default function BlogPage() {
         </h1>
       </div>
 
-      {/* Row 1 — dark — posts 0–2 */}
+      {/* Row 1 — dark — posts 0–2 (newest) */}
       <div style={{ background: "var(--color-navy)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 pb-12 pt-2 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <RealBlogCard post={posts[0]} />
-          <RealBlogCard post={posts[1]} />
-          <RealBlogCard post={posts[2]} />
+          <RealBlogCard post={sorted[0]} />
+          <RealBlogCard post={sorted[1]} />
+          <RealBlogCard post={sorted[2]} />
         </div>
       </div>
 
       {/* Row 2 — light — posts 3–5 */}
       <div className="bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <RealBlogCardLight post={posts[3]} />
-          <RealBlogCardLight post={posts[4]} />
-          <RealBlogCardLight post={posts[5]} />
+          <RealBlogCardLight post={sorted[3]} />
+          <RealBlogCardLight post={sorted[4]} />
+          <RealBlogCardLight post={sorted[5]} />
         </div>
       </div>
 
       {/* Row 3 — dark — posts 6–8 */}
       <div style={{ background: "var(--color-navy)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <RealBlogCard post={posts[6]} />
-          <RealBlogCard post={posts[7]} />
-          <RealBlogCard post={posts[8]} />
+          <RealBlogCard post={sorted[6]} />
+          <RealBlogCard post={sorted[7]} />
+          <RealBlogCard post={sorted[8]} />
         </div>
       </div>
 
       {/* Row 4 — light — posts 9–11 */}
       <div className="bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <RealBlogCardLight post={posts[9]} />
-          <RealBlogCardLight post={posts[10]} />
-          <RealBlogCardLight post={posts[11]} />
+          <RealBlogCardLight post={sorted[9]} />
+          <RealBlogCardLight post={sorted[10]} />
+          <RealBlogCardLight post={sorted[11]} />
         </div>
       </div>
 
-      {/* Row 5 — dark — posts 12–13 */}
+      {/* Row 5 — dark — posts 12–14 (oldest) */}
       <div style={{ background: "var(--color-navy)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <RealBlogCard post={posts[12]} />
-          <RealBlogCard post={posts[13]} />
+          <RealBlogCard post={sorted[12]} />
+          <RealBlogCard post={sorted[13]} />
+          <RealBlogCard post={sorted[14]} />
         </div>
       </div>
 
