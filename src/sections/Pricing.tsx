@@ -169,7 +169,7 @@ export default function Pricing() {
                 className="text-[9px] tracking-[0.38em] uppercase mb-3"
                 style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
               >
-                Returning Clients
+                Returning & Existing Clients
               </p>
               <h3
                 className="text-white mb-3"
@@ -183,7 +183,7 @@ export default function Pricing() {
                 Book a Follow-Up
               </h3>
               <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
-                A focused check-in to review your progress and adjust the plan. Returning clients only.
+                A focused check-in to review your progress and adjust the plan. Returning and existing clients only.
               </p>
 
               <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
@@ -205,8 +205,8 @@ export default function Pricing() {
 
               <ul className="mt-5 flex flex-col gap-2.5">
                 {[
-                  "Returning clients only",
-                  "Written summary delivered within 3 days",
+                  "Returning & existing clients only",
+                  "Written report delivered within 7 days",
                 ].map((f) => (
                   <li key={f} className="flex items-start gap-2">
                     <Check size={11} className="mt-[3px] flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
