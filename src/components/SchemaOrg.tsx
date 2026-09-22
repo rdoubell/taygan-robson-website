@@ -92,6 +92,15 @@ export function HomeSchema() {
                 "45-minute focused check-in for returning and existing clients to review progress and adjust the programme. Written report delivered within 7 days.",
             },
           },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "In-House Assessment",
+              description:
+                "60-minute specialist assessment with a registered practitioner and Taygan directly. Includes VALD ForceDecks, DynaMo, ROM, Grip, Balance, Asymmetry and Reaction Lights testing, movement and nutrition screening. Written clinical report delivered within 7 working days.",
+            },
+          },
         ],
       },
       sameAs: [

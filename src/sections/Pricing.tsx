@@ -13,7 +13,8 @@ export default function Pricing() {
   const isIntl = region === "intl"
   const consultPrice = isIntl ? "$320" : "R 2 250"
   const followUpPrice = isIntl ? "$220" : "R 1 250"
-  const priceLabel = isIntl ? "Online Consultation" : "Online Consultation"
+  const inHousePrice = "R 2 800"
+  const priceLabel = "Online Consultation"
   const footerNote = isIntl
     ? "All ongoing programme pricing follows the initial 1INC consultation. $320 all-in."
     : "All ongoing programme pricing follows the initial 1INC consultation. R 2 250 all-in."
@@ -48,113 +49,114 @@ export default function Pricing() {
         </motion.h2>
       </div>
 
-      {/* ── Consultation + Follow-Up row ── */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.75, delay: 0.12 }}
-        className="mx-auto max-w-7xl px-6 lg:px-12 mb-10"
+        className="mx-auto max-w-7xl px-6 lg:px-12 mb-10 flex flex-col gap-5"
       >
-        <div className="grid lg:grid-cols-[1fr_300px] gap-5 items-stretch">
 
-          {/* ── 1INC Consultation block ── */}
+        {/* ── Row 1: Full-width 1INC Consultation ── */}
+        <div
+          className="relative overflow-hidden"
+          style={{
+            background: "var(--color-navy)",
+            borderRadius: "var(--radius-lg)",
+            padding: "clamp(1.75rem, 4vw, 2.75rem)",
+          }}
+        >
+          {/* Background accent */}
           <div
-            className="relative overflow-hidden"
-            style={{
-              background: "var(--color-navy)",
-              borderRadius: "var(--radius-lg)",
-              padding: "clamp(1.75rem, 4vw, 2.75rem)",
-            }}
-          >
-            {/* Background accent */}
-            <div
-              className="absolute top-0 right-0 w-72 h-72 rounded-full opacity-10 pointer-events-none"
-              style={{ background: "var(--color-gold)", transform: "translate(30%, -40%)", filter: "blur(60px)" }}
-            />
+            className="absolute top-0 right-0 w-72 h-72 rounded-full opacity-10 pointer-events-none"
+            style={{ background: "var(--color-gold)", transform: "translate(30%, -40%)", filter: "blur(60px)" }}
+          />
 
-            <div className="relative grid lg:grid-cols-[1fr_auto] gap-6 lg:gap-12 items-center">
-              {/* Left */}
-              <div>
-                <p
-                  className="text-[10px] tracking-[0.38em] uppercase mb-3"
-                  style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
-                >
-                  Featured · Full Package
-                </p>
-                <h3
-                  className="text-white mb-3"
+          <div className="relative grid lg:grid-cols-[1fr_auto] gap-6 lg:gap-12 items-center">
+            {/* Left */}
+            <div>
+              <p
+                className="text-[10px] tracking-[0.38em] uppercase mb-3"
+                style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
+              >
+                Featured · Full Package
+              </p>
+              <h3
+                className="text-white mb-3"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: "clamp(1.4rem, 2.4vw, 2rem)",
+                  lineHeight: 1.1,
+                }}
+              >
+                1INC Consultation
+              </h3>
+              <p className="mb-5 max-w-2xl" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)", fontSize: "0.93rem", lineHeight: 1.7 }}>
+                A personal 1INC consultation with Taygan directly — across any or all three disciplines.
+                Includes a <strong style={{ color: "rgba(255,255,255,0.8)" }}>written specialised report</strong> and a clear direction before anything else begins.
+              </p>
+
+              {/* Feature list */}
+              <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-2 mb-5">
+                {[
+                  "1INC consultation with Taygan directly — across any or all three disciplines",
+                  "Training load & history, injury background and rehabilitation analysis",
+                  "Nutritional tracking, race fuelling & supplementation assessment",
+                  "Performance goals mapped to findings",
+                  "Written Specialised Report — findings and recommendations",
+                  "Programme direction: Consult — Analysis — Report — Plan — Programme",
+                ].map((f) => (
+                  <li key={f} className="flex items-start gap-2.5">
+                    <Check size={13} className="mt-1 flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
+                    <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.62)", fontSize: "0.85rem" }}>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <p className="text-[11px]" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.28)" }}>
+                Consultations via Microsoft Teams · Bookings via Appointment Guru · Invoice issued post-session, payable within 7 days.
+              </p>
+            </div>
+
+            {/* Right — price + CTA */}
+            <div className="flex flex-col items-start lg:items-end gap-4 lg:min-w-[160px]">
+              <div className="lg:text-right">
+                <div
                   style={{
                     fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: "clamp(1.4rem, 2.4vw, 2rem)",
-                    lineHeight: 1.1,
+                    fontWeight: 800,
+                    fontSize: "clamp(2.4rem, 4vw, 3.2rem)",
+                    color: "var(--color-gold)",
+                    lineHeight: 1,
                   }}
                 >
-                  1INC Consultation
-                </h3>
-                <p className="mb-5 max-w-2xl" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)", fontSize: "0.93rem", lineHeight: 1.7 }}>
-                  A personal 1INC consultation with Taygan directly — across any or all three disciplines.
-                  Includes a <strong style={{ color: "rgba(255,255,255,0.8)" }}>written specialised report</strong> and a clear direction before anything else begins.
-                </p>
-
-                {/* Feature list */}
-                <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-2 mb-5">
-                  {[
-                    "1INC consultation with Taygan directly — across any or all three disciplines",
-                    "Training load & history, injury background and rehabilitation analysis",
-                    "Nutritional tracking, race fuelling & supplementation assessment",
-                    "Performance goals mapped to findings",
-                    "Written Specialised Report — findings and recommendations",
-                    "Programme direction: Consult — Analysis — Report — Plan — Programme",
-                  ].map((f) => (
-                    <li key={f} className="flex items-start gap-2.5">
-                      <Check size={13} className="mt-1 flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
-                      <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.62)", fontSize: "0.85rem" }}>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <p className="text-[11px]" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.28)" }}>
-                  Consultations via Microsoft Teams · Bookings via Appointment Guru · Invoice issued post-session, payable within 7 days.
-                </p>
-              </div>
-
-              {/* Right — price + CTA */}
-              <div className="flex flex-col items-start lg:items-end gap-4 lg:min-w-[160px]">
-                <div className="lg:text-right">
-                  <div
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 800,
-                      fontSize: "clamp(2.4rem, 4vw, 3.2rem)",
-                      color: "var(--color-gold)",
-                      lineHeight: 1,
-                    }}
-                  >
-                    {consultPrice}
-                  </div>
-                  <p className="text-[10px] tracking-[0.2em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
-                    {priceLabel}
-                  </p>
+                  {consultPrice}
                 </div>
-                <button
-                  onClick={open}
-                  className="inline-flex items-center gap-2.5 px-6 py-3 text-[11px] tracking-[0.2em] uppercase font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    background: "#FFFFFF",
-                    color: "var(--color-navy)",
-                    borderRadius: "var(--radius-pill)",
-                  }}
-                >
-                  Book a 1INC Consultation
-                  <ArrowRight size={13} />
-                </button>
+                <p className="text-[10px] tracking-[0.2em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
+                  {priceLabel}
+                </p>
               </div>
+              <button
+                onClick={open}
+                className="inline-flex items-center gap-2.5 px-6 py-3 text-[11px] tracking-[0.2em] uppercase font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  background: "#FFFFFF",
+                  color: "var(--color-navy)",
+                  borderRadius: "var(--radius-pill)",
+                }}
+              >
+                Book a 1INC Consultation
+                <ArrowRight size={13} />
+              </button>
             </div>
           </div>
+        </div>
 
-          {/* ── Book a Follow-Up block ── */}
+        {/* ── Row 2: Follow-Up + In-House Assessment ── */}
+        <div className="grid lg:grid-cols-2 gap-5 items-stretch">
+
+          {/* ── Follow-Up ── */}
           <div
             className="flex flex-col justify-between"
             style={{
@@ -227,6 +229,90 @@ export default function Pricing() {
               }}
             >
               Book a Follow-Up
+              <ArrowRight size={11} />
+            </button>
+          </div>
+
+          {/* ── In-House Assessment ── */}
+          <div
+            className="relative overflow-hidden flex flex-col justify-between"
+            style={{
+              background: "var(--color-navy)",
+              borderRadius: "var(--radius-lg)",
+              padding: "2rem",
+              border: "1px solid rgba(199,161,76,0.22)",
+            }}
+          >
+            {/* Subtle accent */}
+            <div
+              className="absolute bottom-0 left-0 w-56 h-56 rounded-full opacity-10 pointer-events-none"
+              style={{ background: "var(--color-gold)", transform: "translate(-30%, 40%)", filter: "blur(50px)" }}
+            />
+
+            <div className="relative">
+              <p
+                className="text-[9px] tracking-[0.38em] uppercase mb-3"
+                style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
+              >
+                Specialist Assessment
+              </p>
+              <h3
+                className="text-white mb-3"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: "clamp(1.15rem, 1.8vw, 1.45rem)",
+                  lineHeight: 1.15,
+                }}
+              >
+                Book an In-House Assessment
+              </h3>
+              <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
+                A specialised assessment with a registered specialist practitioner and Taygan directly.
+              </p>
+
+              <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                <div
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 800,
+                    fontSize: "clamp(2rem, 3vw, 2.6rem)",
+                    color: "var(--color-gold)",
+                    lineHeight: 1,
+                  }}
+                >
+                  {inHousePrice}
+                </div>
+                <p className="text-[10px] tracking-[0.2em] uppercase mt-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
+                  60-Minute Session
+                </p>
+              </div>
+
+              <ul className="mt-5 flex flex-col gap-2.5">
+                {[
+                  "VALD ForceDecks, DynaMo, ROM, Grip, Balance, Asymmetry & Reaction Lights",
+                  "Movement screening and nutrition screening included",
+                  "Written clinical report delivered within 7 working days",
+                ].map((f) => (
+                  <li key={f} className="flex items-start gap-2">
+                    <Check size={11} className="mt-[3px] flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
+                    <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)", fontSize: "0.82rem" }}>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button
+              onClick={open}
+              className="relative mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-[10px] tracking-[0.18em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
+              style={{
+                fontFamily: "var(--font-display)",
+                background: "var(--color-gold)",
+                color: "#14213D",
+                borderRadius: "var(--radius-pill)",
+              }}
+            >
+              Book an In-House Assessment
               <ArrowRight size={11} />
             </button>
           </div>
