@@ -18,7 +18,7 @@ const faqs = [
   },
   {
     q: "What is the difference between the initial consultation and a follow-up?",
-    a: "The initial 1INC Consultation is a comprehensive first assessment — it establishes your baseline, produces the written report, and sets the programme direction. A Follow-Up is a 30-minute focused check-in for returning clients only, used to review progress against the plan and make adjustments. Follow-ups are not available without a prior consultation.",
+    a: "The initial 1INC Consultation is a comprehensive first assessment — it establishes your baseline, produces the written report, and sets the programme direction. A Follow-Up is a 45-minute focused check-in for returning clients only, used to review progress against the plan and make adjustments. Follow-ups are not available without a prior consultation.",
   },
   {
     q: "Can I book if I only need help with one area — for example, nutrition only?",

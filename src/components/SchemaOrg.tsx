@@ -89,7 +89,7 @@ export function HomeSchema() {
               "@type": "Service",
               name: "Follow-Up Consultation",
               description:
-                "30-minute focused check-in for returning clients to review progress and adjust the programme.",
+                "45-minute focused check-in for returning clients to review progress and adjust the programme.",
             },
           },
         ],
