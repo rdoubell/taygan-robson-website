@@ -43,7 +43,7 @@ const practiceDetails: Record<string, {
   },
   "Prehab — Sports Injury & Rehabilitation": {
     num: "03",
-    subtitle: "In-house at The Campus Wellness Centre, Bryanston · Online via Physitrack globally",
+    subtitle: "In-house at The Campus Wellness Centre, Bryanston · Online via Appointment Guru globally",
     desc: "Movement screening, injuries & rehabilitation and return-to-performance programming. Supporting GLP-1-related muscle loss, osteoporosis, and low skeletal mass with structured strength programming to rebuild and protect.",
     taygan: "MSc Sports Injuries & Return to Performance · BSc S&C",
     team: "Registered Biokineticist",
@@ -74,7 +74,7 @@ const services = [
   {
     num: "03",
     title: "Prehab — Sports Injury & Rehabilitation",
-    desc: "Comprehensive evaluation — baseline, injury profile and movement screening — followed by an individualised rehab programme with video-guided exercises via the Physitrack app, tracked monthly. Available in-house at The Campus Wellness Centre, Bryanston, South Africa, and online via Physitrack globally.",
+    desc: "Comprehensive evaluation — baseline, injury profile and movement screening — followed by an individualised rehab programme with video-guided exercises, tracked monthly. Available in-house at The Campus Wellness Centre, Bryanston, South Africa, and online via Appointment Guru globally.",
     image: "/prehab image.png",
     hasDetail: true,
   },
