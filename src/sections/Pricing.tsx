@@ -209,6 +209,7 @@ export default function Pricing() {
                 {[
                   "Returning & existing clients only",
                   "Written report delivered within 7 days",
+                  "Limited to one topic — clients must select one discipline to focus on",
                 ].map((f) => (
                   <li key={f} className="flex items-start gap-2">
                     <Check size={11} className="mt-[3px] flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
@@ -290,7 +291,6 @@ export default function Pricing() {
 
               <ul className="mt-5 flex flex-col gap-2.5">
                 {[
-                  "Limited to one topic — clients must select one discipline to focus on",
                   "VALD ForceDecks, DynaMo, ROM, Grip, Balance, Asymmetry & Reaction Lights",
                   "Movement screening and nutrition screening included",
                   "Written clinical report delivered within 7 working days",
