@@ -268,7 +268,7 @@ export default function Pricing() {
                 Book an In-House Assessment
               </h3>
               <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
-                A specialised assessment with a registered specialist practitioner and Taygan directly. Limited to one topic — clients must select one discipline to focus on.
+                A specialised assessment with a registered specialist practitioner and Taygan directly.
               </p>
 
               <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
@@ -290,6 +290,7 @@ export default function Pricing() {
 
               <ul className="mt-5 flex flex-col gap-2.5">
                 {[
+                  "Limited to one topic — clients must select one discipline to focus on",
                   "VALD ForceDecks, DynaMo, ROM, Grip, Balance, Asymmetry & Reaction Lights",
                   "Movement screening and nutrition screening included",
                   "Written clinical report delivered within 7 working days",
