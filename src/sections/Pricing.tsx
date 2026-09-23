@@ -13,7 +13,7 @@ export default function Pricing() {
   const isIntl = region === "intl"
   const consultPrice = isIntl ? "$320" : "R 2 250"
   const followUpPrice = isIntl ? "$220" : "R 1 250"
-  const inHousePrice = "R 2 800"
+  const inHousePrice = "R 1 250"
   const priceLabel = "Online Consultation"
   const footerNote = isIntl
     ? "All ongoing programme pricing follows the initial 1INC consultation. $320 all-in."
@@ -153,8 +153,8 @@ export default function Pricing() {
           </div>
         </div>
 
-        {/* ── Row 2: Follow-Up + In-House Assessment ── */}
-        <div className="grid lg:grid-cols-2 gap-5 items-stretch">
+        {/* ── Row 2: Follow-Up + In-House Assessment (In-House hidden for intl) ── */}
+        <div className={`grid gap-5 items-stretch${isIntl ? "" : " lg:grid-cols-2"}`}>
 
           {/* ── Follow-Up ── */}
           <div
@@ -185,7 +185,7 @@ export default function Pricing() {
                 Book a Follow-Up
               </h3>
               <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
-                A focused check-in to review your progress and adjust the plan. Returning and existing clients only.
+                A focused check-in to review your progress and adjust the plan. Returning and existing clients only. Limited to one topic — clients must select one discipline to focus on.
               </p>
 
               <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
@@ -233,8 +233,8 @@ export default function Pricing() {
             </button>
           </div>
 
-          {/* ── In-House Assessment ── */}
-          <div
+          {/* ── In-House Assessment (ZA only) ── */}
+          {!isIntl && <div
             className="relative overflow-hidden flex flex-col justify-between"
             style={{
               background: "var(--color-navy)",
@@ -315,7 +315,7 @@ export default function Pricing() {
               Book an In-House Assessment
               <ArrowRight size={11} />
             </button>
-          </div>
+          </div>}
 
         </div>
       </motion.div>
