@@ -185,7 +185,7 @@ export default function Pricing() {
                 Book a Follow-Up
               </h3>
               <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
-                A focused check-in to review your progress and adjust the plan. Returning and existing clients only. Limited to one topic — clients must select one discipline to focus on.
+                A focused check-in to review your progress and adjust the plan. Returning and existing clients only.
               </p>
 
               <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
@@ -268,7 +268,7 @@ export default function Pricing() {
                 Book an In-House Assessment
               </h3>
               <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
-                A specialised assessment with a registered specialist practitioner and Taygan directly.
+                A specialised assessment with a registered specialist practitioner and Taygan directly. Limited to one topic — clients must select one discipline to focus on.
               </p>
 
               <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
