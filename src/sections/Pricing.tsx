@@ -13,7 +13,7 @@ export default function Pricing() {
   const isIntl = region === "intl"
   const consultPrice = isIntl ? "$320" : "R 2 250"
   const followUpPrice = isIntl ? "$220" : "R 1 250"
-  const inHousePrice = "R 1 250"
+  const inHousePrice = "R 2 800"
   const priceLabel = "Online Consultation"
   const footerNote = isIntl
     ? "All ongoing programme pricing follows the initial 1INC consultation. $320 all-in."
