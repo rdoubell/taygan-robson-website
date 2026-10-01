@@ -164,6 +164,16 @@ const posts: Post[] = [
     image:         "/blog-post-15.png",
     imagePosition: "center center",
   },
+  {
+    slug:          "/blog/itb-syndrome-force-asymmetry-case-study",
+    category:      "Sports Injury · Rehabilitation",
+    date:          "October 2026",
+    title:         "3 Pairs of Shoes. Still in Pain. An ITB Syndrome Case Study.",
+    excerpt:       "A recreational runner with 8 weeks of lateral knee pain and three failed footwear changes. Force plate screening showed a 21% left-right force asymmetry — and changed the entire direction of treatment.",
+    readTime:      "7 min read",
+    image:         "/blog-post-16.png",
+    imagePosition: "center 30%",
+  },
 ]
 
 function RealBlogCard({ post }: { post: Post }) {
