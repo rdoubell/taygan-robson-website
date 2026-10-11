@@ -114,7 +114,7 @@ export default function Pricing() {
               </ul>
 
               <p className="text-[11px]" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.28)" }}>
-                Consultations via Microsoft Teams · Bookings via Appointment Guru · Invoice issued post-session, payable within 7 days.
+                Delivered via Microsoft Teams · Booked via Appointment Guru.
               </p>
             </div>
 
@@ -221,7 +221,7 @@ export default function Pricing() {
 
             <button
               onClick={openFollowUp}
-              className="mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-[10px] tracking-[0.18em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
+              className="mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-[11px] tracking-[0.18em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
               style={{
                 fontFamily: "var(--font-display)",
                 background: "var(--color-gold)",
@@ -305,7 +305,7 @@ export default function Pricing() {
 
             <button
               onClick={open}
-              className="relative mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-[10px] tracking-[0.18em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
+              className="relative mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-[11px] tracking-[0.18em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
               style={{
                 fontFamily: "var(--font-display)",
                 background: "var(--color-gold)",

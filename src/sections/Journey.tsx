@@ -81,7 +81,7 @@ export default function Journey({ showHeading = true }: { showHeading?: boolean 
                   padding: "0.75rem 1.1rem",
                   borderRight: ci < 2 ? `1px solid ${NAVY}` : undefined,
                   fontFamily: "var(--font-display)",
-                  fontSize: "0.68rem",
+                  fontSize: "0.75rem",
                   fontWeight: 700,
                   color: NAVY,
                   textTransform: "uppercase",
@@ -103,7 +103,7 @@ export default function Journey({ showHeading = true }: { showHeading?: boolean 
                 {/* ── Mobile layout: stacked card ── */}
                 <div className="md:hidden" style={{ padding: "1rem 1.1rem" }}>
                   <div style={{ display: "flex", alignItems: "baseline", gap: "0.65rem", marginBottom: "0.45rem" }}>
-                    <span style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "1rem", color: GOLD, flexShrink: 0 }}>
+                    <span style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "1rem", color: NAVY, flexShrink: 0 }}>
                       {step.num}
                     </span>
                     <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.9rem", color: NAVY, lineHeight: 1.3 }}>
@@ -126,7 +126,7 @@ export default function Journey({ showHeading = true }: { showHeading?: boolean 
                     fontFamily: "var(--font-display)",
                     fontWeight: 800,
                     fontSize: "1.15rem",
-                    color: GOLD,
+                    color: NAVY,
                     verticalAlign: "top",
                   }}>
                     {step.num}

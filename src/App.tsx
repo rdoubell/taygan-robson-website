@@ -101,7 +101,7 @@ function HomePage() {
     <HomeSchema />
     <div className="grain">
       <Navbar />
-      <main>
+      <main className="pb-20 lg:pb-0">
         {/* Hero — full-bleed photo, transparent navbar sits on top */}
         <Hero />
         {/* Content flows normally below hero */}

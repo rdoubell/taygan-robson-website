@@ -34,7 +34,7 @@ const faqs = [
   },
   {
     q: "How does payment work?",
-    a: "All payments are processed through Appointment Guru at the time of booking. You will be prompted to pay when you select your appointment slot.",
+    a: "An invoice is issued post-session, payable within 7 days. Bookings are managed and confirmed via Appointment Guru.",
   },
   {
     q: "How quickly will I receive my report?",

@@ -74,13 +74,13 @@ export default function Hero() {
             <div className="flex-1 min-w-0">
 
               {/* Headline — font size reduced so "ONE CONVERSATION." never clips on any desktop */}
-              <div className="mb-6 overflow-hidden">
+              <h1 className="mb-6 overflow-hidden">
                 {[
                   { text: "ONE CONVERSATION", gold: true },
                   { text: "ONLINE · GLOBAL", gold: false },
                 ].map(({ text, gold }, i) => (
                   <div key={text} style={{ overflow: "clip" }}>
-                    <motion.h1
+                    <motion.div
                       initial={{ x: "-105%", opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ duration: 0.72, delay: 0.2 + i * 0.14, ease: [0.22, 1, 0.36, 1] }}
@@ -95,10 +95,10 @@ export default function Hero() {
                       }}
                     >
                       {text}
-                    </motion.h1>
+                    </motion.div>
                   </div>
                 ))}
-              </div>
+              </h1>
 
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
@@ -121,6 +121,30 @@ export default function Hero() {
                 <p style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(1rem, 1.7vw, 1.15rem)", color: "rgba(255,255,255,0.92)", lineHeight: 1.3 }}>
                   Three practices in one. That is 1INC.
                 </p>
+              </motion.div>
+
+              {/* Mobile price + CTA — only below lg where the pricing card is hidden */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.65, delay: 0.9 }}
+                className="lg:hidden mt-6 flex items-center gap-4"
+              >
+                <div>
+                  <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "1.7rem", color: "var(--color-gold)", lineHeight: 1 }}>
+                    {consultPrice}
+                  </div>
+                  <p className="text-[10px] tracking-[0.15em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.4)" }}>
+                    45-Min Consultation
+                  </p>
+                </div>
+                <button
+                  onClick={open}
+                  className="inline-flex items-center gap-2 px-5 py-3 text-[11px] tracking-[0.14em] uppercase font-bold flex-shrink-0"
+                  style={{ fontFamily: "var(--font-display)", background: "#FFFFFF", color: "var(--color-navy)", borderRadius: "var(--radius-pill)" }}
+                >
+                  Book Now <ArrowRight size={12} />
+                </button>
               </motion.div>
 
             </div>
@@ -181,7 +205,7 @@ export default function Hero() {
               {/* Bottom — fine print + credentials */}
               <div>
                 <p className="text-[11.5px] italic mb-2.5" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
-                  Payment due on completion of the intake form. Booked via Appointment Guru. Delivered online via Microsoft Teams.
+                  Booked via Appointment Guru · Delivered online via Microsoft Teams.
                 </p>
                 <p className="text-[11.5px] italic" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
                   Taygan &nbsp;|&nbsp; BSc S&amp;C &middot; MSc Sports Injuries &amp; Return to Performance &middot; PG Dip Performance Nutrition &middot; MSc Sports Nutrition (c)

@@ -7,7 +7,7 @@ const mainLinks = [
   { label: "Process",   href: "/#process",   sectionId: "process"   },
   { label: "Practices", href: "/#services",  sectionId: "services"  },
   { label: "Pricing",   href: "/#pricing",   sectionId: "pricing"   },
-  { label: "Contact",   href: "/#contact",   sectionId: "contact"   },
+  { label: "Contact",   href: "mailto:hello@1inc.co.za", sectionId: "contact" },
 ]
 
 const secondaryLinks = [
@@ -144,7 +144,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="inline-flex items-center px-4 py-1.5 text-[10px] tracking-[0.18em] uppercase font-semibold"
+                className="inline-flex items-center px-4 py-1.5 text-[11px] tracking-[0.18em] uppercase font-semibold"
                 style={{
                   fontFamily: "var(--font-display)",
                   background: "var(--color-gold)",
@@ -225,7 +225,7 @@ export default function Navbar() {
               </motion.a>
             ))}
             <motion.a
-              href="/#contact"
+              href="/#pricing"
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35 }}

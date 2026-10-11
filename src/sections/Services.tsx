@@ -156,7 +156,7 @@ export default function Services() {
                 >
                   <span
                     className="text-[11px] tracking-[0.3em] mb-4"
-                    style={{ fontFamily: "var(--font-display)", color: "rgba(27,42,74,0.35)", fontWeight: 600 }}
+                    style={{ fontFamily: "var(--font-display)", color: "rgba(27,42,74,0.7)", fontWeight: 600 }}
                   >
                     {svc.num}
                   </span>
@@ -184,11 +184,11 @@ export default function Services() {
                   {svc.hasDetail ? (
                     <button
                       onClick={() => setExpandedIdx(isExpanded ? null : i)}
-                      className="self-start inline-flex items-center gap-2 px-5 py-2.5 text-[10px] tracking-[0.16em] uppercase font-bold transition-all duration-200 hover:scale-[1.02]"
+                      className="self-start inline-flex items-center gap-2 px-5 py-2.5 text-[11px] tracking-[0.16em] uppercase font-bold transition-all duration-200 hover:scale-[1.02]"
                       style={{
                         fontFamily: "var(--font-display)",
                         background: "var(--color-gold)",
-                        color: "#FFFFFF",
+                        color: "var(--color-navy)",
                         borderRadius: "var(--radius-pill)",
                       }}
                     >
@@ -201,15 +201,15 @@ export default function Services() {
                   ) : (
                     <a
                       href="#pricing"
-                      className="self-start inline-flex items-center gap-2 px-5 py-2.5 text-[10px] tracking-[0.16em] uppercase font-bold transition-all duration-200 hover:scale-[1.02]"
+                      className="self-start inline-flex items-center gap-2 px-5 py-2.5 text-[11px] tracking-[0.16em] uppercase font-bold transition-all duration-200 hover:scale-[1.02]"
                       style={{
                         fontFamily: "var(--font-display)",
                         background: "var(--color-gold)",
-                        color: "#FFFFFF",
+                        color: "var(--color-navy)",
                         borderRadius: "var(--radius-pill)",
                       }}
                     >
-                      See More <ArrowRight size={12} />
+                      See Pricing <ArrowRight size={12} />
                     </a>
                   )}
                 </div>
