@@ -15,7 +15,7 @@ const fadeUp = (delay = 0) => ({
   },
 })
 
-const HERO_IMAGE = "/blog-post-17.png"
+const HERO_IMAGE = "/blog-post-17.jpg"
 
 const nutritionTiming = [
   { time: "08:00", label: "Meal 1", protein: "50g", detail: "Eggs, Greek yoghurt, oats — carbs first to fuel the rehab session" },
