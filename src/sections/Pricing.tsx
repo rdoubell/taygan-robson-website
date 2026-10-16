@@ -266,7 +266,7 @@ export default function Pricing() {
                   lineHeight: 1.15,
                 }}
               >
-                Book an In-House Assessment
+                Book a Specialist Assessment
               </h3>
               <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
                 A specialised assessment with a registered specialist practitioner and Taygan directly.
@@ -282,7 +282,7 @@ export default function Pricing() {
                     lineHeight: 1,
                   }}
                 >
-                  {inHousePrice}
+                  <span style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: "clamp(1rem, 1.5vw, 1.2rem)", color: "rgba(199,161,76,0.65)", marginRight: "0.3em" }}>From</span>{inHousePrice}
                 </div>
                 <p className="text-[10px] tracking-[0.2em] uppercase mt-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
                   60-Minute Session
@@ -291,13 +291,22 @@ export default function Pricing() {
 
               <ul className="mt-5 flex flex-col gap-2.5">
                 {[
-                  "VALD ForceDecks, DynaMo, ROM, Grip, Balance, Asymmetry & Reaction Lights",
-                  "Movement screening and nutrition screening included",
+                  "VALD ForceDecks · DynaMo · ROM · Grip · Balance · Asymmetry · Reaction Lights",
+                  "Movement screening and screening included",
                   "Written clinical report delivered within 7 working days",
                 ].map((f) => (
                   <li key={f} className="flex items-start gap-2">
                     <Check size={11} className="mt-[3px] flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
                     <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)", fontSize: "0.82rem" }}>{f}</span>
+                  </li>
+                ))}
+                {[
+                  "Strength and mobility programme designed from VALD assessment findings",
+                  "Nutrition plan designed from assessment and consultation findings",
+                ].map((f) => (
+                  <li key={f} className="flex items-start gap-2 mt-0.5">
+                    <span className="mt-[2px] flex-shrink-0 text-[10px]" style={{ color: "var(--color-gold)", fontFamily: "var(--font-display)", fontWeight: 700, letterSpacing: "0.04em" }}>+</span>
+                    <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.38)", fontSize: "0.82rem" }}>Add-on: {f}</span>
                   </li>
                 ))}
               </ul>
@@ -313,7 +322,7 @@ export default function Pricing() {
                 borderRadius: "var(--radius-pill)",
               }}
             >
-              Book an In-House Assessment
+              Book a Specialist Assessment
               <ArrowRight size={11} />
             </button>
           </div>}
