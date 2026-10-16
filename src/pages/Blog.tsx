@@ -174,6 +174,16 @@ const posts: Post[] = [
     image:         "/blog-post-16.png",
     imagePosition: "center 30%",
   },
+  {
+    slug:          "/blog/mcl-rehab-glp1-tirzepatide-calorie-deficit",
+    category:      "Sports Injury · Rehabilitation · GLP-1",
+    date:          "October 2026",
+    title:         "MCL Sprain. GLP-1. A Calorie Deficit. One Plan, Not Two.",
+    excerpt:       "A 62-year-old golfer on tirzepatide recovering from a Grade 2 MCL sprain. GLP-1 suppresses appetite. Rehab needs protein and energy. Running them as separate plans means both fail.",
+    readTime:      "7 min read",
+    image:         "/blog-post-17.png",
+    imagePosition: "center 35%",
+  },
 ]
 
 function RealBlogCard({ post }: { post: Post }) {
