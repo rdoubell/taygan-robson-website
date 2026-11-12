@@ -1,0 +1,27 @@
+rendered 0s / 30s
+rendered 1s / 30s
+rendered 2s / 30s
+rendered 3s / 30s
+rendered 4s / 30s
+rendered 5s / 30s
+screenshot retry 1
+rendered 6s / 30s
+screenshot retry 1
+screenshot retry 1
+rendered 7s / 30s
+screenshot retry 1
+screenshot retry 1
+screenshot retry 2
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.screenshot: Target page, context or browser has been closed
+    at shot (/Users/rohandoubell/Desktop/client-websites/1inc/animation/render.mjs:27:29)
+    at async file:///Users/rohandoubell/Desktop/client-websites/1inc/animation/render.mjs:48:17 {
+  log: []
+}
+
+Node.js v24.16.0
+[out#0/mp4 @ 0x101e04680] Error writing trailer: Immediate exit requested
+[out#0/mp4 @ 0x101e04680] Error closing file: Immediate exit requested

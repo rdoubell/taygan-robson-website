@@ -1,0 +1,647 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>1INC — GLP-1 Story (v2, 30s)</title>
+<style>
+  @font-face { font-family: 'Montserrat'; src: url('../fonts/montserrat.woff2') format('woff2'); font-weight: 100 900; }
+  @font-face { font-family: 'Source Sans 3'; src: url('../fonts/sourcesans3.woff2') format('woff2'); font-weight: 200 900; }
+  html, body { margin: 0; background: #000; }
+  canvas { display: block; width: 1080px; height: 1920px; }
+</style>
+<script src="../lib/motion.js"></script>
+<script src="timeline.js"></script>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// v2 rules: navy background everywhere, white text, gold accents. All text centred inside the
+// Reels-ad safe zone (y 270-1250, x 65-1015). Headlines 56-76px.
+const { clamp, lerp, spring, ui, type, heavy, hash } = M;
+const { scene: S, cue: C, dur: DUR } = TIMELINE;
+const W = 1080, H = 1920, CX = 540;
+// ?variant=organic adds a persistent footer for organic Stories/feed. The Reels-ad cut keeps the
+// bottom ~35% clear because Meta overlays the caption + CTA there.
+const VARIANT = new URLSearchParams(location.search).get('variant') || 'ad';
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+
+const COL = { navy: '#1B2A4A', deep: '#14213D', card: '#22355A', gold: '#C7A14C', white: '#FFFFFF', ink: '#0B1220' };
+const rgba = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
+const ease = (x) => x * x * (3 - 2 * x);
+const mixc = (h1, h2, p) => {
+  const a = parseInt(h1.slice(1), 16), b = parseInt(h2.slice(1), 16);
+  const c = (sh) => Math.round(lerp((a >> sh) & 255, (b >> sh) & 255, clamp(p)));
+  return `rgb(${c(16)},${c(8)},${c(0)})`;
+};
+
+// ---------- assets ----------
+const IMG = {};
+const loadImg = (key, src) => new Promise((res) => {
+  const im = new Image(); im.onload = () => { IMG[key] = im; res(); }; im.onerror = () => res(); im.src = src;
+});
+window.__ready = Promise.all([
+  ...['900', '800', '700', '600'].map((w) => document.fonts.load(`${w} 80px Montserrat`)),
+  document.fonts.load('400 40px "Source Sans 3"'), document.fonts.load('600 40px "Source Sans 3"'),
+  loadImg('logoGold', 'assets/1inc-gold.png'), loadImg('taygan', 'assets/taygan.jpg'),
+  loadImg('booking', 'assets/site-booking.png'),
+]);
+
+// ---------- primitives ----------
+const font = (w, px, fam = 'M') => { ctx.font = `${w} ${px}px ${fam === 'M' ? 'Montserrat' : '"Source Sans 3"'}`; };
+function roundRect(x, y, w, h, r) {
+  r = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+}
+function bg() {
+  ctx.fillStyle = COL.navy; ctx.fillRect(0, 0, W, H);
+  const v = ctx.createRadialGradient(CX, 760, 200, CX, 760, 1300);
+  v.addColorStop(0, rgba(COL.deep, 0)); v.addColorStop(1, rgba(COL.deep, 0.9));
+  ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = rgba(COL.white, 0.045);
+  for (let y = 24; y < H; y += 40) for (let x = 24; x < W; x += 40) ctx.fillRect(x, y, 2.4, 2.4);
+}
+function parse(markup) {
+  const out = []; let accent = false;
+  for (const part of markup.split('*')) { for (const w of part.split(/(\s+)/)) if (w.trim()) out.push({ w, accent }); accent = !accent; }
+  return out;
+}
+// Words rise from behind a per-line mask. Centred.
+function headline(t, lines, y, o = {}) {
+  const size = o.size || 68, lh = o.lh || size * 1.15, weight = o.weight || 800, stagger = o.stagger ?? 0.06;
+  font(weight, size); ctx.letterSpacing = `${-size * 0.02}px`;
+  const space = ctx.measureText(' ').width;
+  lines.forEach((line, li) => {
+    const words = parse(line.text), widths = words.map((w) => ctx.measureText(w.w).width);
+    const total = widths.reduce((a, b) => a + b, 0) + space * (words.length - 1);
+    let x = (o.x ?? CX) - total / 2; const by = y + li * lh;
+    ctx.save(); ctx.beginPath(); ctx.rect(0, by - size * 1.0, W, size * 1.35); ctx.clip();
+    words.forEach((w, wi) => {
+      const p = type(t - line.t - wi * stagger);
+      if (p > 0.001) { ctx.fillStyle = w.accent ? (o.accent || COL.gold) : (o.color || COL.white); ctx.fillText(w.w, x, by + (1 - p) * size * 1.2); }
+      x += widths[wi] + space;
+    });
+    ctx.restore();
+  });
+  ctx.letterSpacing = '0px';
+}
+function eyebrow(t, text, y, t0, size = 24, x = CX) {
+  const p = type(t - t0); if (p <= 0) return;
+  font(700, size); ctx.letterSpacing = `${size * 0.32}px`;
+  const w = ctx.measureText(text).width, x0 = x - w / 2;
+  ctx.save(); ctx.beginPath(); ctx.rect(x0 - 4, y - 40, (w + 8) * p, 60); ctx.clip();
+  ctx.fillStyle = COL.gold; ctx.fillText(text, x0, y); ctx.restore(); ctx.letterSpacing = '0px';
+}
+function label(text, x, y, o = {}) {
+  font(o.weight || 600, o.size || 28, o.fam || 'S');
+  ctx.textAlign = o.align || 'center'; ctx.fillStyle = o.color || rgba(COL.white, o.alpha ?? 0.6);
+  if (o.track) ctx.letterSpacing = `${o.track}px`;
+  ctx.fillText(text, x, y); ctx.textAlign = 'left'; ctx.letterSpacing = '0px';
+}
+function check(cx, cy, r, p, filled) {
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  if (filled > 0) { ctx.fillStyle = rgba(COL.gold, filled); ctx.fill(); }
+  ctx.lineWidth = 2.5; ctx.strokeStyle = filled > 0.5 ? COL.gold : rgba(COL.white, 0.3); ctx.stroke();
+  if (p > 0) {
+    ctx.strokeStyle = COL.navy; ctx.lineWidth = r * 0.22; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const a = [cx - r * 0.42, cy + r * 0.02], b = [cx - r * 0.1, cy + r * 0.34], c = [cx + r * 0.46, cy - r * 0.3];
+    const l1 = Math.hypot(b[0] - a[0], b[1] - a[1]), l2 = Math.hypot(c[0] - b[0], c[1] - b[1]), L = (l1 + l2) * p;
+    ctx.beginPath(); ctx.moveTo(...a);
+    if (L < l1) ctx.lineTo(a[0] + (b[0] - a[0]) * L / l1, a[1] + (b[1] - a[1]) * L / l1);
+    else { ctx.lineTo(...b); const f = (L - l1) / l2; ctx.lineTo(b[0] + (c[0] - b[0]) * f, b[1] + (c[1] - b[1]) * f); }
+    ctx.stroke();
+  }
+}
+function cursor(x, y, press = 0) {
+  ctx.save(); ctx.translate(x, y); const s = 1.5 * (1 - 0.12 * press); ctx.scale(s, s);
+  ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, 34); ctx.lineTo(9, 26); ctx.lineTo(15, 40); ctx.lineTo(21, 37);
+  ctx.lineTo(15, 23); ctx.lineTo(26, 23); ctx.closePath();
+  ctx.fillStyle = COL.white; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = COL.ink; ctx.stroke(); ctx.restore();
+}
+function ripple(x, y, t, t0) {
+  const a = t - t0; if (a < 0 || a > 0.6) return;
+  ctx.beginPath(); ctx.arc(x, y, 20 + a * 160, 0, Math.PI * 2);
+  ctx.strokeStyle = rgba(COL.gold, 0.7 * (1 - a / 0.6)); ctx.lineWidth = 4; ctx.stroke();
+}
+function card(x, y, w, h, r = 40) {
+  roundRect(x, y, w, h, r); ctx.fillStyle = rgba(COL.card, 0.92); ctx.fill();
+  ctx.lineWidth = 2; ctx.strokeStyle = rgba(COL.white, 0.09); ctx.stroke();
+}
+
+// ---------- S1: three unbranded pens swing in, swing out, reveal the hook ----------
+const PENS = [
+  { body: '#EEF1F6', dial: '#CBD3E1', band: COL.navy, ang: -0.62, dx: 0, delay: 0.0, out: -1 },
+  { body: '#A7BBDF', dial: '#8197C2', band: COL.navy, ang: -0.04, dx: 0, delay: 0.07, out: 1 },
+  { body: '#86A0CF', dial: '#6A84B5', band: COL.navy, ang: 0.52, dx: 0, delay: 0.12, out: 1 },
+];
+function pen(p, L = 640, w = 84) {
+  // local coords: pen axis along y, tip at y=+L/2 (bottom), cap at -L/2
+  const g = ctx.createLinearGradient(-w / 2, 0, w / 2, 0);
+  g.addColorStop(0, 'rgba(0,0,0,0.28)'); g.addColorStop(0.18, 'rgba(0,0,0,0)'); g.addColorStop(0.38, 'rgba(255,255,255,0.45)');
+  g.addColorStop(0.55, 'rgba(255,255,255,0)'); g.addColorStop(1, 'rgba(0,0,0,0.32)');
+  const seg = (y0, y1, col, r = 10, inset = 0) => {
+    roundRect(-w / 2 + inset, y0, w - inset * 2, y1 - y0, r); ctx.fillStyle = col; ctx.fill(); ctx.fillStyle = g; ctx.fill();
+  };
+  seg(-L / 2, L / 2 - 120, p.body, 30);                 // cap + body
+  seg(L / 2 - 130, L / 2 - 10, p.dial, 14, 6);          // dose dial
+  ctx.fillStyle = 'rgba(0,0,0,0.18)';
+  for (let k = 0; k < 9; k++) ctx.fillRect(-w / 2 + 12 + k * 7.4, L / 2 - 122, 2.4, 100); // dial ridges
+  seg(L / 2 - 14, L / 2 + 6, p.dial, 8, 18);            // needle end
+  ctx.fillStyle = 'rgba(0,0,0,0.12)'; ctx.fillRect(-w / 2, -L / 2 + 150, w, 4); // cap seam
+  seg(-40, 150, p.band, 6, 2);                          // blank label band (no branding)
+  ctx.fillStyle = COL.gold; ctx.fillRect(-w / 2 + 2, 132, w - 4, 6);
+  ctx.fillStyle = rgba(COL.white, 0.5); roundRect(-14, -20, 10, 120, 5); ctx.fill();
+  ctx.fillStyle = rgba(COL.white, 0.25); roundRect(6, 0, 8, 80, 4); ctx.fill();
+  roundRect(-18, 190, 36, 46, 8); ctx.fillStyle = '#F7F8FA'; ctx.fill();  // dose window
+  font(800, 16); ctx.fillStyle = COL.navy; ctx.textAlign = 'center'; ctx.fillText('0.5', 0, 219); ctx.textAlign = 'left';
+}
+function pens(t) {
+  // Pens open the film already in place (gently floating), then swipe off the screen.
+  const pivotX = CX, pivotY = 1080;
+  const gone = clamp(spring(t - C.pensOut, 120, 18));
+  if (gone < 0.995) {
+    ctx.save(); ctx.globalAlpha = 0.35 * (1 - gone); ctx.fillStyle = '#000'; ctx.filter = 'blur(18px)';
+    ctx.beginPath(); ctx.ellipse(CX, 1128, 250, 24, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+  }
+  PENS.forEach((p, i) => {
+    const sOut = clamp(spring(t - C.pensOut - p.delay * 0.8, 120, 18), 0, 1.05);
+    if (sOut >= 1.0 && t > C.pensOut + 1) return;
+    const bob = Math.sin(t * 1.6 + i * 1.3) * 8, sway = Math.sin(t * 1.2 + i) * 0.015;
+    const x = pivotX + p.dx + sOut * 1300 * p.out, y = pivotY + bob - sOut * 220;
+    ctx.save(); ctx.translate(x, y); ctx.rotate(p.ang + sway + sOut * 0.6 * p.out);
+    ctx.translate(0, -300); pen(p); ctx.restore();
+  });
+}
+const RED = '#E5484D', GREEN = '#30C77B';
+function tag(text, y, col, t0, t) {
+  const p = ui(t - t0); if (p <= 0) return;
+  font(800, 24); ctx.letterSpacing = '7px';
+  const w = ctx.measureText(text).width + 44;
+  ctx.save(); ctx.translate(CX, y); ctx.scale(p, p);
+  roundRect(-w / 2, -26, w, 52, 26); ctx.fillStyle = rgba(col, 0.16); ctx.fill();
+  ctx.lineWidth = 2; ctx.strokeStyle = rgba(col, 0.6); ctx.stroke();
+  ctx.fillStyle = col; ctx.textAlign = 'center'; ctx.fillText(text, 3.5, 9); ctx.restore();
+  ctx.textAlign = 'left'; ctx.letterSpacing = '0px';
+}
+function s1(t) {
+  bg();
+  // 1INC logo, top centre, for the whole opening
+  if (IMG.logoGold) { const lw = 200, lh = lw * IMG.logoGold.height / IMG.logoGold.width; ctx.drawImage(IMG.logoGold, CX - lw / 2, 285, lw, lh); }
+  // title under the pens; leaves upward as the pens swipe off
+  const out = clamp(type(t - C.pensOut));
+  if (out < 1) {
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 1130, W, 120); ctx.clip(); ctx.translate(0, -out * 120);
+    headline(t, [{ text: 'GLP-1 *medication*', t: -1 }], 1215, { size: 76 });
+    ctx.restore();
+  }
+  pens(t);
+  // myth (red) -> struck through -> fact (green)
+  const dim = lerp(1, 0.4, clamp(type(t - C.strike - 0.3)));
+  tag('MYTH', 560, RED, C.myth, t);
+  ctx.save(); ctx.globalAlpha *= dim;
+  headline(t, [{ text: 'The weight you lose', t: C.myth + 0.1 }, { text: 'is all fat.', t: C.myth + 0.35 }], 680, { size: 62, color: RED });
+  ctx.restore();
+  [[680, 'The weight you lose'], [751, 'is all fat.']].forEach(([y, txt], k) => {
+    const p = clamp(type(t - C.strike - k * 0.18)); if (p <= 0) return;
+    font(800, 62); ctx.letterSpacing = `${-62 * 0.02}px`; const w = ctx.measureText(txt).width; ctx.letterSpacing = '0px';
+    ctx.fillStyle = COL.white; ctx.fillRect(CX - w / 2 - 12, y - 22, (w + 24) * p, 7);
+  });
+  tag('FACT', 900, GREEN, C.fact, t);
+  headline(t, [{ text: 'Up to 1 in 3 kg lost', t: C.fact + 0.1 }, { text: 'can be muscle.', t: C.fact + 0.35 }], 1020, { size: 62, color: GREEN });
+}
+
+// ---------- S2: dashboard line chart #170 -> #12 -> #1 ----------
+const CH = { x0: 210, x1: 900, y0: 600, y1: 960, card: [90, 370, 900, 780] };
+const yrX = [CH.x0 + 20, (CH.x0 + CH.x1) / 2, CH.x1 - 20];
+const rankY = (r) => CH.y0 + (Math.log(r) / Math.log(200)) * (CH.y1 - CH.y0);
+const RANKS = [170, 12, 1];
+// position along the curve, s in [0,2]
+function curve(s) {
+  const i = Math.min(1, Math.floor(s)), f = s - i;
+  const x = lerp(yrX[i], yrX[i + 1], f);
+  const yb = lerp(rankY(RANKS[i]), rankY(RANKS[i + 1]), ease(f));
+  const wob = Math.sin(Math.PI * f) * (Math.sin(s * 19.3 + 1.1) * 16 + Math.sin(s * 37.1) * 7);
+  return [x, yb + wob, yb];
+}
+function headS(t) {
+  // organic growth: speeds up, hesitates, surges (monotonic)
+  const g = (u) => u - 0.05 * Math.sin(u * Math.PI * 4) / (Math.PI * 4) * 4;
+  const a = clamp((t - C.p2023 - 0.1) / (C.p2024 - C.p2023 - 0.1));
+  const b = clamp((t - C.p2024 - 0.1) / (C.p2025 - C.p2024 - 0.05));
+  return clamp(g(ease(a))) + clamp(g(ease(b)));
+}
+const CAPS = [
+  { t: C.p2023, yr: '2023', text: '#170 in medical aid spend' },
+  { t: C.p2024, yr: '2024', text: '#12 in medical aid spend' },
+  { t: C.p2025, yr: '2025', text: '#1 best-selling medicine' },
+];
+function s2(t) {
+  bg();
+  // camera push into the #1 point
+  const push = 0; // camera push removed (client: chart exit looked odd)
+  const [px, py] = [yrX[2], rankY(1)];
+  ctx.save(); ctx.translate(px, py); ctx.scale(1 + 0.16 * push, 1 + 0.16 * push); ctx.translate(-px, -py);
+
+  const pc = ui(t - C.card);
+  ctx.save(); ctx.translate(CX, 760); ctx.scale(lerp(0.9, 1, pc), lerp(0.9, 1, pc)); ctx.translate(-CX, -760);
+  ctx.globalAlpha = clamp(pc * 1.5);
+  card(...CH.card);
+  ctx.globalAlpha = 1;
+  eyebrow(t, 'GLP-1 · SOUTH AFRICA', 440, C.card + 0.2, 22, 300);
+  headline(t, [{ text: 'Medicine ranking', t: C.card + 0.3 }], 500, { size: 40, weight: 700, x: 278 });
+  // grid + axes
+  const pa = type(t - C.card - 0.4);
+  [1, 10, 50, 200].forEach((r, k) => {
+    const y = rankY(r);
+    ctx.fillStyle = rgba(COL.white, 0.07 * pa); ctx.fillRect(CH.x0, y, (CH.x1 - CH.x0) * pa, 2);
+    label('#' + r, CH.x0 - 22, y + 9, { size: 24, alpha: 0.4 * pa, align: 'right' });
+  });
+  yrX.forEach((x, k) => label(['2023', '2024', '2025'][k], x, 1030, { size: 28, weight: 700, fam: 'M', alpha: 0.5 * type(t - C.card - 0.5 - k * 0.08) }));
+  // line
+  const s = headS(t);
+  if (t > C.p2023 - 0.05) {
+    ctx.beginPath(); const N = Math.ceil(s * 80);
+    const pts = []; for (let k = 0; k <= N; k++) pts.push(curve((s * k) / Math.max(1, N)));
+    ctx.moveTo(pts[0][0], CH.y1); pts.forEach((p) => ctx.lineTo(p[0], p[1])); ctx.lineTo(pts[pts.length - 1][0], CH.y1); ctx.closePath();
+    ctx.fillStyle = rgba(COL.gold, 0.08); ctx.fill();
+    ctx.beginPath(); pts.forEach((p, k) => (k ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])));
+    ctx.strokeStyle = COL.gold; ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke();
+    // year points
+    RANKS.forEach((r, k) => {
+      const pp = ui(t - [C.p2023, C.p2024, C.p2025][k]); if (pp <= 0) return;
+      const x = yrX[k], y = rankY(r);
+      ctx.beginPath(); ctx.arc(x, y, 13 * pp, 0, Math.PI * 2); ctx.fillStyle = COL.navy; ctx.fill();
+      ctx.lineWidth = 5; ctx.strokeStyle = COL.gold; ctx.stroke();
+      label('#' + r, x, y - 30, { size: 30, weight: 800, fam: 'M', color: COL.white });
+    });
+    const [hx, hy] = curve(s);
+    ctx.beginPath(); ctx.arc(hx, hy, 9, 0, Math.PI * 2); ctx.fillStyle = COL.gold; ctx.fill();
+    const ring = ((t * 1.6) % 1);
+    ctx.beginPath(); ctx.arc(hx, hy, 10 + ring * 26, 0, Math.PI * 2); ctx.strokeStyle = rgba(COL.gold, 0.5 * (1 - ring)); ctx.lineWidth = 3; ctx.stroke();
+  }
+  label('Sources: Mediscor medicines review 2024 · IQVIA via Spotlight, Feb 2026', CX, 1105, { size: 21, alpha: 0.35 * pa });
+  ctx.restore();
+
+  // caption under the card: horizontal swaps
+  CAPS.forEach((c, k) => {
+    const pin = type(t - c.t - (k ? 0.22 : 0)), pout = k < 2 ? clamp(spring(t - CAPS[k + 1].t, 320, 36)) : 0;
+    if (pin <= 0 || pout >= 1) return;
+    const x = CX + (1 - pin) * 1100 - pout * 1100;
+    ctx.save(); ctx.beginPath(); ctx.rect(65, 1160, 950, 80); ctx.clip();
+    font(800, 40); const w1 = ctx.measureText(c.yr + '  ').width; font(700, 40, 'S');
+    const w2 = ctx.measureText(c.text).width, x0 = x - (w1 + w2) / 2;
+    font(800, 40); ctx.fillStyle = COL.gold; ctx.fillText(c.yr + '  ', x0, 1215);
+    font(600, 40, 'S'); ctx.fillStyle = COL.white; ctx.fillText(c.text, x0 + w1, 1215);
+    ctx.restore();
+  });
+  ctx.restore();
+}
+
+// ---------- S3: smart-scale card, the twist ----------
+const SC = { x: 140, y: 330, w: 800, h: 820 };
+const BAR = { x: 220, y: 800, w: 640, h: 84 };
+function s3(t, o = {}) {
+  bg();
+  const pc = ui(t - S.s3 - 0.15);
+  ctx.save(); ctx.globalAlpha = o.alpha ?? 1;
+  const sc = (o.scale ?? 1) * lerp(0.94, 1, pc);
+  ctx.translate(CX, 740); ctx.scale(sc, sc); ctx.translate(-CX, -740);
+  card(SC.x, SC.y, SC.w, SC.h, 48);
+  label('BODY WEIGHT', 200, 410, { size: 22, weight: 700, fam: 'M', color: COL.gold, align: 'left', track: 7 });
+  label('Today', 880, 410, { size: 26, alpha: 0.45, align: 'right' });
+  // weight ticks down
+  const pw = clamp(spring(t - C.weigh - 0.1, 45, 13));
+  const kg = lerp(98, 86, pw).toFixed(1);
+  font(800, 150); ctx.letterSpacing = '-5px'; const nw = ctx.measureText(kg).width; ctx.letterSpacing = '0px';
+  font(700, 52); const kw = ctx.measureText(' kg').width;
+  const nx = CX - (nw + kw) / 2;
+  font(800, 150); ctx.letterSpacing = '-5px'; ctx.fillStyle = COL.white; ctx.fillText(kg, nx, 595); ctx.letterSpacing = '0px';
+  font(700, 52); ctx.fillStyle = rgba(COL.white, 0.5); ctx.fillText(' kg', nx + nw, 595);
+  // chip: win -> twist
+  const pchip = ui(t - C.winning);
+  if (pchip > 0) {
+    const tw = clamp(type(t - C.muscle));
+    ctx.save(); ctx.translate(CX, 668); ctx.scale(pchip, pchip);
+    roundRect(-170, -32, 340, 64, 32); ctx.fillStyle = rgba(COL.gold, 0.16); ctx.fill();
+    ctx.save(); ctx.beginPath(); ctx.rect(-170, -32, 340, 64); ctx.clip();
+    font(800, 30); ctx.textAlign = 'center'; ctx.fillStyle = COL.gold;
+    ctx.fillText('−12 kg  ✓', -tw * 340, 11); ctx.fillText('4 kg was muscle', 340 - tw * 340, 11);
+    ctx.restore(); ctx.restore(); ctx.textAlign = 'left';
+  }
+  // sparkline (before tap) slides out; bar (after tap) slides in
+  const sw = clamp(type(t - C.tap - 0.1));
+  ctx.save(); ctx.beginPath(); ctx.rect(SC.x + 2, 740, SC.w - 4, 200); ctx.clip();
+  if (sw < 1) {
+    const ps = clamp(spring(t - C.weigh - 0.1, 45, 13));
+    ctx.beginPath();
+    for (let k = 0; k <= 40 * ps; k++) {
+      const u = k / 40, x = 220 + u * 640 - sw * 700, y = 780 + u * 110 + Math.sin(u * 15) * 10 * (1 - u);
+      k ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    }
+    ctx.strokeStyle = COL.gold; ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.stroke();
+  }
+  if (sw > 0) {
+    const off = (1 - sw) * 700, fill = clamp(type(t - C.barFill) * 1.0), split = clamp(ui(t - C.split));
+    const third = BAR.w / 3, gap = 14 * split;
+    roundRect(BAR.x + off, BAR.y, BAR.w, BAR.h, 20); ctx.fillStyle = rgba(COL.white, 0.06); ctx.fill();
+    // fat (white) fills whole bar first, then muscle third separates in gold
+    roundRect(BAR.x + off + (third + gap) * split, BAR.y, (BAR.w - (third + gap) * split) * fill, BAR.h, 20);
+    ctx.fillStyle = rgba(COL.white, 0.88); ctx.fill();
+    if (split > 0) { roundRect(BAR.x + off, BAR.y, third * split, BAR.h, 20); ctx.fillStyle = COL.gold; ctx.fill(); }
+    font(800, 30); ctx.textAlign = 'center';
+    ctx.fillStyle = COL.navy; if (fill > 0.6 && split < 0.3) ctx.fillText('12 kg lost', CX + off, BAR.y + 53);
+    ctx.textAlign = 'left';
+    const lp = type(t - C.split - 0.2);
+    if (lp > 0) {
+      const pulse = 1 + 0.08 * Math.exp(-Math.max(0, t - C.muscle) * 5) * (t > C.muscle ? 1 : 0);
+      ctx.save(); ctx.translate(BAR.x + third / 2 + off, BAR.y + BAR.h + 52); ctx.scale(pulse, pulse);
+      label('MUSCLE 4 kg', 0, 0, { size: 26, weight: 800, fam: 'M', color: rgba(COL.gold, lp), track: 2 }); ctx.restore();
+      label('FAT 8 kg', BAR.x + third + (BAR.w - third) / 2 + off, BAR.y + BAR.h + 52, { size: 26, weight: 800, fam: 'M', color: rgba(COL.white, 0.75 * lp), track: 2 });
+    }
+  }
+  ctx.restore();
+  // "View breakdown" button, collapses after the tap
+  const pb = ui(t - C.winning - 0.25) * (1 - clamp(ui(t - C.tap - 0.15)));
+  const press = t > C.tap && t < C.tap + 0.15 ? 0.95 : 1;
+  if (pb > 0.01) {
+    ctx.save(); ctx.translate(CX, 1030); ctx.scale(pb * press, pb * press);
+    roundRect(-230, -48, 460, 96, 48); ctx.lineWidth = 3; ctx.strokeStyle = rgba(COL.white, 0.5); ctx.stroke();
+    label('View breakdown  →', 0, 12, { size: 32, weight: 700, fam: 'M', color: COL.white }); ctx.restore();
+  }
+  ctx.restore();
+  // cursor
+  const cp = clamp(heavy(t - C.cursor)), co = clamp(type(t - C.tap - 0.3));
+  if (cp > 0.01 && co < 1) {
+    cursor(lerp(980, CX + 60, cp) + co * 500, lerp(1500, 1040, cp) + co * 400, t > C.tap && t < C.tap + 0.15 ? 1 : 0);
+    ripple(CX + 60, 1040, t, C.tap);
+  }
+}
+
+// ---------- S4: Less muscle. Less energy. Less performance. ----------
+const LESS = [{ w: 'muscle.', t: C.less1, c: COL.gold }, { w: 'energy.', t: C.less2, c: COL.white }, { w: 'performance.', t: C.less3, c: COL.gold }];
+const S4Y = 780, S4SIZE = 76;
+function lessLayout(i) {
+  font(800, S4SIZE); ctx.letterSpacing = `${-S4SIZE * 0.02}px`;
+  const lw = ctx.measureText('Less ').width, ww = ctx.measureText(LESS[i].w).width;
+  ctx.letterSpacing = '0px';
+  const x0 = CX - (lw + ww) / 2;
+  return { lessX: x0, wordX: x0 + lw, ww };
+}
+function s4(t, o = {}) {
+  bg();
+  const idx = t < C.less2 ? 0 : t < C.less3 ? 1 : 2;
+  const L = [0, 1, 2].map(lessLayout);
+  // "Less" glides to keep the phrase centred
+  const lessX = M.track(t, [[0, L[0].lessX], [C.less2, L[1].lessX], [C.less3, L[2].lessX]], 260, 30);
+  const pLess = type(t - C.less1 + 0.1);
+  font(800, S4SIZE); ctx.letterSpacing = `${-S4SIZE * 0.02}px`;
+  ctx.save(); ctx.beginPath(); ctx.rect(0, S4Y - 90, W, 120); ctx.clip();
+  if (!o.hideLess) { ctx.fillStyle = COL.white; ctx.fillText('Less', lessX, S4Y + (1 - pLess) * 100); }
+  // words swap horizontally
+  LESS.forEach((w, k) => {
+    if (o.hideWord === k) return;
+    const pin = ui(t - w.t), pout = k < 2 ? type(t - LESS[k + 1].t) : 0;
+    if (pin <= 0 || pout >= 0.999) return;
+    const wx = lessX + (L[k].wordX - L[k].lessX) + (1 - pin) * 260 - pout * 260;
+    ctx.globalAlpha = clamp(pin * 2) * (1 - pout);
+    ctx.fillStyle = w.c; ctx.fillText(w.w, wx, S4Y);
+    ctx.globalAlpha = 1;
+  });
+  ctx.restore(); ctx.letterSpacing = '0px';
+  // underline tracks the active word
+  if (!o.hideLine) {
+    const ux = M.track(t, [[0, L[0].wordX], [C.less2, L[1].wordX], [C.less3, L[2].wordX]], 220, 26);
+    const uw = M.track(t, [[0, L[0].ww], [C.less2, L[1].ww], [C.less3, L[2].ww]], 220, 26);
+    ctx.fillStyle = LESS[idx].c === COL.gold ? COL.gold : COL.white;
+    ctx.fillRect(ux, S4Y + 26, uw, 8);
+  }
+}
+// S3 -> S4: the gold muscle segment stretches into the underline
+function t34(t) {
+  const p = clamp(heavy(t - S.s4));
+  s4(t, { hideLine: p < 1 });
+  if (p < 1) {
+    s3Overlay(t, Math.pow(1 - p, 3));
+    const L0 = lessLayout(0);
+    const from = [BAR.x, BAR.y, BAR.w / 3, BAR.h], to = [L0.wordX, S4Y + 26, L0.ww, 8];
+    const r = from.map((v, k) => lerp(v, to[k], p));
+    roundRect(...r, lerp(20, 2, p)); ctx.fillStyle = COL.gold; ctx.fill();
+  }
+}
+function s3Overlay(t, a) {
+  // the scale card shrinking away (drawn over the new scene)
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(CX, 740); ctx.scale(lerp(0.9, 1, a), lerp(0.9, 1, a)); ctx.translate(-CX, -740);
+  card(SC.x, SC.y, SC.w, SC.h, 48); ctx.restore();
+}
+
+// ---------- S5: Taygan + plan chips ----------
+const CHIPS = ['medication', 'nutrition', 'performance'].map((w, k) => ({ w, x: 100 + k * 300, y: 1112, ww: 280, hh: 76 }));
+const CHIP_T = [C.medication, C.nutrition, C.performance];
+const FR = { x: 300, y: 430, s: 480 };
+function s5(t, o = {}) {
+  bg();
+  ctx.save();
+  if (o.leave) { ctx.globalAlpha = 1 - o.leave; ctx.translate(0, -80 * o.leave); }
+  eyebrow(t, 'YOUR GLP-1 SPECIALIST', 300, C.oneInk);
+  label('MSc Sports Injuries & Return to Performance', CX, 350, { size: 28, alpha: 0.55 * type(t - C.oneInk - 0.25) });
+  label('PgDip Performance Nutrition · Distinction', CX, 388, { size: 28, alpha: 0.55 * type(t - C.oneInk - 0.35) });
+  // photo reveal: rounded window opens from the centre, gold frame draws around it
+  const pr = clamp(heavy(t - S.s5 - 0.1));
+  if (pr > 0) {
+    const s = FR.s * lerp(0.2, 1, pr), x = CX - s / 2, y = FR.y + (FR.s - s) / 2;
+    ctx.save(); roundRect(x, y, s, s, 40); ctx.clip();
+    const im = IMG.taygan, k = 1.08 + 0.05 * clamp((t - S.s5) / 5);
+    if (im) { const d = FR.s * k; ctx.drawImage(im, CX - d / 2, FR.y + FR.s / 2 - d * 0.47, d, d); }
+    ctx.fillStyle = rgba(COL.deep, 0.15); ctx.fillRect(x, y, s, s); ctx.restore();
+    const fp = clamp(type(t - S.s5 - 0.4));
+    ctx.save(); ctx.lineWidth = 3; ctx.strokeStyle = COL.gold;
+    roundRect(FR.x - 14, FR.y - 14, FR.s + 28, FR.s + 28, 52);
+    ctx.setLineDash([2400 * fp, 2400]); ctx.stroke(); ctx.restore();
+  }
+  const pbadge = ui(t - C.oneInk - 0.6);
+  if (pbadge > 0) {
+    ctx.save(); ctx.translate(CX, FR.y + FR.s + 14); ctx.scale(pbadge, pbadge);
+    roundRect(-235, -34, 470, 68, 34); ctx.fillStyle = COL.navy; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = COL.gold; ctx.stroke();
+    font(800, 28); const n1 = ctx.measureText('Taygan Robson').width; font(600, 28, 'S'); const n2 = ctx.measureText('  ·  Consultant').width;
+    const nx = -(n1 + n2) / 2;
+    font(800, 28); ctx.fillStyle = COL.white; ctx.fillText('Taygan Robson', nx, 10);
+    font(600, 28, 'S'); ctx.fillStyle = COL.gold; ctx.fillText('  ·  Consultant', nx + n1, 10);
+    ctx.restore();
+  }
+  ctx.restore();
+  if (!o.noChips) chips(t, o);
+}
+function chips(t, o = {}) {
+  CHIPS.forEach((c, k) => {
+    const pin = ui(t - S.s5 - 0.15 - k * 0.1); if (pin <= 0) return;
+    const ck = clamp(type(t - CHIP_T[k]));
+    ctx.save(); ctx.translate(c.x + c.ww / 2, c.y + c.hh / 2); ctx.scale(pin, pin);
+    roundRect(-c.ww / 2, -c.hh / 2, c.ww, c.hh, c.hh / 2);
+    ctx.fillStyle = rgba(COL.white, lerp(0.06, 0.1, ck)); ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = rgba(ck > 0.5 ? COL.gold : COL.white, ck > 0.5 ? 0.8 : 0.12); ctx.stroke();
+    check(-c.ww / 2 + 40, 0, 20, ck, ck);
+    if (!(k === 2 && o.hideChip3Label)) { font(700, 32); ctx.fillStyle = COL.white; ctx.fillText(c.w, -c.ww / 2 + 74, 11); }
+    ctx.restore();
+  });
+}
+// S4 -> S5: "performance." flies down into the third chip
+function t45(t) {
+  const p = clamp(heavy(t - S.s5));
+  if (p >= 1) return s5(t);
+  s5(t, { hideChip3Label: true });
+  const L2 = lessLayout(2), c = CHIPS[2];
+  font(800, S4SIZE); ctx.letterSpacing = `${-S4SIZE * 0.02}px`;
+  ctx.save(); ctx.globalAlpha = 1 - p; ctx.fillStyle = COL.white;
+  ctx.fillText('Less', L2.lessX, S4Y - p * 80); ctx.restore();
+  const size = lerp(S4SIZE, 32, p), x = lerp(L2.wordX, c.x + 74, p), y = lerp(S4Y, c.y + c.hh / 2 + 11, p);
+  font(lerp(800, 700, p), size); ctx.letterSpacing = `${-size * 0.02 * (1 - p)}px`;
+  ctx.fillStyle = p < 0.5 ? COL.gold : COL.white;
+  ctx.fillText(p < 0.6 ? 'performance.' : 'performance', x, y);
+  ctx.letterSpacing = '0px';
+}
+
+// ---------- S6: chips -> button -> tap -> phone ----------
+const BTN = { x: 170, y: 640, w: 740, h: 120 };
+const PH = { x: CX - 185, y: 480, w: 370, h: 770, r: 58 };
+function s6(t) {
+  bg();
+  const merge = clamp(spring(t - S.s6, 220, 28));
+  const grow = clamp(heavy(t - C.phone));
+  if (merge < 1) { s5(t, { leave: merge, noChips: true }); }
+  // chips converge into the button
+  if (merge < 0.999) {
+    CHIPS.forEach((c) => {
+      const r = [lerp(c.x, BTN.x, merge), lerp(c.y, BTN.y, merge), lerp(c.ww, BTN.w, merge), lerp(c.hh, BTN.h, merge)];
+      roundRect(...r, r[3] / 2); ctx.fillStyle = rgba(COL.gold, lerp(0.2, 1, merge)); ctx.fill();
+      ctx.save(); ctx.globalAlpha = clamp(1 - merge * 5); font(700, 32); ctx.fillStyle = COL.white;
+      ctx.fillText(c.w, r[0] + 74, r[1] + r[3] / 2 + 11); ctx.restore();
+    });
+  }
+  // button morphs into the phone
+  const press = t > C.tap2 && t < C.tap2 + 0.15 ? 0.96 : 1;
+  const bx = lerp(BTN.x, PH.x, grow), by = lerp(BTN.y, PH.y, grow), bw = lerp(BTN.w, PH.w, grow), bh = lerp(BTN.h, PH.h, grow);
+  if (merge > 0.6) {
+    ctx.save(); ctx.translate(bx + bw / 2, by + bh / 2); ctx.scale(press, press); ctx.translate(-(bx + bw / 2), -(by + bh / 2));
+    roundRect(bx, by, bw, bh, lerp(BTN.h / 2, PH.r, grow));
+    ctx.fillStyle = COL.gold; ctx.fill(); ctx.globalAlpha = clamp((grow - 0.12) * 5); ctx.fillStyle = COL.ink; ctx.fill(); ctx.globalAlpha = 1;
+    if (grow < 0.3) {
+      ctx.globalAlpha = clamp((merge - 0.7) * 4) * (1 - grow / 0.3);
+      font(800, 38); ctx.textAlign = 'center'; ctx.fillStyle = COL.navy;
+      ctx.fillText('Book your GLP-1 consultation', bx + bw / 2, by + bh / 2 + 13); ctx.textAlign = 'left';
+      ctx.globalAlpha = 1;
+    }
+    if (grow > 0.5) {
+      // phone screen with the real booking page
+      const sx = bx + 12, sy = by + 12, sw = bw - 24, sh = bh - 24, a = clamp((grow - 0.5) * 3);
+      ctx.save(); roundRect(sx, sy, sw, sh, PH.r - 12); ctx.clip();
+      ctx.fillStyle = '#F4F6F9'; ctx.fillRect(sx, sy, sw, sh);
+      const im = IMG.booking;
+      if (im) { ctx.globalAlpha = a; const k = sh / im.height, dw = im.width * k; ctx.drawImage(im, sx + (sw - dw) / 2, sy, dw, sh); }
+      ctx.restore();
+      ctx.fillStyle = COL.ink; roundRect(bx + bw / 2 - 52, by + 26, 104, 28, 14); ctx.fill(); // island
+    }
+    ctx.restore();
+  }
+  // end card: small logo + URL (phone sits below inside the safe zone)
+  const pl = clamp(heavy(t - C.phone - 0.4));
+  if (pl > 0 && IMG.logoGold) {
+    const lw = 170, lh = lw * IMG.logoGold.height / IMG.logoGold.width;
+    ctx.save(); ctx.beginPath(); ctx.rect(CX - lw / 2, 280, lw * pl, lh); ctx.clip();
+    ctx.drawImage(IMG.logoGold, CX - lw / 2, 280, lw, lh); ctx.restore();
+  }
+  headline(t, [{ text: '*1inc.co.za*', t: C.url }], 445, { size: 48, weight: 800 });
+  // cursor taps the button once, then leaves
+  const c1 = clamp(heavy(t - C.cursor2)), cOut = clamp(type(t - C.tap2 - 0.25));
+  if (c1 > 0.01 && cOut < 1) {
+    cursor(lerp(1000, CX + 120, c1) + cOut * 500, lerp(1500, BTN.y + 70, c1) + cOut * 500, t > C.tap2 && t < C.tap2 + 0.15 ? 1 : 0);
+  }
+  ripple(CX + 120, BTN.y + 70, t, C.tap2);
+}
+
+// ---------- transitions ----------
+function zoomThrough(t, t0, a, b) { // a pushes past the camera, b settles in from behind
+  const p = clamp(spring(t - t0, 160, 26));
+  b(t);
+  if (p < 1) {
+    ctx.save(); ctx.globalAlpha = Math.pow(1 - p, 2.5); ctx.translate(CX, 760); ctx.scale(1 + p * 0.5, 1 + p * 0.5); ctx.translate(-CX, -760);
+    a(t); ctx.restore();
+  }
+}
+function dissolve(t, t0, a, b) { // card settles back while the next card resolves in place
+  const p = clamp(spring(t - t0, 150, 24));
+  if (p >= 0.999) return b(t);
+  ctx.save(); ctx.translate(CX, 760); ctx.scale(1 - 0.04 * p, 1 - 0.04 * p); ctx.translate(-CX, -760); a(t); ctx.restore();
+  ctx.save(); ctx.globalAlpha = ease(p); b(t); ctx.restore();
+}
+function whip(t, t0, a, b) { // fast horizontal pan; subframe blur does the smear
+  const p = clamp(spring(t - t0, 220, 28));
+  ctx.save(); ctx.translate(-p * W, 0); a(t); ctx.restore();
+  ctx.save(); ctx.translate((1 - p) * W, 0); b(t); ctx.restore();
+}
+
+function footer(t) {
+  // fades out when the end card (logo + URL at top) takes over
+  const a = 1 - clamp(type(t - C.phone - 0.3));
+  if (a <= 0.01) return;
+  ctx.save(); ctx.globalAlpha = a;
+  if (IMG.logoGold) { const lw = 130, lh = lw * IMG.logoGold.height / IMG.logoGold.width; ctx.drawImage(IMG.logoGold, CX - lw / 2, 1400, lw, lh); }
+  label('1inc.co.za', CX, 1505, { size: 30, weight: 700, fam: 'M', color: rgba(COL.white, 0.75) });
+  roundRect(CX - 220, 1550, 440, 6, 3); ctx.fillStyle = rgba(COL.white, 0.12); ctx.fill();
+  roundRect(CX - 220, 1550, 440 * clamp(t / DUR), 6, 3); ctx.fillStyle = COL.gold; ctx.fill();
+  ctx.restore();
+}
+
+// ---------- master ----------
+window.seek = function (t) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.filter = 'none';
+  if (t < S.s2) s1(t);
+  else if (t < S.s3) zoomThrough(t, S.s2, s1, s2);
+  else if (t < S.s4) dissolve(t, S.s3, s2, s3);
+  else if (t < S.s5) t34(t);
+  else if (t < S.s6) t45(t);
+  else s6(t);
+  if (VARIANT === 'organic') footer(t);
+  const f = clamp((t - (DUR - 0.5)) / 0.5);
+  if (f > 0) { ctx.fillStyle = `rgba(0,0,0,${f})`; ctx.fillRect(0, 0, W, H); }
+};
+
+window.__ready.then(() => {
+  window.seek(0);
+  if (location.hash === '#scrub') {
+    // Review mode: drag through the film frame by frame (render mode never uses this).
+    document.body.style.cssText = 'background:#0B1220;display:flex;flex-direction:column;align-items:center;height:100vh;margin:0;overflow:hidden';
+    cv.style.cssText = 'height:calc(100vh - 110px);width:auto;border-radius:12px;margin-top:12px';
+    const bar = document.createElement('div');
+    bar.style.cssText = 'display:flex;gap:12px;align-items:center;width:min(92vw,720px);padding:14px 0;font:600 15px -apple-system,sans-serif;color:#cbd3e1';
+    bar.innerHTML = `<button id=pb style="font:inherit;padding:6px 14px;border-radius:20px;border:0;background:#C7A14C;color:#1B2A4A">Play</button>
+      <button id=bk style="font:inherit;padding:6px 10px;border-radius:20px;border:1px solid #42557a;background:none;color:#cbd3e1">◀ frame</button>
+      <input id=sl type=range min=0 max=${DUR} step=${1 / 60} value=0 style="flex:1;accent-color:#C7A14C">
+      <button id=fw style="font:inherit;padding:6px 10px;border-radius:20px;border:1px solid #42557a;background:none;color:#cbd3e1">frame ▶</button>
+      <span id=tc style="min-width:150px;text-align:right"></span>`;
+    document.body.appendChild(bar);
+    const sl = bar.querySelector('#sl'), tc = bar.querySelector('#tc');
+    const names = { s1: 'Hook', s2: 'Chart', s3: 'Scale', s4: 'Less…', s5: 'Taygan', s6: 'Booking' };
+    const show = (t) => {
+      t = clamp(t, 0, DUR); sl.value = t; window.seek(t);
+      const sc = Object.entries(S).filter(([, v]) => v <= t).pop()[0];
+      tc.textContent = `${t.toFixed(2)}s · f${Math.round(t * 60)} · ${names[sc]}`;
+    };
+    let playing = false, t0 = 0, from = 0;
+    sl.oninput = () => { playing = false; show(+sl.value); };
+    bar.querySelector('#bk').onclick = () => { playing = false; show(+sl.value - 1 / 60); };
+    bar.querySelector('#fw').onclick = () => { playing = false; show(+sl.value + 1 / 60); };
+    bar.querySelector('#pb').onclick = () => { playing = !playing; t0 = performance.now(); from = +sl.value; if (playing) tick(); };
+    const tick = () => { if (!playing) return; show((from + (performance.now() - t0) / 1000) % DUR); requestAnimationFrame(tick); };
+    show(0);
+  }
+  if (location.hash === '#play') {
+    const t0 = performance.now();
+    const loop = () => { window.seek(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  }
+});
+</script>
+</body>
+</html>

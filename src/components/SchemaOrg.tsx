@@ -96,9 +96,9 @@ export function HomeSchema() {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: "Specialist Assessment",
+              name: "Free 10-Minute Screening Call",
               description:
-                "60-minute specialist assessment with a registered practitioner and Taygan directly. Includes VALD ForceDecks, DynaMo, ROM, Grip, Balance, Asymmetry and Reaction Lights testing, movement screening. Written clinical report delivered within 7 working days. Optional add-ons: strength and mobility programme, nutrition plan.",
+                "A free 10-minute online call with Taygan directly. Taygan listens to your story — injuries, goals and training history — before anything else begins. No commitment, no fee. Leads into the full 45-minute online consultation and written report.",
             },
           },
         ],

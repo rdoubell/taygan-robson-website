@@ -154,7 +154,7 @@ export default function Pricing() {
         </div>
 
         {/* ── Row 2: Follow-Up + In-House Assessment (In-House hidden for intl) ── */}
-        <div className={`grid gap-5 items-stretch${isIntl ? "" : " lg:grid-cols-2"}`}>
+        <div className="grid gap-5 items-stretch lg:grid-cols-2">
 
           {/* ── Follow-Up ── */}
           <div
@@ -234,8 +234,8 @@ export default function Pricing() {
             </button>
           </div>
 
-          {/* ── In-House Assessment (ZA only) ── */}
-          {!isIntl && <div
+          {/* ── Free 10-Minute Call ── */}
+          <div
             className="relative overflow-hidden flex flex-col justify-between"
             style={{
               background: "var(--color-navy)",
@@ -255,7 +255,7 @@ export default function Pricing() {
                 className="text-[9px] tracking-[0.38em] uppercase mb-3"
                 style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
               >
-                Specialist Assessment
+                New · Free to Start
               </p>
               <h3
                 className="text-white mb-3"
@@ -266,10 +266,10 @@ export default function Pricing() {
                   lineHeight: 1.15,
                 }}
               >
-                Book a Specialist Assessment
+                Start with a Free Call
               </h3>
               <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
-                A specialised assessment with a registered specialist practitioner and Taygan directly.
+                Taygan hears your story first — your injuries, goals, and training history — before anything else begins. No commitment. No fee.
               </p>
 
               <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
@@ -282,34 +282,40 @@ export default function Pricing() {
                     lineHeight: 1,
                   }}
                 >
-                  <span style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: "clamp(1rem, 1.5vw, 1.2rem)", color: "rgba(199,161,76,0.65)", marginRight: "0.3em" }}>From</span>{inHousePrice}
+                  Free
                 </div>
                 <p className="text-[10px] tracking-[0.2em] uppercase mt-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
-                  60-Minute Session
+                  10-Minute Screening Call
                 </p>
               </div>
 
               <ul className="mt-5 flex flex-col gap-2.5">
                 {[
-                  "VALD ForceDecks · DynaMo · ROM · Grip · Balance · Asymmetry · Reaction Lights",
-                  "Movement screening and screening included",
-                  "Written clinical report delivered within 7 working days",
+                  "Taygan listens — your history, goals and where things broke down",
+                  "No assessment forms. No pressure. Just a conversation.",
+                  "Online — available to anyone, anywhere",
                 ].map((f) => (
                   <li key={f} className="flex items-start gap-2">
                     <Check size={11} className="mt-[3px] flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
                     <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)", fontSize: "0.82rem" }}>{f}</span>
                   </li>
                 ))}
-                {[
-                  "Strength and mobility programme designed from VALD assessment findings",
-                  "Nutrition plan designed from assessment and consultation findings",
-                ].map((f) => (
-                  <li key={f} className="flex items-start gap-2 mt-0.5">
-                    <span className="mt-[2px] flex-shrink-0 text-[10px]" style={{ color: "var(--color-gold)", fontFamily: "var(--font-display)", fontWeight: 700, letterSpacing: "0.04em" }}>+</span>
-                    <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.38)", fontSize: "0.82rem" }}>Add-on: {f}</span>
-                  </li>
-                ))}
               </ul>
+
+              <div className="mt-5 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                <p className="text-[10px] tracking-[0.18em] uppercase mb-2" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.22)", fontWeight: 600 }}>What follows</p>
+                <ul className="flex flex-col gap-2">
+                  {[
+                    "45-min online consultation — full assessment across your three disciplines",
+                    "Written report and programme direction within 7 working days",
+                  ].map((f) => (
+                    <li key={f} className="flex items-start gap-2">
+                      <ArrowRight size={10} className="mt-[4px] flex-shrink-0" style={{ color: "rgba(199,161,76,0.4)" }} />
+                      <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.35)", fontSize: "0.82rem" }}>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             <button
@@ -322,10 +328,10 @@ export default function Pricing() {
                 borderRadius: "var(--radius-pill)",
               }}
             >
-              Book a Specialist Assessment
+              Book a Free 10-Minute Call
               <ArrowRight size={11} />
             </button>
-          </div>}
+          </div>
 
         </div>
       </motion.div>

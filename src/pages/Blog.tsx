@@ -184,6 +184,16 @@ const posts: Post[] = [
     image:         "/blog-post-17.jpg",
     imagePosition: "center 35%",
   },
+  {
+    slug:          "/blog/rate-of-force-development-rfd-return-to-sport",
+    category:      "Sports Injury · Rehabilitation · Performance",
+    date:          "October 2026",
+    title:         "Cleared. Not Ready. The Rate of Force Development Gap.",
+    excerpt:       "An athlete can restore maximal strength after injury and still carry a significant RFD deficit. The strength screen passes. The 50-millisecond window that sport actually demands — doesn't.",
+    readTime:      "8 min read",
+    image:         "/RFD training image .webp",
+    imagePosition: "center 40%",
+  },
 ]
 
 function RealBlogCard({ post }: { post: Post }) {

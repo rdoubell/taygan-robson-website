@@ -1,0 +1,544 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>1INC — GLP-1 Story</title>
+<style>
+  @font-face { font-family: 'Montserrat'; src: url('../fonts/montserrat.woff2') format('woff2'); font-weight: 100 900; }
+  @font-face { font-family: 'Source Sans 3'; src: url('../fonts/sourcesans3.woff2') format('woff2'); font-weight: 200 900; }
+  html, body { margin: 0; background: #000; }
+  canvas { display: block; width: 1080px; height: 1920px; }
+</style>
+<script src="../lib/motion.js"></script>
+<script src="timeline.js"></script>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+const { clamp, lerp, spring, ui, type, heavy, hash } = M;
+const { scene: S, cue: C, dur: DUR } = TIMELINE;
+const W = 1080, H = 1920, PAD = 90;
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+
+// ---------- brand ----------
+const COL = {
+  navy: '#1B2A4A', deep: '#14213D', cream: '#F7F6EF', gold: '#C7A14C', goldDark: '#9C7C32',
+  red: '#B23A48', white: '#FFFFFF', slate: '#64748B', slateLight: '#9AA7BC',
+};
+const rgba = (hex, a) => {
+  const n = parseInt(hex.slice(1), 16);
+  return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`;
+};
+const mix = (h1, h2, p) => {
+  const a = parseInt(h1.slice(1), 16), b = parseInt(h2.slice(1), 16);
+  const c = (s) => Math.round(lerp((a >> s) & 255, (b >> s) & 255, clamp(p)));
+  return `rgb(${c(16)},${c(8)},${c(0)})`;
+};
+
+// ---------- assets ----------
+const IMG = {};
+const loadImg = (key, src) => new Promise((res) => {
+  const im = new Image();
+  im.onload = () => { IMG[key] = im; res(); };
+  im.onerror = () => res(); // missing photo -> placeholder
+  im.src = src;
+});
+window.__ready = Promise.all([
+  document.fonts.load('900 80px Montserrat'), document.fonts.load('800 80px Montserrat'),
+  document.fonts.load('700 80px Montserrat'), document.fonts.load('600 80px Montserrat'),
+  document.fonts.load('400 40px "Source Sans 3"'), document.fonts.load('600 40px "Source Sans 3"'),
+  loadImg('logoGold', 'assets/1inc-gold.png'), loadImg('logoNavy', 'assets/1inc-navy.png'),
+  loadImg('logoWhite', 'assets/1inc-white.png'),
+  loadImg('photoHook', 'assets/photo-hook.jpg'), loadImg('photoReveal', 'assets/photo-reveal.jpg'),
+]);
+
+// ---------- primitives ----------
+const font = (w, px, fam = 'M') => { ctx.font = `${w} ${px}px ${fam === 'M' ? 'Montserrat' : '"Source Sans 3"'}`; };
+
+function bg(color, dotColor, dotAlpha = 0.07) {
+  ctx.fillStyle = color; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = rgba(dotColor, dotAlpha);
+  for (let y = 24; y < H; y += 40) for (let x = 24; x < W; x += 40) ctx.fillRect(x, y, 2.4, 2.4);
+}
+
+// Parse "Almost nobody has a *plan.*" -> words with accent flags.
+function parse(markup) {
+  const out = []; let accent = false;
+  for (const part of markup.split('*')) {
+    for (const w of part.split(/(\s+)/)) if (w.trim()) out.push({ w, accent });
+    accent = !accent;
+  }
+  return out;
+}
+
+// Kinetic headline: each word rises from behind its own line mask (no fades).
+// lines: [{ text, t }] ; opts: { size, lh, color, accent, align, weight, stagger }
+function headline(t, lines, x, y, o = {}) {
+  const size = o.size || 96, lh = o.lh || size * 1.08, weight = o.weight || 900;
+  const color = o.color || COL.white, accentCol = o.accent || COL.gold, stagger = o.stagger ?? 0.07;
+  font(weight, size);
+  ctx.letterSpacing = `${-size * 0.02}px`;
+  const space = ctx.measureText(' ').width;
+  lines.forEach((line, li) => {
+    const words = parse(line.text);
+    const widths = words.map((w) => ctx.measureText(w.w).width);
+    const total = widths.reduce((a, b) => a + b, 0) + space * (words.length - 1);
+    let cx = o.align === 'center' ? x - total / 2 : x;
+    const by = y + li * lh;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, by - size * 1.0, W, size * 1.32); ctx.clip();
+    words.forEach((w, wi) => {
+      const p = type(t - line.t - wi * stagger);
+      if (p > 0.001) {
+        ctx.fillStyle = w.accent ? accentCol : color;
+        ctx.fillText(w.w, cx, by + (1 - p) * size * 1.15);
+      }
+      cx += widths[wi] + space;
+    });
+    ctx.restore();
+  });
+  ctx.letterSpacing = '0px';
+}
+
+// Tracked-caps eyebrow, revealed by a left-to-right wipe.
+function eyebrow(t, text, x, y, t0, o = {}) {
+  const p = type(t - t0); if (p <= 0) return;
+  font(700, o.size || 30);
+  ctx.letterSpacing = `${(o.size || 30) * 0.32}px`;
+  const w = ctx.measureText(text).width;
+  const x0 = o.align === 'center' ? x - w / 2 : x;
+  ctx.save();
+  ctx.beginPath(); ctx.rect(x0 - 4, y - 40, (w + 8) * p, 60); ctx.clip();
+  ctx.fillStyle = o.color || COL.gold;
+  ctx.fillText(text, x0, y);
+  ctx.restore();
+  ctx.letterSpacing = '0px';
+}
+
+function body(t, text, x, y, t0, o = {}) {
+  const p = type(t - t0); if (p <= 0) return;
+  font(o.weight || 400, o.size || 40, 'S');
+  ctx.textAlign = o.align || 'left';
+  ctx.fillStyle = rgba(o.color || COL.white, (o.alpha ?? 0.72) * clamp(p * 1.4));
+  ctx.fillText(text, x, y + (1 - p) * 24);
+  ctx.textAlign = 'left';
+}
+
+function rule(t, x, y, w, t0, color = COL.gold, h = 6, align = 'left') {
+  const p = type(t - t0); if (p <= 0) return;
+  ctx.fillStyle = color;
+  const x0 = align === 'center' ? x - (w * p) / 2 : x;
+  ctx.fillRect(x0, y, w * p, h);
+}
+
+function roundRect(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+}
+
+function logo(key, x, y, w, reveal = 1) {
+  const im = IMG[key]; if (!im || reveal <= 0) return;
+  const h = (w * im.height) / im.width;
+  ctx.save();
+  ctx.beginPath(); ctx.rect(x, y, w * reveal, h); ctx.clip();
+  ctx.drawImage(im, x, y, w, h);
+  ctx.restore();
+}
+
+// Photo slot: real image (cover + slow push) or a navy placeholder until one is supplied.
+function photo(key, t, t0, tint = 0.66) {
+  const im = IMG[key];
+  const s = 1.0 + 0.05 * clamp((t - t0) / 10);
+  if (im) {
+    const r = Math.max(W / im.width, H / im.height) * s;
+    const w = im.width * r, h = im.height * r;
+    ctx.drawImage(im, (W - w) / 2, (H - h) / 2, w, h);
+  } else {
+    const g = ctx.createRadialGradient(W * 0.62, H * 0.32, 80, W * 0.5, H * 0.5, H * 0.75);
+    g.addColorStop(0, '#2A3F6B'); g.addColorStop(1, COL.deep);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = rgba(COL.white, 0.035); ctx.lineWidth = 2;
+    const off = ((t - t0) * 14) % 56;
+    for (let i = -H; i < W + H; i += 56) {
+      ctx.beginPath(); ctx.moveTo(i + off, 0); ctx.lineTo(i + off - H * 0.6, H); ctx.stroke();
+    }
+  }
+  ctx.fillStyle = rgba(COL.deep, tint); ctx.fillRect(0, 0, W, H);
+  const g2 = ctx.createLinearGradient(0, H * 0.4, 0, H);
+  g2.addColorStop(0, rgba(COL.deep, 0)); g2.addColorStop(1, rgba(COL.deep, 0.85));
+  ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
+}
+
+// ---------- transitions ----------
+// Next scene is revealed through a moving edge with a gold leading line.
+function wipe(t, t0, dir, drawA, drawB) {
+  const p = clamp(heavy(t - t0) * 1.0, 0, 1);
+  if (t < t0) return drawA(t);
+  if (p >= 0.999) return drawB(t);
+  drawA(t);
+  ctx.save(); ctx.beginPath();
+  let edge;
+  if (dir === 'up') { edge = H * (1 - p); ctx.rect(0, edge, W, H - edge); }
+  else if (dir === 'left') { edge = W * (1 - p); ctx.rect(edge, 0, W - edge, H); }
+  else if (dir === 'down') { edge = H * p; ctx.rect(0, 0, W, edge); }
+  ctx.clip(); drawB(t); ctx.restore();
+  ctx.fillStyle = COL.gold;
+  if (dir === 'up') ctx.fillRect(0, edge - 4, W, 8);
+  else if (dir === 'left') ctx.fillRect(edge - 4, 0, 8, H);
+  else ctx.fillRect(0, edge - 4, W, 8);
+}
+
+// ---------- S1: hook ----------
+const chain = (() => {
+  // A peptide-like chain of hexagon rings joined by bonds, as ordered segments.
+  const segs = [], nodes = [];
+  let x = -60; const yMid = 760, R = 46;
+  for (let i = 0; i < 9; i++) {
+    const up = i % 2 === 0 ? -1 : 1;
+    const cx = x + 70, cy = yMid + up * 46;
+    segs.push([x, yMid - up * 20, cx - R, cy]);
+    const pts = [];
+    for (let k = 0; k <= 6; k++) {
+      const a = Math.PI + (k * Math.PI) / 3;
+      pts.push([cx + R * Math.cos(a), cy + R * Math.sin(a)]);
+    }
+    for (let k = 0; k < 6; k++) { segs.push([...pts[k], ...pts[k + 1]]); nodes.push({ x: pts[k][0], y: pts[k][1] }); }
+    // side branch every other ring
+    if (i % 2 === 1) { segs.push([cx, cy - R, cx + 8, cy - R - 64]); nodes.push({ x: cx + 8, y: cy - R - 64, big: true }); }
+    x = cx + R + 6;
+  }
+  let L = 0; for (const s of segs) { s.len = Math.hypot(s[2] - s[0], s[3] - s[1]); s.at = L; L += s.len; }
+  for (const n of nodes) {
+    let best = 0;
+    for (const s of segs) if (Math.hypot(s[0] - n.x, s[1] - n.y) < 2 || Math.hypot(s[2] - n.x, s[3] - n.y) < 2) best = Math.max(best, s.at + s.len);
+    n.at = best;
+  }
+  return { segs, nodes, L };
+})();
+
+function drawChain(t, t0) {
+  const p = clamp(spring(t - t0, 22, 9.5)) ; // slow, weighted draw
+  const len = chain.L * p;
+  const drift = -(t - t0) * 10;
+  ctx.save(); ctx.translate(drift, 0);
+  ctx.strokeStyle = rgba(COL.gold, 0.9); ctx.lineWidth = 5; ctx.lineCap = 'round';
+  ctx.beginPath();
+  for (const s of chain.segs) {
+    if (s.at > len) break;
+    const f = clamp((len - s.at) / s.len);
+    ctx.moveTo(s[0], s[1]); ctx.lineTo(lerp(s[0], s[2], f), lerp(s[1], s[3], f));
+  }
+  ctx.stroke();
+  chain.nodes.forEach((n, i) => {
+    if (n.at > len) return;
+    const age = (len - n.at) / chain.L * 6;
+    const pop = ui(age);
+    const pulse = 1 + 0.25 * Math.max(0, Math.sin((t - t0) * 3.2 + hash(i) * 6.28));
+    ctx.fillStyle = COL.gold;
+    ctx.beginPath(); ctx.arc(n.x, n.y, (n.big ? 11 : 7) * pop * pulse, 0, Math.PI * 2); ctx.fill();
+    if (n.big) {
+      ctx.strokeStyle = rgba(COL.gold, 0.35 * pop); ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(n.x, n.y, 26 * pop * pulse, 0, Math.PI * 2); ctx.stroke();
+    }
+  });
+  ctx.restore();
+}
+
+function s1(t) {
+  photo('photoHook', t, 0, 0.6);
+  logo('logoWhite', PAD, 250, 250, clamp(type(t - 0.1)));
+  drawChain(t, 0);
+  eyebrow(t, 'GLP-1 · SOUTH AFRICA', PAD, 1040, 0.2);
+  headline(t, [{ text: "Everyone's on", t: C.hook1 }, { text: 'GLP-1.', t: C.hook1 + 0.25 }], PAD, 1160, { size: 118 });
+  headline(t, [{ text: 'Almost nobody', t: C.hook2 }, { text: 'has a *plan.*', t: C.hook2 + 0.3 }], PAD, 1410, { size: 104, color: COL.white });
+  rule(t, PAD, 1560, 230, C.hook2 + 0.9);
+}
+
+// ---------- S2: rank ----------
+const rankY = (r) => lerp(600, 1400, (r - 1) / 199);
+function s2(t) {
+  bg(COL.navy, COL.white, 0.05);
+  eyebrow(t, 'SEMAGLUTIDE', PAD, 420, S.s2 + 0.35);
+  headline(t, [{ text: 'In one year.', t: C.oneYear }], PAD, 530, { size: 64, weight: 800 });
+
+  // rank counter: 170 holds, then counts to 12
+  const pIn = ui(t - C.rank170 + 0.2);
+  const pCount = clamp(spring(t - C.rank12, 60, 15));
+  const rank = Math.round(lerp(170, 12, pCount));
+  if (pIn > 0.001) {
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, 640, 900, 400); ctx.clip();
+    font(900, 300); ctx.letterSpacing = '-10px';
+    ctx.fillStyle = mix('#FFFFFF', COL.gold, pCount);
+    ctx.fillText('#' + rank, PAD - 8, 980 + (1 - pIn) * 300);
+    ctx.restore(); ctx.letterSpacing = '0px';
+  }
+  body(t, 'rank on SA medical scheme', PAD, 1070, C.rank170 + 0.4, { size: 44 });
+  body(t, 'spending lists', PAD, 1124, C.rank170 + 0.5, { size: 44 });
+
+  // ladder
+  const pl = type(t - S.s2 - 0.5);
+  if (pl > 0) {
+    const lx = 930;
+    ctx.fillStyle = rgba(COL.white, 0.18);
+    ctx.fillRect(lx - 1.5, 600, 3, 800 * pl);
+    font(600, 26, 'S'); ctx.textAlign = 'right';
+    [1, 50, 100, 150, 200].forEach((r) => {
+      const y = rankY(r);
+      if (y > 600 + 800 * pl) return;
+      ctx.fillStyle = rgba(COL.white, 0.3); ctx.fillRect(lx - 14, y - 1, 28, 2);
+      ctx.fillStyle = rgba(COL.white, 0.4); ctx.fillText(r === 1 ? '#1' : String(r), lx - 26, y + 9);
+    });
+    ctx.textAlign = 'left';
+    if (pIn > 0.01) {
+      const my = rankY(lerp(170, 12, pCount));
+      ctx.fillStyle = COL.gold;
+      ctx.fillRect(lx - 1.5, my, 3, rankY(170) - my); // climbed trail
+      ctx.beginPath(); ctx.arc(lx, my, 16 * ui(t - C.rank170), 0, Math.PI * 2); ctx.fill();
+      // year chip
+      const year = pCount > 0.5 ? '2024' : '2023';
+      font(800, 26); ctx.letterSpacing = '3px';
+      const cw = ctx.measureText(year).width + 30;
+      roundRect(lx + 28, my - 22, cw, 44, 22); ctx.fillStyle = rgba(COL.gold, 0.16); ctx.fill();
+      ctx.fillStyle = COL.gold; ctx.fillText(year, lx + 43, my + 10);
+      ctx.letterSpacing = '0px';
+    }
+  }
+
+  headline(t, [{ text: 'And still', t: C.accel }, { text: '*accelerating.*', t: C.accel + 0.25 }], PAD, 1400, { size: 92 });
+  // upward chevrons ticking after "accelerating"
+  for (let i = 0; i < 3; i++) {
+    const p = ui(t - C.accel - 0.6 - i * 0.12); if (p <= 0) continue;
+    const bob = Math.sin((t - C.accel) * 4 - i * 0.7) * 6;
+    ctx.strokeStyle = rgba(COL.gold, 0.4 + 0.3 * i); ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const cx = 880, cy = 1470 - i * 36 + bob;
+    ctx.beginPath(); ctx.moveTo(cx - 30 * p, cy + 18 * p); ctx.lineTo(cx, cy); ctx.lineTo(cx + 30 * p, cy + 18 * p); ctx.stroke();
+  }
+}
+
+// ---------- S3: weight vs muscle ----------
+function s3(t) {
+  // top: cream "on the scale"
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, 960); ctx.clip();
+  bg(COL.cream, COL.navy, 0.06);
+  eyebrow(t, 'ON THE SCALE', PAD, 330, C.weight - 0.1, { color: COL.goldDark });
+  const pw = clamp(spring(t - C.weight - 0.2, 30, 11));
+  const kg = lerp(98, 86, pw);
+  const pIn = type(t - C.weight);
+  font(900, 210); ctx.letterSpacing = '-8px';
+  ctx.fillStyle = COL.navy;
+  ctx.fillText(kg.toFixed(1), PAD - 6, 560 + (1 - pIn) * 260);
+  const numW = ctx.measureText(kg.toFixed(1)).width;
+  ctx.letterSpacing = '0px';
+  font(800, 70); ctx.fillStyle = rgba(COL.navy, 0.5); ctx.fillText('kg', PAD + numW + 20, 560 + (1 - pIn) * 260);
+  // descending line
+  const pl = clamp(spring(t - C.weight - 0.1, 30, 11));
+  ctx.strokeStyle = COL.goldDark; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.beginPath();
+  const N = 40;
+  for (let i = 0; i <= N * pl; i++) {
+    const u = i / N, x = PAD + u * (W - 2 * PAD);
+    const y = 660 + u * 200 + Math.sin(u * 18) * 10 * (1 - u);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  headline(t, [{ text: 'Weight *down.*', t: C.weight + 1.1 }], PAD, 920 - 30, { size: 64, color: COL.navy, accent: COL.goldDark, weight: 800 });
+  ctx.restore();
+
+  // bottom: navy "what you're actually losing"
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 960, W, 960); ctx.clip();
+  bg(COL.navy, COL.white, 0.05);
+  eyebrow(t, 'BUT WITHOUT A PLAN', PAD, 1050, C.withoutPlan);
+  const bw = 280, gap = 30;
+  for (let i = 0; i < 3; i++) {
+    const p = ui(t - C.withoutPlan - 0.5 - i * 0.15); if (p <= 0) continue;
+    const x = PAD + i * (bw + gap), y = 1095 + (1 - p) * -120;
+    const isMuscle = i === 0, flip = clamp(type(t - C.third - 0.2));
+    const fill = isMuscle ? mix('#2A3F6B', COL.red, flip) : '#2A3F6B';
+    roundRect(x, y, bw, 130, 18); ctx.fillStyle = fill; ctx.fill();
+    font(800, 48); ctx.fillStyle = COL.white; ctx.textAlign = 'center';
+    ctx.fillText('4 kg', x + bw / 2, y + 80);
+    font(700, 30); ctx.letterSpacing = '6px';
+    const lab = isMuscle ? 'MUSCLE' : 'FAT';
+    ctx.fillStyle = rgba(isMuscle ? '#E58A95' : COL.white, 0.85 * flip);
+    ctx.fillText(lab, x + bw / 2, 1268);
+    ctx.textAlign = 'left'; ctx.letterSpacing = '0px';
+  }
+  headline(t, [
+    { text: 'Up to *1 in 3* kg lost', t: C.third },
+    { text: 'can be lean muscle', t: C.third + 1.0 },
+    { text: '— *not fat.*', t: C.notFat },
+  ], PAD, 1385, { size: 70, lh: 82 });
+  ctx.restore();
+
+  // divider springs in
+  ctx.fillStyle = COL.gold; ctx.fillRect(0, 957, W * type(t - S.s3 - 0.2), 6);
+}
+
+// ---------- S4/S5: problems -> managed outcomes ----------
+const ROWS = [
+  { bad: 'Reduced protein', bad2: 'intake', good: 'Targeted', good2: 'protein plan', at: C.protein + 0.1, flip: C.notAccept + 0.15 },
+  { bad: 'Lower energy', bad2: 'availability', good: 'Fuelling matched', good2: 'to load', at: C.energy, flip: C.notAccept + 0.65 },
+  { bad: 'Performance', bad2: 'decline', good: 'Performance', good2: 'protected', at: C.active, flip: C.notAccept + 1.15 },
+];
+const rowY = (i) => 680 + i * 290;
+
+function icon(i, cx, cy, col, fix, t) {
+  ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  if (i === 0) { // plate + fork
+    ctx.beginPath(); ctx.arc(cx + 10, cy, 44, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx + 10, cy, 24, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx - 58, cy - 44); ctx.lineTo(cx - 58, cy + 46); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx - 70, cy - 44); ctx.lineTo(cx - 70, cy - 16); ctx.lineTo(cx - 46, cy - 16); ctx.lineTo(cx - 46, cy - 44); ctx.stroke();
+  } else if (i === 1) { // battery
+    roundRect(cx - 60, cy - 32, 108, 64, 10); ctx.stroke();
+    ctx.fillRect(cx + 52, cy - 14, 10, 28);
+    const lvl = lerp(0.18, 0.86, fix);
+    ctx.fillRect(cx - 50, cy - 22, 88 * lvl, 44);
+  } else { // chart line: down -> up
+    const drop = clamp(type(t - C.perfFollows)) * 0.4 + 0.6;
+    const ys = [0, 1, 2, 3].map((k) => {
+      const down = -36 + k * 26 * drop, up = 30 - k * 24;
+      return cy + lerp(down, up, fix);
+    });
+    ctx.beginPath(); ys.forEach((y, k) => { const x = cx - 54 + k * 36; k ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke();
+    const ang = Math.atan2(ys[3] - ys[2], 36);
+    ctx.save(); ctx.translate(cx + 54, ys[3]); ctx.rotate(ang);
+    ctx.beginPath(); ctx.moveTo(-16, -12); ctx.lineTo(0, 0); ctx.lineTo(-16, 12); ctx.stroke(); ctx.restore();
+  }
+}
+
+function rows(t, phase) {
+  bg(COL.navy, COL.white, 0.05);
+  // eyebrow swaps from problem to plan
+  const swap = clamp(type(t - C.notAccept - 0.1));
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 380, W, 60); ctx.clip();
+  ctx.translate(0, -swap * 60);
+  eyebrow(t, 'WITHOUT A PLAN', PAD, 420, S.s4 + 0.3, { color: '#E58A95' });
+  ctx.translate(0, 60);
+  if (swap > 0) eyebrow(t, 'WITH THE RIGHT PLAN', PAD, 420, C.notAccept);
+  ctx.restore();
+
+  ROWS.forEach((r, i) => {
+    const p = ui(t - r.at); if (p <= 0) return;
+    const fix = clamp(type(t - r.flip) * 1.0);
+    const y = rowY(i);
+    const shake = Math.sin((t - r.at) * 42) * 14 * Math.exp(-(t - r.at) * 5) * (1 - fix);
+    const settle = lerp(1, 0.6, clamp((t - r.at - 0.5) * 2)) ;
+    const alpha = lerp(settle, 1, fix);
+    const col = mix(COL.red, COL.gold, fix);
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.translate(PAD + 100 + shake, y);
+    ctx.scale(p, p);
+    ctx.beginPath(); ctx.arc(0, 0, 100, 0, Math.PI * 2);
+    ctx.fillStyle = fix > 0.5 ? rgba(COL.gold, 0.14) : rgba(COL.red, 0.16); ctx.fill();
+    ctx.lineWidth = 4; ctx.strokeStyle = col; ctx.stroke();
+    icon(i, 0, 0, col, fix, t);
+    ctx.restore();
+
+    // labels: problem text slides out up, plan text slides in
+    ctx.save(); ctx.beginPath(); ctx.rect(330, y - 110, W - 330, 200); ctx.clip();
+    const lp = type(t - r.at - 0.15);
+    const off = fix * 200;
+    font(800, 58);
+    ctx.fillStyle = rgba(COL.white, lerp(0.75, 1, 0));
+    ctx.fillText(r.bad, 340, y - 8 + (1 - lp) * 120 - off);
+    ctx.fillText(r.bad2, 340, y + 58 + (1 - lp) * 120 - off);
+    if (fix > 0) {
+      ctx.fillStyle = COL.white; ctx.fillText(r.good, 340, y - 8 + 200 - off);
+      ctx.fillStyle = COL.gold; ctx.fillText(r.good2, 340, y + 58 + 200 - off);
+    }
+    ctx.restore();
+  });
+
+  if (phase === 2) {
+    headline(t, [{ text: 'Outcomes you *manage.*', t: C.manage }], PAD, 1560, { size: 78 });
+    rule(t, PAD, 1590, 300, C.rightPlan);
+  }
+}
+const s4 = (t) => rows(t, 1);
+const s5 = (t) => rows(t, 2);
+
+// ---------- S6: 1INC reveal ----------
+function s6(t) {
+  photo('photoReveal', t, S.s6, 0.7);
+  logo('logoGold', PAD, 330, 560, clamp(heavy(t - C.oneInc)));
+  eyebrow(t, 'GLP-1 SPECIALIST CONSULTATION', PAD, 720, C.oneInc + 1.0, { size: 28 });
+  // fills the beat before "medication, nutrition, performance" (scenes need something new every 2-4s)
+  const exit = clamp(type(t - C.together + 0.55));
+  if (exit < 0.999) {
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, 790, W, 230); ctx.clip();
+    ctx.translate(0, -exit * 240);
+    headline(t, [{ text: 'For active individuals', t: C.oneInc + 2.2 }, { text: 'using *GLP-1.*', t: C.oneInc + 2.45 }],
+      PAD, 880, { size: 72, lh: 86, weight: 800 });
+    ctx.restore();
+  }
+  headline(t, [
+    { text: 'Your medication.', t: C.together },
+    { text: 'Your nutrition.', t: C.together + 0.45 },
+    { text: 'Your performance.', t: C.together + 0.9 },
+  ], PAD, 880, { size: 84, lh: 104, weight: 800 });
+  headline(t, [{ text: 'One *consultation.*', t: C.together + 1.6 }], PAD, 1250, { size: 100 });
+  rule(t, PAD, 1295, 260, C.together + 2.0);
+  body(t, 'Taygan Robson · BSc S&C · MSc Sports Injuries', PAD, 1400, C.together + 2.2, { size: 34, alpha: 0.6 });
+  body(t, '& Return to Performance', PAD, 1444, C.together + 2.3, { size: 34, alpha: 0.6 });
+}
+
+// ---------- S7: CTA ----------
+function s7(t) {
+  bg(COL.cream, COL.navy, 0.06);
+  eyebrow(t, 'GLP-1 CONSULTATION', W / 2, 520, C.protect - 0.1, { align: 'center', color: COL.goldDark });
+  headline(t, [{ text: 'Protect your', t: C.protect }, { text: '*progress.*', t: C.protect + 0.3 }], W / 2, 690,
+    { size: 124, lh: 136, align: 'center', color: COL.navy, accent: COL.goldDark });
+  body(t, 'Specialist support built around your medication.', W / 2, 920, C.protect + 1.0,
+    { size: 40, color: COL.slate, alpha: 1, align: 'center' });
+
+  const pb = ui(t - C.book);
+  if (pb > 0) {
+    const pulse = t > C.url + 1 ? 1 + 0.025 * Math.pow(Math.max(0, Math.sin((t - C.url - 1) * Math.PI / 0.8)), 2) : 1;
+    const s = pb * pulse, bw = 880, bh = 132;
+    ctx.save(); ctx.translate(W / 2, 1080); ctx.scale(s, s);
+    roundRect(-bw / 2, -bh / 2, bw, bh, bh / 2); ctx.fillStyle = COL.navy; ctx.fill();
+    font(800, 46); ctx.fillStyle = COL.white; ctx.textAlign = 'center';
+    ctx.globalAlpha = clamp((pb - 0.4) * 2);
+    ctx.fillText('Book your GLP-1 Consultation', 0, 16);
+    ctx.restore(); ctx.textAlign = 'left';
+  }
+  headline(t, [{ text: '1inc.co.za', t: C.url }], W / 2, 1265, { size: 64, weight: 800, align: 'center', color: COL.navy });
+  body(t, 'Taygan Robson · BSc S&C · MSc Sports Injuries & Return to Performance', W / 2, 1360, C.url + 0.8,
+    { size: 30, color: COL.slateLight, alpha: 1, align: 'center' });
+  logo('logoNavy', PAD, 1450, 240, clamp(heavy(t - C.url - 1.3)));
+}
+
+// ---------- master ----------
+window.seek = function (t) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.globalAlpha = 1;
+  if (t < S.s2) s1(t);
+  else if (t < S.s3) wipe(t, S.s2, 'up', s1, s2);
+  else if (t < S.s4) wipe(t, S.s3, 'left', s2, s3);
+  else if (t < S.s5) wipe(t, S.s4, 'down', s3, s4);
+  else if (t < S.s6) s5(t);
+  else if (t < S.s7) wipe(t, S.s6, 'left', s5, s6);
+  else wipe(t, S.s7, 'up', s6, s7);
+  // fade to black, last 0.5s
+  const f = clamp((t - (DUR - 0.5)) / 0.5);
+  if (f > 0) { ctx.fillStyle = `rgba(0,0,0,${f})`; ctx.fillRect(0, 0, W, H); }
+};
+
+// Preview mode: open index.html in a browser and add #play to watch in real time.
+window.__ready.then(() => {
+  window.seek(0);
+  if (location.hash === '#play') {
+    const t0 = performance.now();
+    const loop = () => { const t = (performance.now() - t0) / 1000; window.seek(t % DUR); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  }
+});
+</script>
+</body>
+</html>

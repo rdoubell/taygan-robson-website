@@ -1,0 +1,664 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>1INC — GLP-1 Story (v2, 30s)</title>
+<style>
+  @font-face { font-family: 'Montserrat'; src: url('../fonts/montserrat.woff2') format('woff2'); font-weight: 100 900; }
+  @font-face { font-family: 'Source Sans 3'; src: url('../fonts/sourcesans3.woff2') format('woff2'); font-weight: 200 900; }
+  html, body { margin: 0; background: #fff; }
+  canvas { display: block; width: 1080px; height: 1920px; }
+</style>
+<script src="../lib/motion.js"></script>
+<script src="timeline.js"></script>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// v2 rules: navy background everywhere, white text, gold accents. All text centred inside the
+// Reels-ad safe zone (y 270-1250, x 65-1015). Headlines 56-76px.
+const { clamp, lerp, spring, ui, type, heavy, hash } = M;
+const { scene: S, cue: C, dur: DUR } = TIMELINE;
+const W = 1080, H = 1920, CX = 540;
+// ?variant=organic adds a persistent footer for organic Stories/feed. The Reels-ad cut keeps the
+// bottom ~35% clear because Meta overlays the caption + CTA there.
+const VARIANT = new URLSearchParams(location.search).get('variant') || 'ad';
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+
+const COL = { navy: '#FFFFFF', deep: '#F4F7FD', card: '#E5EEF8', gold: '#C7A14C', white: '#1B2A4A', ink: '#F8FAFF' };
+const rgba = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
+const ease = (x) => x * x * (3 - 2 * x);
+const mixc = (h1, h2, p) => {
+  const a = parseInt(h1.slice(1), 16), b = parseInt(h2.slice(1), 16);
+  const c = (sh) => Math.round(lerp((a >> sh) & 255, (b >> sh) & 255, clamp(p)));
+  return `rgb(${c(16)},${c(8)},${c(0)})`;
+};
+
+// ---------- assets ----------
+const IMG = {};
+const loadImg = (key, src) => new Promise((res) => {
+  const im = new Image(); im.onload = () => { IMG[key] = im; res(); }; im.onerror = () => res(); im.src = src;
+});
+window.__ready = Promise.all([
+  ...['900', '800', '700', '600'].map((w) => document.fonts.load(`${w} 80px Montserrat`)),
+  document.fonts.load('400 40px "Source Sans 3"'), document.fonts.load('600 40px "Source Sans 3"'),
+  loadImg('logoGold', 'assets/1inc-gold.png'), loadImg('taygan', 'assets/taygan.jpg'),
+  loadImg('booking', 'assets/site-booking.png'),
+]);
+
+// ---------- primitives ----------
+const font = (w, px, fam = 'M') => { ctx.font = `${w} ${px}px ${fam === 'M' ? 'Montserrat' : '"Source Sans 3"'}`; };
+function roundRect(x, y, w, h, r) {
+  r = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+}
+function bg() {
+  ctx.fillStyle = COL.navy; ctx.fillRect(0, 0, W, H);
+  const v = ctx.createRadialGradient(CX, 760, 200, CX, 760, 1300);
+  v.addColorStop(0, rgba(COL.deep, 0)); v.addColorStop(1, rgba(COL.deep, 0.9));
+  ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = rgba(COL.white, 0.045);
+  for (let y = 24; y < H; y += 40) for (let x = 24; x < W; x += 40) ctx.fillRect(x, y, 2.4, 2.4);
+}
+function parse(markup) {
+  const out = []; let accent = false;
+  for (const part of markup.split('*')) { for (const w of part.split(/(\s+)/)) if (w.trim()) out.push({ w, accent }); accent = !accent; }
+  return out;
+}
+// Words rise from behind a per-line mask. Centred.
+function headline(t, lines, y, o = {}) {
+  const size = o.size || 68, lh = o.lh || size * 1.15, weight = o.weight || 800, stagger = o.stagger ?? 0.06;
+  font(weight, size); ctx.letterSpacing = `${-size * 0.02}px`;
+  const space = ctx.measureText(' ').width;
+  lines.forEach((line, li) => {
+    const words = parse(line.text), widths = words.map((w) => ctx.measureText(w.w).width);
+    const total = widths.reduce((a, b) => a + b, 0) + space * (words.length - 1);
+    let x = (o.x ?? CX) - total / 2; const by = y + li * lh;
+    ctx.save(); ctx.beginPath(); ctx.rect(0, by - size * 1.0, W, size * 1.35); ctx.clip();
+    words.forEach((w, wi) => {
+      const p = type(t - line.t - wi * stagger);
+      if (p > 0.001) { ctx.fillStyle = w.accent ? (o.accent || COL.gold) : (o.color || COL.white); ctx.fillText(w.w, x, by + (1 - p) * size * 1.2); }
+      x += widths[wi] + space;
+    });
+    ctx.restore();
+  });
+  ctx.letterSpacing = '0px';
+}
+function eyebrow(t, text, y, t0, size = 24, x = CX) {
+  const p = type(t - t0); if (p <= 0) return;
+  font(700, size); ctx.letterSpacing = `${size * 0.32}px`;
+  const w = ctx.measureText(text).width, x0 = x - w / 2;
+  ctx.save(); ctx.beginPath(); ctx.rect(x0 - 4, y - 40, (w + 8) * p, 60); ctx.clip();
+  ctx.fillStyle = COL.gold; ctx.fillText(text, x0, y); ctx.restore(); ctx.letterSpacing = '0px';
+}
+function label(text, x, y, o = {}) {
+  font(o.weight || 600, o.size || 28, o.fam || 'S');
+  ctx.textAlign = o.align || 'center'; ctx.fillStyle = o.color || rgba(COL.white, o.alpha ?? 0.6);
+  if (o.track) ctx.letterSpacing = `${o.track}px`;
+  ctx.fillText(text, x, y); ctx.textAlign = 'left'; ctx.letterSpacing = '0px';
+}
+function check(cx, cy, r, p, filled) {
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  if (filled > 0) { ctx.fillStyle = rgba(COL.gold, filled); ctx.fill(); }
+  ctx.lineWidth = 2.5; ctx.strokeStyle = filled > 0.5 ? COL.gold : rgba(COL.white, 0.3); ctx.stroke();
+  if (p > 0) {
+    ctx.strokeStyle = COL.navy; ctx.lineWidth = r * 0.22; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const a = [cx - r * 0.42, cy + r * 0.02], b = [cx - r * 0.1, cy + r * 0.34], c = [cx + r * 0.46, cy - r * 0.3];
+    const l1 = Math.hypot(b[0] - a[0], b[1] - a[1]), l2 = Math.hypot(c[0] - b[0], c[1] - b[1]), L = (l1 + l2) * p;
+    ctx.beginPath(); ctx.moveTo(...a);
+    if (L < l1) ctx.lineTo(a[0] + (b[0] - a[0]) * L / l1, a[1] + (b[1] - a[1]) * L / l1);
+    else { ctx.lineTo(...b); const f = (L - l1) / l2; ctx.lineTo(b[0] + (c[0] - b[0]) * f, b[1] + (c[1] - b[1]) * f); }
+    ctx.stroke();
+  }
+}
+function cursor(x, y, press = 0) {
+  ctx.save(); ctx.translate(x, y); const s = 1.5 * (1 - 0.12 * press); ctx.scale(s, s);
+  ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, 34); ctx.lineTo(9, 26); ctx.lineTo(15, 40); ctx.lineTo(21, 37);
+  ctx.lineTo(15, 23); ctx.lineTo(26, 23); ctx.closePath();
+  ctx.fillStyle = COL.white; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = COL.ink; ctx.stroke(); ctx.restore();
+}
+function ripple(x, y, t, t0) {
+  const a = t - t0; if (a < 0 || a > 0.6) return;
+  ctx.beginPath(); ctx.arc(x, y, 20 + a * 160, 0, Math.PI * 2);
+  ctx.strokeStyle = rgba(COL.gold, 0.7 * (1 - a / 0.6)); ctx.lineWidth = 4; ctx.stroke();
+}
+function card(x, y, w, h, r = 40) {
+  roundRect(x, y, w, h, r); ctx.fillStyle = rgba(COL.card, 0.92); ctx.fill();
+  ctx.lineWidth = 2; ctx.strokeStyle = rgba(COL.white, 0.09); ctx.stroke();
+}
+
+// ---------- S1: three unbranded pens swing in, swing out, reveal the hook ----------
+const PENS = [
+  // draft 5: all three pens the same light blue; all exit to the right (rightmost first)
+  { body: '#A7BBDF', dial: '#8197C2', band: COL.navy, ang: -0.62, dx: 0, delay: 0.12, out: 1 },
+  { body: '#A7BBDF', dial: '#8197C2', band: COL.navy, ang: -0.04, dx: 0, delay: 0.06, out: 1 },
+  { body: '#A7BBDF', dial: '#8197C2', band: COL.navy, ang: 0.52, dx: 0, delay: 0.0, out: 1 },
+];
+function pen(p, L = 640, w = 84) {
+  // local coords: pen axis along y, tip at y=+L/2 (bottom), cap at -L/2
+  const g = ctx.createLinearGradient(-w / 2, 0, w / 2, 0);
+  g.addColorStop(0, 'rgba(0,0,0,0.28)'); g.addColorStop(0.18, 'rgba(0,0,0,0)'); g.addColorStop(0.38, 'rgba(255,255,255,0.45)');
+  g.addColorStop(0.55, 'rgba(255,255,255,0)'); g.addColorStop(1, 'rgba(0,0,0,0.32)');
+  const seg = (y0, y1, col, r = 10, inset = 0) => {
+    roundRect(-w / 2 + inset, y0, w - inset * 2, y1 - y0, r); ctx.fillStyle = col; ctx.fill(); ctx.fillStyle = g; ctx.fill();
+  };
+  seg(-L / 2, L / 2 - 120, p.body, 30);                 // cap + body
+  seg(L / 2 - 130, L / 2 - 10, p.dial, 14, 6);          // dose dial
+  ctx.fillStyle = 'rgba(0,0,0,0.18)';
+  for (let k = 0; k < 9; k++) ctx.fillRect(-w / 2 + 12 + k * 7.4, L / 2 - 122, 2.4, 100); // dial ridges
+  seg(L / 2 - 14, L / 2 + 6, p.dial, 8, 18);            // needle end
+  ctx.fillStyle = 'rgba(0,0,0,0.12)'; ctx.fillRect(-w / 2, -L / 2 + 150, w, 4); // cap seam
+  seg(-40, 150, p.band, 6, 2);                          // blank label band (no branding)
+  ctx.fillStyle = COL.gold; ctx.fillRect(-w / 2 + 2, 132, w - 4, 6);
+  ctx.fillStyle = rgba(COL.white, 0.5); roundRect(-14, -20, 10, 120, 5); ctx.fill();
+  ctx.fillStyle = rgba(COL.white, 0.25); roundRect(6, 0, 8, 80, 4); ctx.fill();
+  roundRect(-18, 190, 36, 46, 8); ctx.fillStyle = '#F7F8FA'; ctx.fill();  // dose window
+  font(800, 16); ctx.fillStyle = COL.navy; ctx.textAlign = 'center'; ctx.fillText('0.5', 0, 219); ctx.textAlign = 'left';
+}
+function pens(t) {
+  // Pens open the film already in place (gently floating), then swipe off the screen.
+  const pivotX = CX, pivotY = 1010;
+  const gone = clamp(spring(t - C.pensOut, 120, 18));
+  if (gone < 0.995) {
+    ctx.save(); ctx.globalAlpha = 0.35 * (1 - gone); ctx.fillStyle = '#000'; ctx.filter = 'blur(18px)';
+    ctx.beginPath(); ctx.ellipse(CX, 1058, 250, 24, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+  }
+  PENS.forEach((p, i) => {
+    const sOut = clamp(spring(t - C.pensOut - p.delay * 0.8, 120, 18), 0, 1.05);
+    if (sOut >= 1.0 && t > C.pensOut + 1) return;
+    // draft 5 hook: pens are already moving in frame 1. They rise and fan open (staggered springs)...
+    const pin = clamp(ui(t + 0.22 - p.delay * 0.6), 0, 1.08);
+        const q = p, pop = 1; // (gold pen removed: all pens stay light blue)
+    const bob = Math.sin(t * 1.6 + i * 1.3) * 8, sway = Math.sin(t * 1.2 + i) * 0.015;
+    const x = pivotX + p.dx + sOut * 1300 * p.out, y = pivotY + bob - sOut * 220 + (1 - pin) * 520;
+    ctx.save(); ctx.translate(x, y); ctx.rotate(p.ang * pin + sway + sOut * 0.6 * p.out); ctx.scale(pop, pop);
+    ctx.translate(0, -300); pen(q); ctx.restore();
+  });
+}
+const RED = '#E5484D', GREEN = '#30C77B';
+function tag(text, y, col, t0, t) {
+  const p = ui(t - t0); if (p <= 0) return;
+  font(800, 24); ctx.letterSpacing = '7px';
+  const w = ctx.measureText(text).width + 44;
+  ctx.save(); ctx.translate(CX, y); ctx.scale(p, p);
+  roundRect(-w / 2, -26, w, 52, 26); ctx.fillStyle = rgba(col, 0.16); ctx.fill();
+  ctx.lineWidth = 2; ctx.strokeStyle = rgba(col, 0.6); ctx.stroke();
+  ctx.fillStyle = col; ctx.textAlign = 'center'; ctx.fillText(text, 3.5, 9); ctx.restore();
+  ctx.textAlign = 'left'; ctx.letterSpacing = '0px';
+}
+function s1(t) {
+  bg();
+  // (draft 5f: top logo removed; the footer logo carries the brand)
+  // ---- HOOK (draft 5b): context first, then the question.
+  //      "GLP-1 medication" -> "The scale drops fast." under the pens; pens swipe right; the line rises
+  //      and the question "But what's actually lost?" lands under it. Scene 3 answers it. ----
+  pens(t);
+  const up = clamp(heavy(t - C.pensOut - 0.05));
+  const sw = clamp(type(t - C.goldPen - 0.05) * 1.4);
+  if (sw < 1) {
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 1080, W, 170); ctx.clip(); ctx.translate(0, -sw * 120);
+    headline(t, [{ text: 'GLP-1 *medication*', t: -1 }], 1175, { size: 72 }); ctx.restore();
+  }
+  if (t > C.goldPen) {
+    const y = lerp(1175, 690, up), size = lerp(66, 60, up);
+    ctx.save();
+    if (up < 0.02) { ctx.beginPath(); ctx.rect(0, 1080, W, 170); ctx.clip(); }
+    ctx.globalAlpha *= lerp(1, 0.7, clamp(type(t - C.question)));
+    headline(t, [{ text: 'The scale drops *fast.*', t: C.goldPen + 0.08 }], y, { size });
+    ctx.restore();
+  }
+  headline(t, [{ text: 'But what’s', t: C.question }, { text: 'actually *lost?*', t: C.question + 0.14 }], 830, { size: 84, weight: 900, lh: 96 });
+}
+
+// ---------- S2: dashboard line chart #170 -> #12 -> #1 ----------
+const CH = { x0: 240, x1: 860, y0: 600, y1: 960, card: [125, 370, 830, 780] }; // draft 5: more side margin
+const yrX = [CH.x0 + 20, (CH.x0 + CH.x1) / 2, CH.x1 - 20];
+const rankY = (r) => CH.y0 + (Math.log(r) / Math.log(200)) * (CH.y1 - CH.y0);
+const RANKS = [170, 12, 1];
+// position along the curve, s in [0,2]
+function curve(s) {
+  const i = Math.min(1, Math.floor(s)), f = s - i;
+  const x = lerp(yrX[i], yrX[i + 1], f);
+  const yb = lerp(rankY(RANKS[i]), rankY(RANKS[i + 1]), ease(f));
+  const wob = Math.sin(Math.PI * f) * (Math.sin(s * 19.3 + 1.1) * 16 + Math.sin(s * 37.1) * 7);
+  return [x, yb + wob, yb];
+}
+function headS(t) {
+  // organic growth: speeds up, hesitates, surges (monotonic)
+  const g = (u) => u - 0.05 * Math.sin(u * Math.PI * 4) / (Math.PI * 4) * 4;
+  const a = clamp((t - C.p2023 - 0.1) / (C.p2024 - C.p2023 - 0.1));
+  const b = clamp((t - C.p2024 - 0.1) / (C.p2025 - C.p2024 - 0.05));
+  return clamp(g(ease(a))) + clamp(g(ease(b)));
+}
+const CAPS = [
+  { t: C.p2023, yr: '2023', text: '#170 in medical aid spend' },
+  { t: C.p2024, yr: '2024', text: '#12 in medical aid spend' },
+  { t: C.p2025, yr: '2025', text: '#1 best-selling medicine' },
+  { t: C.stay, yr: '', text: 'And it’s here to stay.' },
+];
+function s2(t) {
+  bg();
+  // camera push into the #1 point
+  const push = 0; // camera push removed (client: chart exit looked odd)
+  const [px, py] = [yrX[2], rankY(1)];
+  ctx.save(); ctx.translate(px, py); ctx.scale(1 + 0.16 * push, 1 + 0.16 * push); ctx.translate(-px, -py);
+
+  const pc = ui(t - C.card);
+  ctx.save(); ctx.translate(CX, 760); ctx.scale(lerp(0.9, 1, pc), lerp(0.9, 1, pc)); ctx.translate(-CX, -760);
+  ctx.globalAlpha = clamp(pc * 1.5);
+  card(...CH.card);
+  ctx.globalAlpha = 1;
+  // draft 5d: heading + subheading left-aligned with a proper inset from the card edge (was crowding the left outline)
+  const PADL = CH.card[0] + 56;
+  font(700, 22); ctx.letterSpacing = `${22 * 0.32}px`; const ewW = ctx.measureText('GLP-1 · SOUTH AFRICA').width;
+  font(700, 40); ctx.letterSpacing = `${-40 * 0.02}px`; const hdW = ctx.measureText('Medicine ranking').width; ctx.letterSpacing = '0px';
+  eyebrow(t, 'GLP-1 · SOUTH AFRICA', 446, C.card + 0.2, 22, PADL + ewW / 2);
+  headline(t, [{ text: 'Medicine ranking', t: C.card + 0.3 }], 504, { size: 40, weight: 700, x: PADL + hdW / 2 });
+  // grid + axes
+  const pa = type(t - C.card - 0.4);
+  [1, 10, 50, 200].forEach((r, k) => {
+    const y = rankY(r);
+    ctx.fillStyle = rgba(COL.white, 0.07 * pa); ctx.fillRect(CH.x0, y, (CH.x1 - CH.x0) * pa, 2);
+    label('#' + r, CH.x0 - 22, y + 9, { size: 24, alpha: 0.4 * pa, align: 'right' });
+  });
+  yrX.forEach((x, k) => label(['2023', '2024', '2025'][k], x, 1030, { size: 28, weight: 700, fam: 'M', alpha: 0.5 * type(t - C.card - 0.5 - k * 0.08) }));
+  // line
+  const s = headS(t);
+  if (t > C.p2023 - 0.05) {
+    ctx.beginPath(); const N = Math.ceil(s * 80);
+    const pts = []; for (let k = 0; k <= N; k++) pts.push(curve((s * k) / Math.max(1, N)));
+    ctx.moveTo(pts[0][0], CH.y1); pts.forEach((p) => ctx.lineTo(p[0], p[1])); ctx.lineTo(pts[pts.length - 1][0], CH.y1); ctx.closePath();
+    ctx.fillStyle = rgba(COL.gold, 0.08); ctx.fill();
+    ctx.beginPath(); pts.forEach((p, k) => (k ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])));
+    ctx.strokeStyle = COL.gold; ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke();
+    // year points
+    RANKS.forEach((r, k) => {
+      const pp = ui(t - [C.p2023, C.p2024, C.p2025][k]); if (pp <= 0) return;
+      const x = yrX[k], y = rankY(r);
+      ctx.beginPath(); ctx.arc(x, y, 13 * pp, 0, Math.PI * 2); ctx.fillStyle = COL.navy; ctx.fill();
+      ctx.lineWidth = 5; ctx.strokeStyle = COL.gold; ctx.stroke();
+      label('#' + r, x, y - 30, { size: 30, weight: 800, fam: 'M', color: COL.white });
+    });
+    const [hx, hy] = curve(s);
+    ctx.beginPath(); ctx.arc(hx, hy, 9, 0, Math.PI * 2); ctx.fillStyle = COL.gold; ctx.fill();
+    const ring = ((t * 1.6) % 1);
+    ctx.beginPath(); ctx.arc(hx, hy, 10 + ring * 26, 0, Math.PI * 2); ctx.strokeStyle = rgba(COL.gold, 0.5 * (1 - ring)); ctx.lineWidth = 3; ctx.stroke();
+  }
+  label('Sources: Mediscor medicines review 2024 · IQVIA via Spotlight, Feb 2026', CX, 1105, { size: 21, alpha: 0.35 * pa });
+  ctx.restore();
+
+  // caption under the card: horizontal swaps
+  CAPS.forEach((c, k) => {
+    // fix (audit S2 caption): short slide + fade, the old caption clears before the new one arrives
+    const pin = clamp(type(t - c.t - (k ? 0.16 : 0))), pout = k < CAPS.length - 1 ? clamp(type(t - CAPS[k + 1].t) * 1.6) : 0;
+    if (pin <= 0.001 || pout >= 0.999) return;
+    const x = CX + (1 - pin) * 70 - pout * 70;
+    ctx.save(); ctx.globalAlpha *= pin * (1 - pout); ctx.beginPath(); ctx.rect(65, 1160, 950, 80); ctx.clip();
+    font(800, 40); const w1 = c.yr ? ctx.measureText(c.yr + '  ').width : 0; font(700, 40, 'S');
+    const w2 = ctx.measureText(c.text).width, x0 = x - (w1 + w2) / 2;
+    font(800, 40); ctx.fillStyle = COL.gold; ctx.fillText(c.yr + '  ', x0, 1215);
+    font(600, 40, 'S'); ctx.fillStyle = COL.white; ctx.fillText(c.text, x0 + w1, 1215);
+    ctx.restore();
+  });
+  ctx.restore();
+}
+
+// ---------- S3 (draft 5d): one block. It builds as the kilos come off, then the bottom third wipes gold = muscle ----------
+const SCL = { x: 140, y: 330, w: 800, h: 250 };      // scale readout card
+const BK = { x: 240, y: 650, w: 600, h: 500, r: 36 }; // the 12 kg block
+function s3(t, o = {}) {
+  if (!o.noBg) bg();
+  ctx.save(); ctx.globalAlpha = o.alpha ?? 1;
+  // scale card: 98.0 -> 86.0
+  const pa = ui(t - S.s3 - 0.1);
+  const pw = clamp(spring(t - C.weigh, 45, 13));
+  ctx.save(); ctx.globalAlpha *= clamp(pa * 1.4); ctx.translate(0, (1 - pa) * 40);
+  card(SCL.x, SCL.y, SCL.w, SCL.h, 40);
+  label('ON THE SCALE', 190, 395, { size: 22, weight: 700, fam: 'M', color: COL.gold, align: 'left', track: 6 });
+  const kg = lerp(98, 86, pw).toFixed(1);
+  font(800, 124); ctx.letterSpacing = '-4px'; const nw = ctx.measureText(kg).width;
+  ctx.fillStyle = COL.white; ctx.fillText(kg, 190, 530); ctx.letterSpacing = '0px';
+  font(700, 46); ctx.fillStyle = rgba(COL.white, 0.5); ctx.fillText(' kg', 190 + nw, 530);
+  const pchip = ui(t - C.winning), doubt = clamp(type(t - C.muscle));
+  if (pchip > 0) {
+    ctx.save(); ctx.translate(800, 490); ctx.scale(pchip, pchip); ctx.globalAlpha *= lerp(1, 0.35, doubt);
+    roundRect(-100, -36, 200, 72, 36); ctx.fillStyle = rgba(COL.white, 0.12); ctx.fill();
+    font(800, 32); ctx.textAlign = 'center'; ctx.fillStyle = COL.white; ctx.fillText('−12 kg ✓', 0, 11); ctx.textAlign = 'left';
+    ctx.restore();
+  }
+  ctx.restore();
+  // the block grows up from its base as the kilos come off
+  const hb = BK.h * clamp(spring(t - C.weigh - 0.05, 45, 13), 0, 1.02);
+  if (hb > 1) {
+    const top = BK.y + BK.h - hb;
+    ctx.save(); roundRect(BK.x, top, BK.w, hb, BK.r); ctx.clip();
+    ctx.fillStyle = rgba(COL.white, 0.92); ctx.fillRect(BK.x, top, BK.w, hb);
+    // gold wipe from the bottom up to one third
+    const wipe = clamp(heavy(t - C.split));
+    const mh = (BK.h / 3) * wipe;
+    if (mh > 0) { ctx.fillStyle = COL.gold; ctx.fillRect(BK.x, BK.y + BK.h - mh, BK.w, mh); }
+    ctx.restore();
+    // "12 kg lost" while it builds; clears as the wipe starts
+    const pl = clamp(type(t - C.weigh - 0.4)) * (1 - clamp(type(t - C.split) * 2));
+    if (pl > 0) {
+      ctx.save(); ctx.globalAlpha *= pl;
+      label('12 kg lost', CX, top + hb / 2 + 18, { size: 52, weight: 800, fam: 'M', color: COL.navy });
+      ctx.restore();
+    }
+    // divider + the two words that split it
+    const pd = clamp(type(t - C.muscle));
+    if (pd > 0) {
+      const dy = BK.y + BK.h * 2 / 3;
+      ctx.fillStyle = rgba(COL.navy, 0.9); ctx.fillRect(BK.x + (BK.w / 2) * (1 - pd), dy - 2, BK.w * pd, 4);
+      ctx.save(); ctx.beginPath(); ctx.rect(BK.x, BK.y, BK.w, BK.h); ctx.clip();
+      label('FAT', CX, BK.y + BK.h / 3 + 6 + (1 - pd) * 40, { size: 64, weight: 900, fam: 'M', color: COL.navy, track: 6, alpha: pd });
+      label('8 kg', CX, BK.y + BK.h / 3 + 62 + (1 - pd) * 40, { size: 34, weight: 700, fam: 'S', color: rgba(COL.navy, 0.7 * pd) });
+      const pm = clamp(type(t - C.muscle - 0.12));
+      ctx.globalAlpha *= pm;
+      label('MUSCLE · 4 kg', CX, BK.y + BK.h * 5 / 6 + 18 + (1 - pm) * 30, { size: 48, weight: 900, fam: 'M', color: COL.navy, track: 4 });
+      ctx.restore();
+    }
+  }
+  ctx.restore();
+  const pc = clamp(type(t - C.split - 0.1));
+  if (pc > 0) {
+    ctx.save(); ctx.globalAlpha *= pc * (o.alpha ?? 1);
+    font(700, 40, 'S'); ctx.textAlign = 'center'; ctx.fillStyle = COL.white;
+    ctx.fillText('Research: up to 1 in 3 kg lost can be muscle.', CX, 1228 + (1 - pc) * 20); ctx.textAlign = 'left';
+    ctx.restore();
+  }
+}
+
+// ---------- NEW (draft 5): the mistake. "Don't take GLP-1 medication without a structured strength programme." ----------
+function sM(t, o = {}) {
+  if (!o.noBg) bg();
+  const t0 = S.sm;
+  eyebrow(t, 'THE COMMON MISTAKE', 345, t0 + 0.12);
+  headline(t, [
+    { text: "Don’t take GLP-1", t: t0 + 0.22 }, { text: 'medication without', t: t0 + 0.34 },
+    { text: 'a structured', t: t0 + 0.46 }, { text: '*strength programme.*', t: t0 + 0.58 },
+  ], 450, { size: 58, lh: 70 });
+  const pc = ui(t - C.planIn);
+  if (pc <= 0) return;
+  ctx.save(); ctx.globalAlpha *= clamp(pc * 1.4); ctx.translate(0, (1 - pc) * 50);
+  card(140, 730, 800, 400, 40);
+  label('THE PLAN', 190, 800, { size: 22, weight: 700, fam: 'M', color: COL.gold, align: 'left', track: 6 });
+  const r1 = ui(t - C.row1);
+  if (r1 > 0) {
+    ctx.save(); ctx.globalAlpha *= clamp(r1 * 2);
+    roundRect(190, 835, 700, 110, 28); ctx.fillStyle = rgba(COL.white, 0.08); ctx.fill();
+    check(250, 890, 24, clamp(type(t - C.row1 - 0.15)), 1);
+    label('GLP-1 medication', 296, 902, { size: 34, weight: 700, fam: 'M', color: COL.white, align: 'left' });
+    ctx.restore();
+  }
+  const r2 = ui(t - C.row2);
+  if (r2 > 0) {
+    ctx.save(); ctx.globalAlpha *= clamp(r2 * 2);
+    ctx.setLineDash([14, 10]); ctx.lineWidth = 3; roundRect(190, 970, 700, 110, 28); ctx.strokeStyle = rgba(COL.white, 0.35); ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); ctx.arc(250, 1025, 24, 0, Math.PI * 2); ctx.lineWidth = 2.5; ctx.strokeStyle = rgba(COL.white, 0.3); ctx.stroke();
+    label('Strength programme', 296, 1037, { size: 34, weight: 700, fam: 'M', color: rgba(COL.white, 0.55), align: 'left' });
+    const pm = ui(t - C.missing);
+    if (pm > 0) {
+      ctx.save(); ctx.translate(800, 1025); ctx.scale(pm, pm);
+      roundRect(-74, -24, 148, 48, 24); ctx.fillStyle = rgba(RED, 0.16); ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = rgba(RED, 0.6); ctx.stroke();
+      font(800, 20); ctx.letterSpacing = '4px'; ctx.textAlign = 'center'; ctx.fillStyle = RED; ctx.fillText('MISSING', 2, 7);
+      ctx.textAlign = 'left'; ctx.letterSpacing = '0px'; ctx.restore();
+    }
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+// ---------- S4: Less muscle. Less energy. Less performance. ----------
+const LESS = [{ w: 'muscle.', t: C.less1, c: COL.gold }, { w: 'energy.', t: C.less2, c: COL.white }, { w: 'performance.', t: C.less3, c: COL.gold }];
+const S4Y = 780, S4SIZE = 76;
+function lessLayout(i) {
+  font(800, S4SIZE); ctx.letterSpacing = `${-S4SIZE * 0.02}px`;
+  const lw = ctx.measureText('Less ').width, ww = ctx.measureText(LESS[i].w).width;
+  ctx.letterSpacing = '0px';
+  const x0 = CX - (lw + ww) / 2;
+  return { lessX: x0, wordX: x0 + lw, ww };
+}
+function s4(t, o = {}) {
+  if (!o.noBg) bg();
+  const idx = t < C.less2 ? 0 : t < C.less3 ? 1 : 2;
+  const L = [0, 1, 2].map(lessLayout);
+  // "Less" glides to keep the phrase centred
+  const lessX = M.track(t, [[0, L[0].lessX], [C.less2, L[1].lessX], [C.less3, L[2].lessX]], 260, 30);
+  const pLess = type(t - C.less1 + 0.1);
+  font(800, S4SIZE); ctx.letterSpacing = `${-S4SIZE * 0.02}px`;
+  ctx.save(); ctx.beginPath(); ctx.rect(0, S4Y - 90, W, 120); ctx.clip();
+  if (!o.hideLess) { ctx.fillStyle = COL.white; ctx.fillText('Less', lessX, S4Y + (1 - pLess) * 100); }
+  // words swap horizontally
+  LESS.forEach((w, k) => {
+    if (o.hideWord === k) return;
+    // fix (audit S4 collision): outgoing word clears fast; incoming waits 0.14s
+    // fix (audit S4 collision): masked vertical swap. Old word rises out, new word rises in, never sideways into "Less"
+    const pin = clamp(type(t - w.t - (k ? 0.05 : 0)) * 1.2), pout = k < 2 ? clamp(type(t - LESS[k + 1].t) * 1.6) : 0;
+    if (pin <= 0 || pout >= 0.999) return;
+    const wx = lessX + (L[k].wordX - L[k].lessX);
+    const wy = S4Y + (1 - pin) * 100 - pout * 100;
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = w.c; ctx.fillText(w.w, wx, wy);
+    ctx.globalAlpha = 1;
+  });
+  ctx.restore(); ctx.letterSpacing = '0px';
+  // underline tracks the active word
+  if (!o.hideLine) {
+    const ux = M.track(t, [[0, L[0].wordX], [C.less2, L[1].wordX], [C.less3, L[2].wordX]], 220, 26);
+    const uw = M.track(t, [[0, L[0].ww], [C.less2, L[1].ww], [C.less3, L[2].ww]], 220, 26);
+    ctx.fillStyle = LESS[idx].c === COL.gold ? COL.gold : COL.white;
+    ctx.fillRect(ux, S4Y + 26, uw * clamp(type(t - C.less1 + 0.05)), 8);
+  }
+}
+// mistake -> S4: the plan card lifts away fast, then "Less muscle." rolls in
+function tM4(t) {
+  const q = clamp((t - S.s4) / 0.18);
+  bg();
+  s4(t, { noBg: true });
+  if (q < 1) { ctx.save(); ctx.globalAlpha = Math.pow(1 - q, 2); ctx.translate(0, -90 * ease(q)); sM(t, { noBg: true }); ctx.restore(); }
+}
+
+// ---------- S5: Taygan + plan chips ----------
+const CHIPF = 30; // chip label size
+const CHIPS = (() => { // draft 5: widths fit each word, so "performance" sits inside its bubble
+  const words = ['nutrition', 'strength', 'performance'], ww = [262, 250, 330], gap = 20;
+  let x = (W - (ww[0] + ww[1] + ww[2] + gap * 2)) / 2;
+  return words.map((w, k) => { const c = { w, x, y: 1112, ww: ww[k], hh: 76 }; x += ww[k] + gap; return c; });
+})();
+const CHIP_T = [C.nutrition, C.strength, C.performance];
+const FR = { x: 300, y: 430, s: 480 };
+function s5(t, o = {}) {
+  bg();
+  ctx.save();
+  if (o.leave) { ctx.globalAlpha = 1 - o.leave; ctx.translate(0, -80 * o.leave); }
+  // fix (audit S4→S5): S5 waits until "performance." has landed in its chip
+  const in5 = Math.max(C.oneInk, S.s5 + 0.5);
+  eyebrow(t, 'GLP-1 SPECIALIST', 300, in5);
+  label('MSc Sports Injuries & Return to Performance', CX, 352, { size: 30, alpha: 0.6 * type(t - in5 - 0.25) });
+  label('PgDip Performance Nutrition · Distinction', CX, 392, { size: 30, alpha: 0.6 * type(t - in5 - 0.35) });
+  // photo reveal: rounded window opens from the centre, gold frame draws around it
+  const pr = clamp(heavy(t - S.s5 - 0.45));
+  if (pr > 0) {
+    const s = FR.s * lerp(0.2, 1, pr), x = CX - s / 2, y = FR.y + (FR.s - s) / 2;
+    ctx.save(); roundRect(x, y, s, s, 40); ctx.clip();
+    const im = IMG.taygan, k = 1.08 + 0.05 * clamp((t - S.s5) / 5);
+    if (im) { const d = FR.s * k; ctx.drawImage(im, CX - d / 2, FR.y + FR.s / 2 - d * 0.47, d, d); }
+    ctx.fillStyle = rgba(COL.deep, 0.15); ctx.fillRect(x, y, s, s); ctx.restore();
+    const fp = clamp(type(t - S.s5 - 0.75));
+    ctx.save(); ctx.lineWidth = 3; ctx.strokeStyle = COL.gold;
+    roundRect(FR.x - 14, FR.y - 14, FR.s + 28, FR.s + 28, 52);
+    ctx.setLineDash([2400 * fp, 2400]); ctx.stroke(); ctx.restore();
+  }
+  const pbadge = ui(t - in5 - 0.6);
+  if (pbadge > 0) {
+    ctx.save(); ctx.translate(CX, FR.y + FR.s + 14); ctx.scale(pbadge, pbadge);
+    roundRect(-235, -34, 470, 68, 34); ctx.fillStyle = COL.navy; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = COL.gold; ctx.stroke();
+    font(800, 28); const n1 = ctx.measureText('Taygan Robson').width; font(600, 28, 'S'); const n2 = ctx.measureText('  ·  Consultant').width;
+    const nx = -(n1 + n2) / 2;
+    font(800, 28); ctx.fillStyle = COL.white; ctx.fillText('Taygan Robson', nx, 10);
+    font(600, 28, 'S'); ctx.fillStyle = COL.gold; ctx.fillText('  ·  Consultant', nx + n1, 10);
+    ctx.restore();
+  }
+  ctx.restore();
+  if (!o.noChips) chips(t, o);
+}
+function chips(t, o = {}) {
+  CHIPS.forEach((c, k) => {
+    const pin = ui(t - S.s5 - 0.15 - k * 0.1); if (pin <= 0) return;
+    const ck = clamp(type(t - CHIP_T[k]));
+    ctx.save(); ctx.translate(c.x + c.ww / 2, c.y + c.hh / 2); ctx.scale(pin, pin);
+    roundRect(-c.ww / 2, -c.hh / 2, c.ww, c.hh, c.hh / 2);
+    ctx.fillStyle = rgba(COL.white, lerp(0.06, 0.1, ck)); ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = rgba(ck > 0.5 ? COL.gold : COL.white, ck > 0.5 ? 0.8 : 0.12); ctx.stroke();
+    check(-c.ww / 2 + 40, 0, 20, ck, ck);
+    if (!(k === 2 && o.hideChip3Label)) { font(700, CHIPF); ctx.fillStyle = COL.white; ctx.fillText(c.w, -c.ww / 2 + 72, 10); }
+    ctx.restore();
+  });
+}
+// S4 -> S5: "performance." flies down into the third chip
+function t45(t) {
+  const p = clamp(heavy(t - S.s5));
+  if (p >= 1) return s5(t);
+  s5(t, { hideChip3Label: true });
+  const L2 = lessLayout(2), c = CHIPS[2];
+  font(800, S4SIZE); ctx.letterSpacing = `${-S4SIZE * 0.02}px`;
+  ctx.save(); ctx.globalAlpha = clamp(1 - p * 4); ctx.fillStyle = COL.white; // fix: "Less" leaves fast
+  ctx.fillText('Less', L2.lessX, S4Y - p * 80); ctx.restore();
+  const size = lerp(S4SIZE, CHIPF, p), x = lerp(L2.wordX, c.x + 72, p), y = lerp(S4Y, c.y + c.hh / 2 + 10, p);
+  font(lerp(800, 700, p), size); ctx.letterSpacing = `${-size * 0.02 * (1 - p)}px`;
+  ctx.fillStyle = p < 0.5 ? COL.gold : COL.white;
+  ctx.fillText(p < 0.6 ? 'performance.' : 'performance', x, y);
+  ctx.letterSpacing = '0px';
+}
+
+// ---------- S6: chips -> button -> tap -> phone ----------
+const PH = { x: CX - 265, y: 540, w: 530, h: 1100, r: 76 }; // draft 5: bigger; covers the footer
+// draft 5e: no button, no zoom. Taygan clears, the phone wipes in from the bottom (covering the footer),
+// then the logo and URL slide up out from behind the phone's top edge.
+function phone(t) {
+  roundRect(PH.x, PH.y, PH.w, PH.h, PH.r); ctx.fillStyle = COL.ink; ctx.fill();
+  ctx.lineWidth = 3; ctx.strokeStyle = rgba(COL.white, 0.14); ctx.stroke();
+  const sx = PH.x + 12, sy = PH.y + 12, sw = PH.w - 24, sh = PH.h - 24;
+  ctx.save(); roundRect(sx, sy, sw, sh, PH.r - 12); ctx.clip();
+  ctx.fillStyle = '#F4F6F9'; ctx.fillRect(sx, sy, sw, sh);
+  const im = IMG.booking;
+  if (im) { const k = sh / im.height, dw = im.width * k, dh = im.height * k; ctx.drawImage(im, sx + (sw - dw) / 2, sy, dw, dh); }
+  ctx.restore();
+  ctx.fillStyle = COL.ink; roundRect(CX - 70, PH.y + 30, 140, 36, 18); ctx.fill(); // island
+}
+function brandAbove(t, p) {
+  // emerges from behind the phone: everything below the phone's top edge is masked off
+  const rise = (1 - p) * 300;
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, PH.y - 6); ctx.clip(); ctx.translate(0, rise);
+  if (IMG.logoGold) { const lw = 170, lh = lw * IMG.logoGold.height / IMG.logoGold.width; ctx.drawImage(IMG.logoGold, CX - lw / 2, 280, lw, lh); }
+  font(800, 48); ctx.letterSpacing = '-1px'; ctx.textAlign = 'center'; ctx.fillStyle = COL.gold; ctx.fillText('1inc.co.za', CX, 445);
+  ctx.textAlign = 'left'; const uw = ctx.measureText('1inc.co.za').width; ctx.letterSpacing = '0px';
+  ctx.fillRect(CX - uw / 2, 466, uw * clamp(type(t - C.brandUp - 0.45)), 5);
+  ctx.restore();
+}
+function s6(t) {
+  const leave = clamp(type(t - S.s6) * 2.2);
+  if (leave < 1) { s5(t, { leave, noChips: true }); ctx.save(); ctx.globalAlpha = 1 - leave; chips(t); ctx.restore(); }
+  else bg();
+  footer(t); // stays until the phone wipes over it
+  const pb = clamp(heavy(t - C.brandUp));
+  if (pb > 0) brandAbove(t, pb); // drawn before the phone so it reads as coming from underneath
+  // draft 5f: the whole phone slides up from below the frame (no wipe), covering the footer as it lands
+  const pe = clamp(spring(t - C.phoneWipe, 90, 16), 0, 1.02);
+  if (pe > 0) { ctx.save(); ctx.translate(0, (1 - pe) * (H - PH.y + 40)); phone(t); ctx.restore(); }
+}
+
+// ---------- transitions ----------
+// fix (audit S1→S2): the outgoing scene lifts away and is gone in ~0.15s, BEFORE the card lands,
+// instead of blowing up over it. Nothing from S1 is drawn on top of S2.
+function zoomThrough(t, t0, a, b) {
+  const q = clamp((t - t0) / 0.16);
+  b(t);
+  if (q < 1) {
+    ctx.save(); ctx.globalAlpha = Math.pow(1 - q, 2); ctx.translate(0, -90 * ease(q));
+    a(t); ctx.restore();
+  }
+}
+// fix (audit S2→S3): old card fades out in the first third, new card fades in after it; never both at full
+function dissolve(t, t0, a, b) {
+  const p = clamp(spring(t - t0, 150, 24));
+  if (p >= 0.999) return b(t);
+  const aOut = clamp(1 - p * 3.2), bIn = clamp((p - 0.2) / 0.8);
+  bg();
+  if (aOut > 0) { ctx.save(); ctx.globalAlpha = aOut; ctx.translate(CX, 760); ctx.scale(1 - 0.05 * p, 1 - 0.05 * p); ctx.translate(-CX, -760); a(t); ctx.restore(); }
+  if (bIn > 0) { ctx.save(); ctx.globalAlpha = ease(bIn); b(t); ctx.restore(); }
+}
+function whip(t, t0, a, b) { // fast horizontal pan; subframe blur does the smear
+  const p = clamp(spring(t - t0, 220, 28));
+  ctx.save(); ctx.translate(-p * W, 0); a(t); ctx.restore();
+  ctx.save(); ctx.translate((1 - p) * W, 0); b(t); ctx.restore();
+}
+
+function footer(t) {
+  // draft 5: always on, below the Reels safe zone. The phone covers it at the end; logo + URL reappear above the phone.
+  if (IMG.logoGold) { const lw = 150, lh = lw * IMG.logoGold.height / IMG.logoGold.width; ctx.drawImage(IMG.logoGold, CX - lw / 2, 1385, lw, lh); }
+  label('1inc.co.za', CX, 1500, { size: 32, weight: 700, fam: 'M', color: rgba(COL.white, 0.8) });
+  if (VARIANT === 'organic') {
+    roundRect(CX - 220, 1545, 440, 6, 3); ctx.fillStyle = rgba(COL.white, 0.12); ctx.fill();
+    roundRect(CX - 220, 1545, 440 * clamp(t / DUR), 6, 3); ctx.fillStyle = COL.gold; ctx.fill();
+  }
+}
+
+// ---------- master ----------
+window.seek = function (t) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.filter = 'none';
+  // draft 5 order: hook → SA stat → scale vs scan → the mistake → less… → Taygan → book
+  // draft 5c order: hook (question) -> 12 blocks (answer) -> the mistake -> less… -> SA stat (here to stay) -> Taygan -> book
+  if (t < S.s3) s1(t);
+  else if (t < S.sm) zoomThrough(t, S.s3, s1, s3);
+  else if (t < S.s4) dissolve(t, S.sm, s3, sM);
+  else if (t < S.s2) tM4(t);
+  else if (t < S.s5) dissolve(t, S.s2, s4, s2);
+  else if (t < S.s6) dissolve(t, S.s5, s2, s5);
+  else s6(t);
+  if (t < S.s6) footer(t); // s6 draws the footer itself, under the phone
+  // fade-to-black removed (audit): Reels loop automatically and a black frame breaks the loop
+};
+
+window.__ready.then(() => {
+  window.seek(0);
+  if (location.hash === '#scrub') {
+    // Review mode: drag through the film frame by frame (render mode never uses this).
+    document.body.style.cssText = 'background:#0B1220;display:flex;flex-direction:column;align-items:center;height:100vh;margin:0;overflow:hidden';
+    cv.style.cssText = 'height:calc(100vh - 110px);width:auto;border-radius:12px;margin-top:12px';
+    const bar = document.createElement('div');
+    bar.style.cssText = 'display:flex;gap:12px;align-items:center;width:min(92vw,720px);padding:14px 0;font:600 15px -apple-system,sans-serif;color:#cbd3e1';
+    bar.innerHTML = `<button id=pb style="font:inherit;padding:6px 14px;border-radius:20px;border:0;background:#C7A14C;color:#1B2A4A">Play</button>
+      <button id=bk style="font:inherit;padding:6px 10px;border-radius:20px;border:1px solid #42557a;background:none;color:#cbd3e1">◀ frame</button>
+      <input id=sl type=range min=0 max=${DUR} step=${1 / 60} value=0 style="flex:1;accent-color:#C7A14C">
+      <button id=fw style="font:inherit;padding:6px 10px;border-radius:20px;border:1px solid #42557a;background:none;color:#cbd3e1">frame ▶</button>
+      <span id=tc style="min-width:150px;text-align:right"></span>`;
+    document.body.appendChild(bar);
+    const sl = bar.querySelector('#sl'), tc = bar.querySelector('#tc');
+    const names = { s1: 'Hook', s2: 'Chart', s3: 'Scale', s4: 'Less…', s5: 'Taygan', s6: 'Booking' };
+    const show = (t) => {
+      t = clamp(t, 0, DUR); sl.value = t; window.seek(t);
+      const sc = Object.entries(S).filter(([, v]) => v <= t).pop()[0];
+      tc.textContent = `${t.toFixed(2)}s · f${Math.round(t * 60)} · ${names[sc]}`;
+    };
+    let playing = false, t0 = 0, from = 0;
+    sl.oninput = () => { playing = false; show(+sl.value); };
+    bar.querySelector('#bk').onclick = () => { playing = false; show(+sl.value - 1 / 60); };
+    bar.querySelector('#fw').onclick = () => { playing = false; show(+sl.value + 1 / 60); };
+    bar.querySelector('#pb').onclick = () => { playing = !playing; t0 = performance.now(); from = +sl.value; if (playing) tick(); };
+    const tick = () => { if (!playing) return; show((from + (performance.now() - t0) / 1000) % DUR); requestAnimationFrame(tick); };
+    show(0);
+  }
+  if (location.hash === '#play') {
+    const t0 = performance.now();
+    const loop = () => { window.seek(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<!doctype html><meta charset=utf-8><style>
+@font-face{font-family:'Montserrat';src:url('../../fonts/montserrat.woff2') format('woff2');font-weight:100 900}
+html,body{margin:0;background:transparent}</style>
+<canvas id=c width=1080 height=1920></canvas><script>
+const c=document.getElementById('c').getContext('2d'), im=new Image();
+window.__ready=Promise.all([document.fonts.load('700 30px Montserrat'),new Promise(r=>{im.onload=r;im.src='../assets/1inc-gold.png'})]).then(()=>{
+  const lw=130, lh=lw*im.height/im.width; c.drawImage(im,540-lw/2,1400,lw,lh);
+  c.font='700 30px Montserrat'; c.textAlign='center'; c.fillStyle='rgba(255,255,255,0.75)'; c.fillText('1inc.co.za',540,1505);
+  c.fillStyle='rgba(255,255,255,0.12)'; c.beginPath(); c.roundRect(320,1550,440,6,3); c.fill();
+});</script>
