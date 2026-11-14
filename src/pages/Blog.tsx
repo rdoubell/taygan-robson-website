@@ -194,6 +194,16 @@ const posts: Post[] = [
     image:         "/RFD training image .webp",
     imagePosition: "center 40%",
   },
+  {
+    slug:          "/blog/protein-requirements-glp1-therapy",
+    category:      "Clinical Nutrition · GLP-1 · Body Composition",
+    date:          "November 2026",
+    title:         "How Much Protein Do You Actually Need on GLP-1?",
+    excerpt:       "GLP-1 therapy suppresses appetite. Suppressed appetite means suppressed protein intake. Without a deliberate target, a significant portion of what you lose on the medication will be muscle, not fat.",
+    readTime:      "6 min read",
+    image:         "/blog-post-19.jpg",
+    imagePosition: "center center",
+  },
 ]
 
 function RealBlogCard({ post }: { post: Post }) {

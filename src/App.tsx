@@ -77,6 +77,7 @@ import BlogPost15 from "./pages/BlogPost15"
 import BlogPost16 from "./pages/BlogPost16"
 import BlogPost17 from "./pages/BlogPost17"
 import BlogPost18 from "./pages/BlogPost18"
+import BlogPost19 from "./pages/BlogPost19"
 
 function HomePage() {
   // Coming from another page via a link like "/#services" — scroll to that
@@ -146,6 +147,7 @@ export default function App() {
           <Route path="/blog/itb-syndrome-force-asymmetry-case-study" element={<BlogPost16 />} />
           <Route path="/blog/mcl-rehab-glp1-tirzepatide-calorie-deficit" element={<BlogPost17 />} />
           <Route path="/blog/rate-of-force-development-rfd-return-to-sport" element={<BlogPost18 />} />
+          <Route path="/blog/protein-requirements-glp1-therapy" element={<BlogPost19 />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
       </BrowserRouter>
