@@ -56,6 +56,33 @@ export default function Pricing() {
         className="mx-auto max-w-7xl px-6 lg:px-12 mb-10 flex flex-col gap-5"
       >
 
+        {/* ── Free Call slim banner ── */}
+        <div
+          className="flex items-center justify-between gap-4 flex-wrap"
+          style={{
+            background: "var(--color-gold)",
+            borderRadius: "var(--radius-lg)",
+            padding: "0.9rem 1.75rem",
+          }}
+        >
+          <p style={{ fontFamily: "var(--font-body)", color: "#14213D", fontSize: "0.9rem", fontWeight: 600, margin: 0 }}>
+            New clients start with a <strong>free 10-minute call</strong> — no forms, no commitment.
+          </p>
+          <button
+            onClick={open}
+            className="inline-flex items-center gap-2 text-[10px] tracking-[0.18em] uppercase font-bold whitespace-nowrap transition-all duration-200 hover:opacity-80"
+            style={{
+              fontFamily: "var(--font-display)",
+              background: "#14213D",
+              color: "#FFFFFF",
+              borderRadius: "var(--radius-pill)",
+              padding: "0.5rem 1.25rem",
+            }}
+          >
+            Book Free Call <ArrowRight size={10} />
+          </button>
+        </div>
+
         {/* ── Row 1: Full-width 1INC Consultation ── */}
         <div
           className="relative overflow-hidden"
@@ -234,104 +261,86 @@ export default function Pricing() {
             </button>
           </div>
 
-          {/* ── Free 10-Minute Call ── */}
-          <div
-            className="relative overflow-hidden flex flex-col justify-between"
-            style={{
-              background: "var(--color-navy)",
-              borderRadius: "var(--radius-lg)",
-              padding: "2rem",
-              border: "1px solid rgba(199,161,76,0.22)",
-            }}
-          >
-            {/* Subtle accent */}
+          {/* ── In-House Assessment (SA only) ── */}
+          {!isIntl && (
             <div
-              className="absolute bottom-0 left-0 w-56 h-56 rounded-full opacity-10 pointer-events-none"
-              style={{ background: "var(--color-gold)", transform: "translate(-30%, 40%)", filter: "blur(50px)" }}
-            />
-
-            <div className="relative">
-              <p
-                className="text-[9px] tracking-[0.38em] uppercase mb-3"
-                style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
-              >
-                New · Free to Start
-              </p>
-              <h3
-                className="text-white mb-3"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: "clamp(1.15rem, 1.8vw, 1.45rem)",
-                  lineHeight: 1.15,
-                }}
-              >
-                Start with a Free Call
-              </h3>
-              <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
-                Taygan hears your story first — your injuries, goals, and training history — before anything else begins. No commitment. No fee.
-              </p>
-
-              <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-                <div
+              className="flex flex-col justify-between"
+              style={{
+                background: "var(--color-navy)",
+                borderRadius: "var(--radius-lg)",
+                padding: "2rem",
+                border: "1px solid rgba(199,161,76,0.22)",
+              }}
+            >
+              <div>
+                <p
+                  className="text-[9px] tracking-[0.38em] uppercase mb-3"
+                  style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
+                >
+                  South Africa · In Person
+                </p>
+                <h3
+                  className="text-white mb-3"
                   style={{
                     fontFamily: "var(--font-display)",
-                    fontWeight: 800,
-                    fontSize: "clamp(2rem, 3vw, 2.6rem)",
-                    color: "var(--color-gold)",
-                    lineHeight: 1,
+                    fontWeight: 700,
+                    fontSize: "clamp(1.15rem, 1.8vw, 1.45rem)",
+                    lineHeight: 1.15,
                   }}
                 >
-                  Free
-                </div>
-                <p className="text-[10px] tracking-[0.2em] uppercase mt-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
-                  10-Minute Screening Call
+                  In-House Assessment
+                </h3>
+                <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
+                  A full in-person consultation at The Campus, Bryanston — same scope as the online 1INC Consultation, delivered face to face.
                 </p>
-              </div>
 
-              <ul className="mt-5 flex flex-col gap-2.5">
-                {[
-                  "Taygan listens — your history, goals and where things broke down",
-                  "No assessment forms. No pressure. Just a conversation.",
-                  "Online — available to anyone, anywhere",
-                ].map((f) => (
-                  <li key={f} className="flex items-start gap-2">
-                    <Check size={11} className="mt-[3px] flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
-                    <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)", fontSize: "0.82rem" }}>{f}</span>
-                  </li>
-                ))}
-              </ul>
+                <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 800,
+                      fontSize: "clamp(2rem, 3vw, 2.6rem)",
+                      color: "var(--color-gold)",
+                      lineHeight: 1,
+                    }}
+                  >
+                    {inHousePrice}
+                  </div>
+                  <p className="text-[10px] tracking-[0.2em] uppercase mt-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
+                    In-Person Session
+                  </p>
+                </div>
 
-              <div className="mt-5 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                <p className="text-[10px] tracking-[0.18em] uppercase mb-2" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.22)", fontWeight: 600 }}>What follows</p>
-                <ul className="flex flex-col gap-2">
+                <ul className="mt-5 flex flex-col gap-2.5">
                   {[
-                    "45-min online consultation — full assessment across your three disciplines",
-                    "Written report and programme direction within 7 working days",
+                    "Full in-person consultation with Taygan",
+                    "Covers S&C, nutrition & injury background",
+                    "Written Specialised Report delivered within 7 days",
+                    "South Africa only — The Campus, Bryanston",
                   ].map((f) => (
                     <li key={f} className="flex items-start gap-2">
-                      <ArrowRight size={10} className="mt-[4px] flex-shrink-0" style={{ color: "rgba(199,161,76,0.4)" }} />
-                      <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.35)", fontSize: "0.82rem" }}>{f}</span>
+                      <Check size={11} className="mt-[3px] flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
+                      <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)", fontSize: "0.82rem" }}>{f}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-            </div>
 
-            <button
-              onClick={open}
-              className="relative mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-[11px] tracking-[0.18em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
-              style={{
-                fontFamily: "var(--font-display)",
-                background: "var(--color-gold)",
-                color: "#14213D",
-                borderRadius: "var(--radius-pill)",
-              }}
-            >
-              Book a Free 10-Minute Call
-              <ArrowRight size={11} />
-            </button>
-          </div>
+              <button
+                onClick={open}
+                className="mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-[11px] tracking-[0.18em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  background: "var(--color-gold)",
+                  color: "#14213D",
+                  borderRadius: "var(--radius-pill)",
+                }}
+              >
+                Book In-House Assessment
+                <ArrowRight size={11} />
+              </button>
+            </div>
+          )}
 
         </div>
       </motion.div>
