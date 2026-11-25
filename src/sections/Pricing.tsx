@@ -1,6 +1,6 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { ArrowRight, Check } from "lucide-react"
+import { ArrowRight, Check, ChevronDown } from "lucide-react"
 import { useBookingModal } from "../lib/booking-modal-context"
 import { useRegion } from "../lib/region-context"
 
@@ -10,6 +10,7 @@ export default function Pricing() {
   const inView = useInView(ref, { once: true, margin: "-60px" })
   const { open, openFollowUp } = useBookingModal()
   const region = useRegion()
+  const [addOnsOpen, setAddOnsOpen] = useState(false)
   const isIntl = region === "intl"
   const consultPrice = isIntl ? "$320" : "R 2 250"
   const followUpPrice = isIntl ? "$220" : "R 1 250"
@@ -261,84 +262,138 @@ export default function Pricing() {
             </button>
           </div>
 
-          {/* ── In-House Assessment (SA only) ── */}
+          {/* ── Specialist Assessment (SA only) ── */}
           {!isIntl && (
             <div
-              className="flex flex-col justify-between"
-              style={{
-                background: "var(--color-navy)",
-                borderRadius: "var(--radius-lg)",
-                padding: "2rem",
-                border: "1px solid rgba(199,161,76,0.22)",
-              }}
-            >
-              <div>
-                <p
-                  className="text-[9px] tracking-[0.38em] uppercase mb-3"
-                  style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
-                >
-                  South Africa · In Person
-                </p>
-                <h3
-                  className="text-white mb-3"
+                  className="flex flex-col justify-between"
                   style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: "clamp(1.15rem, 1.8vw, 1.45rem)",
-                    lineHeight: 1.15,
+                    background: "var(--color-navy)",
+                    borderRadius: "var(--radius-lg)",
+                    padding: "2rem",
+                    border: "1px solid rgba(199,161,76,0.22)",
                   }}
                 >
-                  In-House Assessment
-                </h3>
-                <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
-                  A full in-person consultation at The Campus, Bryanston — same scope as the online 1INC Consultation, delivered face to face.
-                </p>
+                  <div>
+                    <p
+                      className="text-[9px] tracking-[0.38em] uppercase mb-3"
+                      style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
+                    >
+                      South Africa · In Person
+                    </p>
+                    <h3
+                      className="text-white mb-3"
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontWeight: 700,
+                        fontSize: "clamp(1.15rem, 1.8vw, 1.45rem)",
+                        lineHeight: 1.15,
+                      }}
+                    >
+                      Specialist Assessment
+                    </h3>
+                    <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.5)", fontSize: "0.875rem", lineHeight: 1.7 }}>
+                      A specialised assessment with a registered specialist practitioner and Taygan directly.
+                    </p>
 
-                <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-                  <div
+                    <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                      <div
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          fontWeight: 800,
+                          fontSize: "clamp(2rem, 3vw, 2.6rem)",
+                          color: "var(--color-gold)",
+                          lineHeight: 1,
+                        }}
+                      >
+                        {inHousePrice}
+                      </div>
+                      <p className="text-[10px] tracking-[0.2em] uppercase mt-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
+                        60–90 Minute Session
+                      </p>
+                    </div>
+
+                    {/* Equipment tags */}
+                    <div className="mt-5 flex flex-wrap gap-1.5">
+                      {["VALD ForceDecks", "DynaMo", "ROM", "Grip", "Balance", "Asymmetry", "Reaction Lights"].map((tag) => (
+                        <span
+                          key={tag}
+                          style={{
+                            fontFamily: "var(--font-display)",
+                            fontSize: "0.65rem",
+                            fontWeight: 600,
+                            letterSpacing: "0.06em",
+                            color: "rgba(199,161,76,0.85)",
+                            background: "rgba(199,161,76,0.1)",
+                            border: "1px solid rgba(199,161,76,0.2)",
+                            borderRadius: "999px",
+                            padding: "0.2rem 0.6rem",
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <ul className="mt-4 flex flex-col gap-2.5">
+                      {[
+                        "Movement screening included",
+                        "Written clinical report within 7 working days",
+                      ].map((f) => (
+                        <li key={f} className="flex items-start gap-2">
+                          <Check size={11} className="mt-[3px] flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
+                          <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)", fontSize: "0.82rem" }}>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Programme Add-Ons dropdown */}
+                    <div className="mt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "1rem" }}>
+                      <button
+                        onClick={() => setAddOnsOpen((v) => !v)}
+                        className="flex items-center justify-between w-full"
+                        style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+                      >
+                        <span style={{ fontFamily: "var(--font-display)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
+                          Programme Add-Ons
+                        </span>
+                        <ChevronDown
+                          size={13}
+                          style={{
+                            color: "rgba(199,161,76,0.6)",
+                            transform: addOnsOpen ? "rotate(180deg)" : "rotate(0deg)",
+                            transition: "transform 0.2s ease",
+                          }}
+                        />
+                      </button>
+                      {addOnsOpen && (
+                        <ul className="mt-3 flex flex-col gap-2.5">
+                          {[
+                            "Data-Driven Strength & Mobility Plan — bespoke rehabilitation and performance programme tailored to your VALD diagnostic findings and full injury assessment.",
+                            "Data-Driven Nutrition Plan — bespoke dietary strategy tailored to your physiological assessment and comprehensive consultation findings.",
+                          ].map((f) => (
+                            <li key={f} className="flex items-start gap-2">
+                              <Check size={11} className="mt-[3px] flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
+                              <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.45)", fontSize: "0.8rem", lineHeight: 1.6 }}>{f}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={open}
+                    className="mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-[11px] tracking-[0.18em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
                     style={{
                       fontFamily: "var(--font-display)",
-                      fontWeight: 800,
-                      fontSize: "clamp(2rem, 3vw, 2.6rem)",
-                      color: "var(--color-gold)",
-                      lineHeight: 1,
+                      background: "var(--color-gold)",
+                      color: "#14213D",
+                      borderRadius: "var(--radius-pill)",
                     }}
                   >
-                    {inHousePrice}
-                  </div>
-                  <p className="text-[10px] tracking-[0.2em] uppercase mt-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
-                    In-Person Session
-                  </p>
-                </div>
-
-                <ul className="mt-5 flex flex-col gap-2.5">
-                  {[
-                    "Full in-person consultation with Taygan",
-                    "Covers S&C, nutrition & injury background",
-                    "Written Specialised Report delivered within 7 days",
-                    "South Africa only — The Campus, Bryanston",
-                  ].map((f) => (
-                    <li key={f} className="flex items-start gap-2">
-                      <Check size={11} className="mt-[3px] flex-shrink-0" style={{ color: "var(--color-gold)" }} strokeWidth={2.5} />
-                      <span style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.55)", fontSize: "0.82rem" }}>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <button
-                onClick={open}
-                className="mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-[11px] tracking-[0.18em] uppercase font-bold transition-all duration-300 hover:scale-[1.02]"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  background: "var(--color-gold)",
-                  color: "#14213D",
-                  borderRadius: "var(--radius-pill)",
-                }}
-              >
-                Book In-House Assessment
-                <ArrowRight size={11} />
-              </button>
+                    Book an In-House Assessment
+                    <ArrowRight size={11} />
+                  </button>
             </div>
           )}
 
