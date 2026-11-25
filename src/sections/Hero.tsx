@@ -1,14 +1,8 @@
-import { useRef, useEffect } from "react"
 import { ArrowRight, ChevronRight } from "lucide-react"
 import { useBookingModal } from "../lib/booking-modal-context"
 
 export default function Hero() {
   const { open } = useBookingModal()
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    if (videoRef.current) videoRef.current.playbackRate = 0.4
-  }, [])
 
   return (
     <section id="hero" style={{ background: "#FFFFFF", overflow: "hidden" }}>
@@ -170,40 +164,32 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── Full-bleed video strip ── */}
+      {/* ── Contained video block ── */}
       <div
         style={{
-          position: "relative",
-          width: "100%",
-          aspectRatio: "16 / 7",
-          maxHeight: "520px",
-          overflow: "hidden",
-          background: "var(--color-navy)",
+          paddingLeft: "max(24px, env(safe-area-inset-left, 0px))",
+          paddingRight: "max(24px, env(safe-area-inset-right, 0px))",
+          paddingBottom: "clamp(48px, 7vh, 96px)",
         }}
       >
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          src="/dna-loop.mp4"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            opacity: 0.65,
-          }}
-        />
-        {/* Top-to-bottom fade so it blends from white hero above */}
         <div
-          aria-hidden
           style={{
-            position: "absolute",
-            inset: 0,
-            background: "linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, transparent 20%, rgba(27,42,74,0.4) 100%)",
+            maxWidth: "900px",
+            margin: "0 auto",
+            borderRadius: "16px",
+            overflow: "hidden",
+            background: "var(--color-navy)",
+            boxShadow: "0 24px 64px rgba(27,42,74,0.18)",
+            aspectRatio: "16 / 9",
           }}
-        />
+        >
+          {/* Replace src with your MP4 path, e.g. src="/your-video.mp4" */}
+          <video
+            controls
+            playsInline
+            style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
+          />
+        </div>
       </div>
 
     </section>
