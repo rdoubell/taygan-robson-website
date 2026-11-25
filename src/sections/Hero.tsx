@@ -36,34 +36,20 @@ export default function Hero() {
           textAlign: "center",
         }}
       >
-        {/* 2-line heading */}
+        {/* Heading — one line on desktop, two on mobile */}
         <h1
+          className="whitespace-normal lg:whitespace-nowrap"
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 800,
-            lineHeight: 1.03,
-            letterSpacing: "-0.025em",
-            marginBottom: "1.5rem",
+            lineHeight: 1.05,
+            letterSpacing: "-0.03em",
+            marginBottom: "1.75rem",
+            fontSize: "clamp(2.2rem, 4.5vw, 5rem)",
           }}
         >
-          <span
-            style={{
-              display: "block",
-              fontSize: "clamp(2.4rem, 6.5vw, 6rem)",
-              color: "var(--color-navy)",
-            }}
-          >
-            One Consultation.
-          </span>
-          <span
-            style={{
-              display: "block",
-              fontSize: "clamp(2.4rem, 6.5vw, 6rem)",
-              color: "var(--color-gold)",
-            }}
-          >
-            Four Disciplines.
-          </span>
+          <span style={{ color: "var(--color-navy)" }}>One Consultation.{" "}</span>
+          <span style={{ color: "var(--color-gold)" }}>Four Disciplines.</span>
         </h1>
 
         {/* Subline */}
