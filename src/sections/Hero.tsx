@@ -29,28 +29,13 @@ export default function Hero() {
         style={{
           position: "relative",
           zIndex: 1,
-          paddingTop: "clamp(120px, 17vh, 168px)",
-          paddingBottom: "clamp(48px, 6vh, 80px)",
+          paddingTop: "clamp(96px, 13vh, 136px)",
+          paddingBottom: "clamp(40px, 5vh, 64px)",
           paddingLeft: "max(16px, env(safe-area-inset-left, 0px))",
           paddingRight: "max(16px, env(safe-area-inset-right, 0px))",
           textAlign: "center",
         }}
       >
-        {/* Eyebrow */}
-        <p
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "10px",
-            letterSpacing: "0.32em",
-            textTransform: "uppercase",
-            color: "var(--color-gold)",
-            fontWeight: 700,
-            marginBottom: "1.4rem",
-          }}
-        >
-          Online Performance Consulting
-        </p>
-
         {/* 2-line heading */}
         <h1
           style={{
@@ -64,7 +49,7 @@ export default function Hero() {
           <span
             style={{
               display: "block",
-              fontSize: "clamp(2.8rem, 7.5vw, 7rem)",
+              fontSize: "clamp(2.4rem, 6.5vw, 6rem)",
               color: "var(--color-navy)",
             }}
           >
@@ -73,7 +58,7 @@ export default function Hero() {
           <span
             style={{
               display: "block",
-              fontSize: "clamp(2.8rem, 7.5vw, 7rem)",
+              fontSize: "clamp(2.4rem, 6.5vw, 6rem)",
               color: "var(--color-gold)",
             }}
           >
@@ -86,14 +71,14 @@ export default function Hero() {
           style={{
             fontFamily: "var(--font-body)",
             fontSize: "clamp(0.95rem, 1.6vw, 1.1rem)",
-            color: "rgba(27,42,74,0.55)",
+            color: "rgba(27,42,74,0.78)",
             lineHeight: 1.65,
             maxWidth: "54ch",
             margin: "0 auto 2.5rem",
           }}
         >
-          Strength &amp; conditioning, sports nutrition, injury rehabilitation, and performance science —
-          assessed together, in one online session with Taygan directly.
+          Strength &amp; conditioning, sports nutrition, injury rehabilitation and performance science.
+          Assessed together, in one online session with Taygan directly.
         </p>
 
         {/* CTA buttons */}
@@ -103,6 +88,7 @@ export default function Hero() {
             gap: "0.75rem",
             justifyContent: "center",
             flexWrap: "wrap",
+            marginBottom: "2rem",
           }}
         >
           <a
@@ -162,6 +148,20 @@ export default function Hero() {
             Book a Consultation <ArrowRight size={13} />
           </button>
         </div>
+
+        {/* Eyebrow — below buttons */}
+        <p
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "10px",
+            letterSpacing: "0.32em",
+            textTransform: "uppercase",
+            color: "var(--color-gold)",
+            fontWeight: 700,
+          }}
+        >
+          Online Performance Consulting
+        </p>
       </div>
 
       {/* ── Contained video block ── */}
