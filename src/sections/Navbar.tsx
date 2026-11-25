@@ -2,12 +2,13 @@ import { useState, useEffect, useRef } from "react"
 import { useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
+import { useBookingModal } from "../lib/booking-modal-context"
 
 const mainLinks = [
-  { label: "Process",   href: "/#process",   sectionId: "process"   },
-  { label: "Practices", href: "/#services",  sectionId: "services"  },
-  { label: "Pricing",   href: "/#pricing",   sectionId: "pricing"   },
-  { label: "Contact",   href: "mailto:hello@1inc.co.za", sectionId: "contact" },
+  { label: "Process",   href: "/#process",               sectionId: "process"  },
+  { label: "Practices", href: "/#services",              sectionId: "services" },
+  { label: "Pricing",   href: "/#pricing",               sectionId: "pricing"  },
+  { label: "Contact",   href: "mailto:hello@1inc.co.za", sectionId: "contact"  },
 ]
 
 const secondaryLinks = [
@@ -15,37 +16,26 @@ const secondaryLinks = [
   { label: "About", href: "/about" },
 ]
 
-const ALL_SECTION_IDS   = ["hero", "process", "services", "pricing", "contact"]
+const ALL_SECTION_IDS = ["hero", "process", "services", "pricing", "contact"]
 
 export default function Navbar() {
-  const { pathname }   = useLocation()
-  const isHome         = pathname === "/"
+  const { pathname } = useLocation()
+  const { open } = useBookingModal()
 
-  const [menuOpen,       setMenuOpen]       = useState(false)
-  const [activeSection,  setActiveSection]  = useState("")
-  const [navOpacity,     setNavOpacity]     = useState(isHome ? 0 : 1)
+  const [menuOpen,      setMenuOpen]      = useState(false)
+  const [activeSection, setActiveSection] = useState("")
+  const [scrolled,      setScrolled]      = useState(false)
 
   const underlineRef = useRef<HTMLDivElement>(null)
   const linkRefs     = useRef<Record<string, HTMLAnchorElement | null>>({})
 
-  // On non-home pages always stay solid; on home page fade in with hero scroll
+  // Show shadow after scrolling past a small threshold
   useEffect(() => {
-    if (!isHome) {
-      setNavOpacity(1)
-      return
-    }
-    const onScroll = () => {
-      const heroEl    = document.getElementById("hero")
-      const heroH     = heroEl ? heroEl.offsetHeight : window.innerHeight
-      const fadeStart = heroH * 0.75
-      const fadeEnd   = heroH * 0.95
-      const raw       = (window.scrollY - fadeStart) / (fadeEnd - fadeStart)
-      setNavOpacity(Math.min(1, Math.max(0, raw)))
-    }
+    const onScroll = () => setScrolled(window.scrollY > 20)
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
-  }, [isHome])
+  }, [])
 
   // Active-section detection
   useEffect(() => {
@@ -65,7 +55,7 @@ export default function Navbar() {
       if (el) observer.observe(el)
     })
     return () => observer.disconnect()
-  }, [])
+  }, [pathname])
 
   // Slide underline to active link
   useEffect(() => {
@@ -85,40 +75,72 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50"
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         style={{
-          // Use rgba so the transition is always a smooth numeric interpolation
-          backgroundColor: `rgba(27, 42, 74, ${navOpacity})`,
-          borderBottom: navOpacity > 0.5 ? "1px solid rgba(255,255,255,0.08)" : "none",
-          boxShadow:    navOpacity > 0.5 ? "0 2px 40px rgba(0,0,0,0.3)"       : "none",
-          transition:   "background-color 0.12s linear, box-shadow 0.3s ease, border-bottom 0.3s ease",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 50,
+          background: "#FFFFFF",
+          borderBottom: scrolled ? "1px solid rgba(27,42,74,0.08)" : "1px solid transparent",
+          boxShadow: scrolled ? "0 2px 24px rgba(0,0,0,0.07)" : "none",
+          transition: "box-shadow 0.3s ease, border-bottom 0.3s ease",
         }}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center h-[68px] gap-8">
-
+        <div
+          style={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            paddingLeft: "max(24px, env(safe-area-inset-left, 0px))",
+            paddingRight: "max(24px, env(safe-area-inset-right, 0px))",
+            display: "flex",
+            alignItems: "center",
+            height: "68px",
+            gap: "2.5rem",
+          }}
+        >
           {/* Logo */}
-          <a href="/" className="flex-shrink-0 flex items-center">
+          <a href="/" style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
             <img
               src="/logo/1inc-gold-mark.png"
               alt="1INC Consulting"
-              className="h-8 w-auto"
-              style={{ filter: "drop-shadow(0 0 8px rgba(199,161,76,0.3))" }}
+              style={{ height: "30px", width: "auto" }}
             />
           </a>
 
-          {/* Main links + sliding underline */}
-          <div className="hidden lg:flex items-center gap-8 relative flex-1">
+          {/* ── Desktop nav ── */}
+          <div
+            style={{
+              display: "none",
+              flex: 1,
+              alignItems: "center",
+              gap: "2rem",
+              position: "relative",
+            }}
+            className="lg:!flex"
+          >
+            {/* Main links */}
             {mainLinks.map((link) => (
               <a
                 key={link.sectionId}
                 ref={(el) => { linkRefs.current[link.sectionId] = el }}
                 href={link.href}
-                className="text-[11px] tracking-[0.16em] uppercase font-semibold whitespace-nowrap"
                 style={{
                   fontFamily: "var(--font-display)",
-                  color: activeSection === link.sectionId ? "#FFFFFF" : "rgba(255,255,255,0.62)",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  color: activeSection === link.sectionId ? "var(--color-navy)" : "rgba(27,42,74,0.55)",
                   transition: "color 0.2s ease",
+                  whiteSpace: "nowrap",
+                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--color-navy)")}
+                onMouseLeave={(e) => {
+                  if (activeSection !== link.sectionId)
+                    (e.currentTarget as HTMLElement).style.color = "rgba(27,42,74,0.55)"
                 }}
               >
                 {link.label}
@@ -128,8 +150,11 @@ export default function Navbar() {
             {/* Animated underline */}
             <div
               ref={underlineRef}
-              className="absolute bottom-[-4px] h-[2px] opacity-0"
               style={{
+                position: "absolute",
+                bottom: "-4px",
+                height: "2px",
+                opacity: 0,
                 background: "var(--color-gold)",
                 borderRadius: "2px",
                 transition: "left 0.25s cubic-bezier(.4,0,.2,1), width 0.25s cubic-bezier(.4,0,.2,1), opacity 0.2s ease",
@@ -137,65 +162,106 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Right group */}
-          <div className="hidden lg:flex items-center gap-3 ml-auto">
-            {/* Blog + About gold pills */}
+          {/* Right group — secondary links + CTA */}
+          <div
+            style={{ display: "none", alignItems: "center", gap: "1.5rem", marginLeft: "auto" }}
+            className="lg:!flex"
+          >
             {secondaryLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="inline-flex items-center px-4 py-1.5 text-[11px] tracking-[0.18em] uppercase font-semibold"
                 style={{
                   fontFamily: "var(--font-display)",
-                  background: "var(--color-gold)",
-                  color: "#14213D",
-                  borderRadius: "var(--radius-pill)",
-                  transition: "background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease",
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  color: "rgba(27,42,74,0.4)",
+                  transition: "color 0.2s ease",
+                  whiteSpace: "nowrap",
                 }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.background = "#FFFFFF"
-                  el.style.color = "var(--color-gold)"
-                  el.style.boxShadow = "inset 0 0 0 1px var(--color-gold)"
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.background = "var(--color-gold)"
-                  el.style.color = "#14213D"
-                  el.style.boxShadow = "none"
-                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--color-navy)")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(27,42,74,0.4)")}
               >
                 {link.label}
               </a>
             ))}
 
+            {/* Book Now CTA */}
+            <button
+              onClick={open}
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "11px",
+                fontWeight: 700,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                background: "var(--color-gold)",
+                color: "#14213D",
+                border: "none",
+                borderRadius: "var(--radius-pill)",
+                padding: "0.6rem 1.4rem",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+                transition: "background 0.2s ease, box-shadow 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLElement
+                el.style.background = "var(--color-navy)"
+                el.style.color = "#FFFFFF"
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLElement
+                el.style.background = "var(--color-gold)"
+                el.style.color = "#14213D"
+              }}
+            >
+              Book Now
+            </button>
           </div>
 
           {/* Mobile hamburger */}
           <button
-            className="lg:hidden ml-auto p-2 text-white"
+            className="lg:hidden"
+            style={{ marginLeft: "auto", padding: "8px", background: "none", border: "none", cursor: "pointer", color: "var(--color-navy)" }}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </motion.nav>
 
-      {/* Mobile full-screen menu */}
+      {/* ── Mobile menu ── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 lg:hidden"
-            style={{ background: "var(--color-navy)" }}
+            transition={{ duration: 0.2 }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 40,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "2rem",
+              background: "#FFFFFF",
+            }}
+            className="lg:hidden"
           >
-            <button className="absolute top-5 right-6 text-white" onClick={() => setMenuOpen(false)}>
+            <button
+              style={{ position: "absolute", top: "20px", right: "24px", background: "none", border: "none", cursor: "pointer", color: "var(--color-navy)" }}
+              onClick={() => setMenuOpen(false)}
+            >
               <X size={22} />
             </button>
+
             {mainLinks.map((link, i) => (
               <motion.a
                 key={link.href}
@@ -204,46 +270,72 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.07 }}
                 onClick={() => setMenuOpen(false)}
-                className="text-3xl font-semibold text-white hover:text-[#C7A14C] transition-colors"
-                style={{ fontFamily: "var(--font-display)" }}
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.75rem",
+                  fontWeight: 800,
+                  textDecoration: "none",
+                  color: "var(--color-navy)",
+                  letterSpacing: "-0.01em",
+                  transition: "color 0.2s ease",
+                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--color-gold)")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--color-navy)")}
               >
                 {link.label}
               </motion.a>
             ))}
-            {secondaryLinks.map((link, i) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: (mainLinks.length + i) * 0.07 }}
-                onClick={() => setMenuOpen(false)}
-                className="text-xl font-medium transition-colors"
-                style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)" }}
-              >
-                {link.label}
-              </motion.a>
-            ))}
-            <motion.a
-              href="/#pricing"
+
+            <div style={{ display: "flex", gap: "1.5rem" }}>
+              {secondaryLinks.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (mainLinks.length + i) * 0.07 }}
+                  onClick={() => setMenuOpen(false)}
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "0.95rem",
+                    fontWeight: 600,
+                    textDecoration: "none",
+                    color: "rgba(27,42,74,0.45)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    transition: "color 0.2s ease",
+                  }}
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </div>
+
+            <motion.button
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35 }}
-              onClick={() => setMenuOpen(false)}
-              className="mt-2 px-8 py-3 text-xs tracking-widest uppercase font-bold"
+              onClick={() => { open(); setMenuOpen(false) }}
               style={{
                 fontFamily: "var(--font-display)",
+                fontSize: "11px",
+                fontWeight: 700,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
                 background: "var(--color-gold)",
                 color: "#14213D",
+                border: "none",
                 borderRadius: "var(--radius-pill)",
+                padding: "0.9rem 2.25rem",
+                cursor: "pointer",
+                marginTop: "0.5rem",
               }}
             >
-              Book a 1INC Consultation
-            </motion.a>
+              Book a Consultation
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
-
     </>
   )
 }

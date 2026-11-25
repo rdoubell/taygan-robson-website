@@ -1,281 +1,210 @@
 import { useRef, useEffect } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, ChevronRight } from "lucide-react"
 import { useBookingModal } from "../lib/booking-modal-context"
-import { useRegion } from "../lib/region-context"
-
-const soundFamiliarCards = [
-  { category: "Performance & Training", quote: "I have entered the ABSA Cape Epic to be competitive in my age category and I have no structured training plan. I do not know if I can ride hard for 8 days, let alone race it." },
-  { category: "Nutrition & Fuelling", quote: "I know I should eat before and after training but I never know the right timing, the right amount, or what type of food actually supports recovery versus performance." },
-  { category: "Injury & Rehabilitation", quote: "I fractured my collarbone in a mountain bike crash and lost strength while I could not train. I do not know how to rebuild the muscle." },
-  { category: "GLP-1 & Recovery", quote: "I am on GLP-1 medication and have no appetite. I know I am not eating enough protein but I do not know how much I need or when to eat it." },
-  { category: "Performance & Training", quote: "I am 45 and want to run my first Comrades. I have never had my training load, recovery capacity, or physiological age assessed against my training. I do not know what my body can actually handle before I start building." },
-  { category: "Nutrition & Fuelling", quote: "I eat well during the week but on race morning I have no idea what to eat, how much, or how long before I start. I always feel either too full or completely empty at the start line." },
-  { category: "Injury & Rehabilitation", quote: "I tore my ACL two years ago. I was cleared to return but I do not trust my knee and my nutrition during recovery has been non-existent." },
-  { category: "GLP-1 & Recovery", quote: "I have been on Ozempic for eight months. I have lost weight but my body composition looks worse. I have no muscle tone and I am weaker than before I started." },
-  { category: "Performance & Training", quote: "I have been told I am overtraining, doing too much millage, but I do not know what to cut, what to keep, or how to structure my week." },
-  { category: "Nutrition & Fuelling", quote: "I race Motocross early morning fasted. By gate drop I have no energy and my reactions are slow. Nobody has built a fuelling plan around my start time." },
-  { category: "Injury & Rehabilitation", quote: "I have a rotator cuff tear and I have been told to rest from swimming. I have lost fitness, lost muscle, and nobody has given me a structured plan to rebuild either." },
-  { category: "GLP-1 & Recovery", quote: "I am on GLP-1 medication and my resting heart rate has been 10 beats higher than normal for months. I do not know why or how it is affecting my training and racing." },
-  { category: "Performance & Training", quote: "I am training for 500 to 1000km gravel races and have no idea how to structure the volume and intensity across a week without breaking down or burning out." },
-  { category: "Nutrition & Fuelling", quote: "I do 5-hour rides and have no idea how many carbs to take per hour or why the ratio of glucose to fructose matters. I just take whatever gel is cheapest and wonder why I blow up at hour four." },
-  { category: "Injury & Rehabilitation", quote: "My back goes into spasm while playing golf. I have changed my clubs but need to fix my strength, posture and core." },
-  { category: "GLP-1 & Recovery", quote: "I started GLP-1 medication six months ago. My weight is down but I feel I am getting slower on my rides. Nobody has connected my medication, my strength, and my nutrition into one conversation." },
-]
 
 export default function Hero() {
-  const { scrollY } = useScroll()
-  const contentOpacity = useTransform(scrollY, [0, 500], [1, 0])
-  const contentY      = useTransform(scrollY, [0, 500], [0, -60])
   const { open } = useBookingModal()
-
-  const region = useRegion()
-  const consultPrice = region === "intl" ? "$320" : "R 2 250"
-
   const videoRef = useRef<HTMLVideoElement>(null)
+
   useEffect(() => {
-    if (videoRef.current) videoRef.current.playbackRate = 0.35
+    if (videoRef.current) videoRef.current.playbackRate = 0.4
   }, [])
 
-  const innerStripRef = useRef<HTMLDivElement>(null)
-  const pauseStrip  = () => { if (innerStripRef.current) innerStripRef.current.style.animationPlayState = "paused" }
-  const resumeStrip = () => { if (innerStripRef.current) innerStripRef.current.style.animationPlayState = "running" }
-
   return (
-    <section id="hero" className="relative w-full h-screen min-h-[640px] overflow-hidden" style={{ background: "#14213D" }}>
+    <section id="hero" style={{ background: "#FFFFFF", overflow: "hidden" }}>
 
-      {/* DNA video */}
-      <video
-        ref={videoRef}
-        autoPlay loop muted playsInline
-        src="/dna-loop.mp4"
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ opacity: 0.55, transform: "scale(1.08)", filter: "blur(6px) brightness(0.45) saturate(0.6)" }}
+      {/* Gold orb blur — decorative background element */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: "5%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "min(900px, 130vw)",
+          height: "480px",
+          background: "radial-gradient(ellipse at 50% 40%, rgba(199,161,76,0.22) 0%, rgba(199,161,76,0.07) 45%, transparent 68%)",
+          filter: "blur(32px)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
       />
 
-      {/* Navy overlay */}
-      <div className="absolute inset-0" style={{ background: "rgba(14,24,50,0.68)" }} />
-
-      {/* Content — small top spacer keeps content near nav, strip floats below, gold bar closes */}
-      <motion.div
-        style={{ opacity: contentOpacity, y: contentY }}
-        className="absolute inset-0 flex flex-col"
+      {/* ── Hero text block ── */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          paddingTop: "clamp(120px, 17vh, 168px)",
+          paddingBottom: "clamp(48px, 6vh, 80px)",
+          paddingLeft: "max(16px, env(safe-area-inset-left, 0px))",
+          paddingRight: "max(16px, env(safe-area-inset-right, 0px))",
+          textAlign: "center",
+        }}
       >
+        {/* Eyebrow */}
+        <p
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "10px",
+            letterSpacing: "0.32em",
+            textTransform: "uppercase",
+            color: "var(--color-gold)",
+            fontWeight: 700,
+            marginBottom: "1.4rem",
+          }}
+        >
+          Online Performance Consulting
+        </p>
 
-        {/* Top spacer — flex-[0.3] keeps content close to nav (≈ original feel) */}
-        <div style={{ flex: "0.3" }} />
-
-        {/* ── Main content row ── */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
-          {/* items-stretch: right card matches the left column height exactly */}
-          <div className="flex items-stretch gap-12 xl:gap-20">
-
-            {/* Left — text block */}
-            <div className="flex-1 min-w-0">
-
-              {/* Headline — font size reduced so "ONE CONVERSATION." never clips on any desktop */}
-              <h1 className="mb-6 overflow-hidden">
-                {[
-                  { text: "ONE CONVERSATION", gold: true },
-                  { text: "ONLINE · GLOBAL", gold: false },
-                ].map(({ text, gold }, i) => (
-                  <div key={text} style={{ overflow: "clip" }}>
-                    <motion.div
-                      initial={{ x: "-105%", opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ duration: 0.72, delay: 0.2 + i * 0.14, ease: [0.22, 1, 0.36, 1] }}
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        fontSize: "clamp(1.6rem, 3.5vw, 3.5rem)",
-                        fontWeight: 800,
-                        lineHeight: 1.1,
-                        letterSpacing: "-0.01em",
-                        whiteSpace: "nowrap",
-                        color: gold ? "var(--color-gold)" : "#FFFFFF",
-                      }}
-                    >
-                      {text}
-                    </motion.div>
-                  </div>
-                ))}
-              </h1>
-
-              <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.65, delay: 0.75 }}
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "clamp(0.85rem, 1.45vw, 0.98rem)",
-                  color: "rgba(255,255,255,0.55)",
-                  lineHeight: 1.7,
-                  maxWidth: "52ch",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.75rem",
-                }}
-              >
-                <p>Injured. Undertrained. Under fuelled. Managing GLP-1 related muscle loss. Your numbers are dropping. Lost and need someone to be accountable to.</p>
-                <p>Whatever brought you here — your training load, injury history, nutrition, endurance data numbers and performance goals assessed in a personal online consultation with Taygan directly.</p>
-                <p>A written report, a clear plan and a programme built around your findings.</p>
-                <p style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(1rem, 1.7vw, 1.15rem)", color: "rgba(255,255,255,0.92)", lineHeight: 1.3 }}>
-                  Three practices in one. That is 1INC.
-                </p>
-              </motion.div>
-
-              {/* Mobile price + CTA — only below lg where the pricing card is hidden */}
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.65, delay: 0.9 }}
-                className="lg:hidden mt-6 flex items-center gap-4"
-              >
-                <div>
-                  <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "1.7rem", color: "var(--color-gold)", lineHeight: 1 }}>
-                    {consultPrice}
-                  </div>
-                  <p className="text-[10px] tracking-[0.15em] uppercase mt-1" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.4)" }}>
-                    45-Min Consultation
-                  </p>
-                </div>
-                <button
-                  onClick={open}
-                  className="inline-flex items-center gap-2 px-5 py-3 text-[11px] tracking-[0.14em] uppercase font-bold flex-shrink-0"
-                  style={{ fontFamily: "var(--font-display)", background: "#FFFFFF", color: "var(--color-navy)", borderRadius: "var(--radius-pill)" }}
-                >
-                  Book Now <ArrowRight size={12} />
-                </button>
-              </motion.div>
-
-            </div>
-
-            {/* Right — pricing card, stretches to match left column height via items-stretch on parent */}
-            <motion.div
-              initial={{ opacity: 0, x: 48 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.85, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="hidden lg:flex flex-col flex-shrink-0 p-8 justify-between"
-              style={{
-                width: "468px",
-                borderRadius: "20px",
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(199,161,76,0.22)",
-                backdropFilter: "blur(8px)",
-                boxShadow: "0 16px 48px rgba(0,0,0,0.35)",
-              }}
-            >
-              {/* Top — eyebrow + description */}
-              <div>
-                <p
-                  className="text-[10px] tracking-[0.3em] uppercase mb-4"
-                  style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontWeight: 600 }}
-                >
-                  Data-driven conversation &middot; Evidence-based direction.
-                </p>
-                <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.75)", fontSize: "0.92rem", lineHeight: 1.7 }}>
-                  Every client begins with a personal consultation with Taygan directly, covering your training load, injury history, nutrition, performance and training structure. From there, a written guidance report, a clear plan, and a programme. That is 1INC.
-                </p>
-              </div>
-
-              {/* Middle — pricing row */}
-              <div className="pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-                <p className="text-[10px] tracking-[0.18em] uppercase mb-2" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.4)" }}>
-                  45-Minute Online Session
-                </p>
-                <div className="flex items-end justify-between gap-4">
-                  <div>
-                    <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(2rem, 3.2vw, 2.6rem)", color: "var(--color-gold)", lineHeight: 1 }}>
-                      {consultPrice}
-                    </div>
-                    <p className="text-[10px] tracking-[0.15em] uppercase mt-1.5" style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.3)" }}>
-                      Online Consultation
-                    </p>
-                  </div>
-                  <button
-                    onClick={open}
-                    className="inline-flex items-center gap-2 px-5 py-3 text-[10px] tracking-[0.16em] uppercase font-bold transition-all duration-300 hover:scale-[1.02] flex-shrink-0"
-                    style={{ fontFamily: "var(--font-display)", background: "#FFFFFF", color: "var(--color-navy)", borderRadius: "var(--radius-pill)" }}
-                  >
-                    Book Now
-                    <ArrowRight size={12} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Bottom — fine print + credentials */}
-              <div>
-                <p className="text-[11.5px] italic mb-2.5" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
-                  Booked via Appointment Guru · Delivered online via Microsoft Teams.
-                </p>
-                <p className="text-[11.5px] italic" style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.4)" }}>
-                  Taygan &nbsp;|&nbsp; BSc S&amp;C &middot; MSc Sports Injuries &amp; Return to Performance &middot; PG Dip Performance Nutrition &middot; MSc Sports Nutrition (c)
-                </p>
-              </div>
-            </motion.div>
-
-          </div>
-        </div>
-
-        {/* ── Lower half: Sound Familiar strip + gold closing bar, centred as a unit ── */}
-        <div className="flex-1 flex flex-col justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.1 }}
-            style={{ borderTop: "1px solid rgba(199,161,76,0.18)", flexShrink: 0 }}
+        {/* 2-line heading */}
+        <h1
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 800,
+            lineHeight: 1.03,
+            letterSpacing: "-0.025em",
+            marginBottom: "1.5rem",
+          }}
+        >
+          <span
+            style={{
+              display: "block",
+              fontSize: "clamp(2.8rem, 7.5vw, 7rem)",
+              color: "var(--color-navy)",
+            }}
           >
-            {/* Heading */}
-            <div className="px-6 lg:px-12 text-center" style={{ paddingTop: "0.7rem", paddingBottom: "0.6rem" }}>
-              <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "clamp(1rem, 1.6vw, 1.4rem)", fontWeight: 800, letterSpacing: "-0.01em" }}>
-                Sound Familiar?
-              </p>
-            </div>
+            One Consultation.
+          </span>
+          <span
+            style={{
+              display: "block",
+              fontSize: "clamp(2.8rem, 7.5vw, 7rem)",
+              color: "var(--color-gold)",
+            }}
+          >
+            Four Disciplines.
+          </span>
+        </h1>
 
-            {/* Scrolling cards — seamless infinite loop, 4 visible */}
-            <div
-              style={{ overflow: "hidden", paddingBottom: "0.9rem" }}
-              onMouseEnter={pauseStrip}
-              onMouseLeave={resumeStrip}
-              onTouchStart={pauseStrip}
-              onTouchEnd={resumeStrip}
-            >
-              <div ref={innerStripRef} style={{ display: "flex", gap: "0.75rem", paddingLeft: "1.5rem", paddingRight: "1.5rem", width: "max-content", animation: "scroll-left 70s linear infinite" }}>
-                {[...soundFamiliarCards, ...soundFamiliarCards].map((card, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      width: "25vw",
-                      minWidth: "220px",
-                      flexShrink: 0,
-                      padding: "0.9rem 1.2rem 1rem",
-                      borderRadius: "14px",
-                      background: "rgba(255,255,255,0.05)",
-                      border: "1px solid rgba(199,161,76,0.22)",
-                      backdropFilter: "blur(8px)",
-                      boxShadow: "0 8px 24px rgba(0,0,0,0.28)",
-                      minHeight: "118px",
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <p style={{ fontFamily: "var(--font-display)", color: "var(--color-gold)", fontSize: "7.5px", letterSpacing: "0.24em", textTransform: "uppercase", fontWeight: 800, marginBottom: "0.45rem", flexShrink: 0 }}>
-                      {card.category}
-                    </p>
-                    <p style={{ fontFamily: "var(--font-body)", color: "rgba(255,255,255,0.92)", fontSize: "0.76rem", lineHeight: 1.55, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical" } as React.CSSProperties}>
-                      {card.quote}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+        {/* Subline */}
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: "clamp(0.95rem, 1.6vw, 1.1rem)",
+            color: "rgba(27,42,74,0.55)",
+            lineHeight: 1.65,
+            maxWidth: "54ch",
+            margin: "0 auto 2.5rem",
+          }}
+        >
+          Strength &amp; conditioning, sports nutrition, injury rehabilitation, and performance science —
+          assessed together, in one online session with Taygan directly.
+        </p>
 
-          </motion.div>
+        {/* CTA buttons */}
+        <div
+          style={{
+            display: "flex",
+            gap: "0.75rem",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          <a
+            href="/#pricing"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "11px",
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              fontWeight: 700,
+              padding: "0.9rem 1.9rem",
+              background: "var(--color-navy)",
+              color: "#FFFFFF",
+              borderRadius: "var(--radius-pill)",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              transition: "opacity 0.2s ease",
+            }}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.opacity = "0.85")}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.opacity = "1")}
+          >
+            View Pricing <ChevronRight size={13} />
+          </a>
 
-          {/* Gold closing bar — sits directly below the cards */}
-          <div style={{ borderTop: "1px solid rgba(199,161,76,0.18)", height: "1.75rem", flexShrink: 0 }} />
+          <button
+            onClick={open}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "11px",
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              fontWeight: 700,
+              padding: "0.9rem 1.9rem",
+              background: "transparent",
+              color: "var(--color-navy)",
+              border: "1.5px solid var(--color-navy)",
+              borderRadius: "var(--radius-pill)",
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              transition: "background 0.2s ease, color 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = "var(--color-navy)"
+              el.style.color = "#FFFFFF"
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = "transparent"
+              el.style.color = "var(--color-navy)"
+            }}
+          >
+            Book a Consultation <ArrowRight size={13} />
+          </button>
         </div>
+      </div>
 
-      </motion.div>
+      {/* ── Full-bleed video strip ── */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          aspectRatio: "16 / 7",
+          maxHeight: "520px",
+          overflow: "hidden",
+          background: "var(--color-navy)",
+        }}
+      >
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          src="/dna-loop.mp4"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: 0.65,
+          }}
+        />
+        {/* Top-to-bottom fade so it blends from white hero above */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, transparent 20%, rgba(27,42,74,0.4) 100%)",
+          }}
+        />
+      </div>
 
     </section>
   )
