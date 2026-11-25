@@ -25,19 +25,22 @@ const credentials = [
     icon: BookOpen,
     category: "Education",
     items: [
-      "BSc Strength & Conditioning",
-      "PG Dip Performance Nutrition (IOPN)",
-      "MSc Sports Injuries & Return to Performance Management — Setanta / Irish American University (Ireland)",
-      "MSc Sports Nutrition — University of Portsmouth (UK) · candidate",
+      "MSc Sports Injuries and Return to Performance Management, Setanta College / IAU",
+      "MSc Sports Nutrition, IOPN / University of Portsmouth (in progress)",
+      "PGDip Performance Nutrition (First Class), IOPN, UK",
+      "BSc S&C, Setanta College, Ireland",
     ],
   },
   {
     icon: Activity,
     category: "Currently",
     items: [
-      "Clinical movement screening & rehabilitation — The Campus Wellness Centre, Bryanston",
-      "Performance analyst & nutritionist — Dash Youth Elite Racing Team",
-      "Performance nutrition product development — Elite Labs",
+      "Sports Injury & Return-to-Performance Management: Prehab, Bryanston, South Africa",
+      "In-house performance and injury screening: VALD force plate and DynaMo testing — strength, ROM, asymmetries and injury risk mapping",
+      "Performance Scientist and Team Nutritionist, Dash Youth Elite MX Racing Team",
+      "GLP-1 education in strength training for SASMA and Exercise is Medicine® South Africa",
+      "Custom neuromuscular bite plates with prosthodontist Dr Peter van der Meulen — each tested on VALD force plates",
+      "Online performance analytics for endurance athletes via TrainingPeaks",
     ],
   },
   {
@@ -241,7 +244,7 @@ export default function AboutPage() {
               >
                 <div className="w-8 h-[2px] mb-6" style={{ background: "var(--color-gold)" }} />
                 <p className="leading-[1.9]" style={{ fontFamily: "var(--font-body)", color: "rgba(0,0,0,0.65)", fontSize: "clamp(1rem, 1.6vw, 1.1rem)" }}>
-                  I have been an athlete my entire life. Played football (soccer) from age 5 to 13, progressing to 1st team junior level; competed in rugby at school and club 1st team level. I earned provincial colours in youth dinghy sailing, then moved to competitive racing mountain biking across more than 50 events over 15 years including Absa Cape Epic, Joberg2c, and other three - four day stage race events, as well as Xterra off-road triathlon and Adventure racing across South Africa from 2006 to 2024.
+                  I have been an athlete my entire life. I started with football, rugby and provincial colours in dinghy sailing, then spent 15 years racing mountain bikes across more than 50 events, including the Absa Cape Epic, Joburg2c and XTERRA.
                 </p>
               </motion.div>
 
@@ -252,7 +255,7 @@ export default function AboutPage() {
                 className="leading-[1.9]"
                 style={{ fontFamily: "var(--font-body)", color: "rgba(0,0,0,0.65)", fontSize: "clamp(1rem, 1.6vw, 1.1rem)" }}
               >
-                From participating in sports at a competitive level, I know what it means when an injury derails months of structured work. The last two years have been my own rehabilitation journey, managing a significant back injury from Muay Thai training and navigating return-to-performance firsthand. That experience of extensive rehabilitation, working with physiotherapists, psychologists and specialists in my own personal multi-disciplinary team, has shaped every consultation and rehab session I run.
+                Two years ago, a Muay Thai back injury stopped me. With my own team of physiotherapists, biokineticists and specialists, I came back without surgery. That recovery is why I built <span style={{ color: "var(--color-navy)", fontWeight: 600 }}>1INC Consulting</span>.
               </motion.p>
 
               <motion.p
@@ -262,7 +265,7 @@ export default function AboutPage() {
                 className="leading-[1.9]"
                 style={{ fontFamily: "var(--font-body)", color: "rgba(0,0,0,0.65)", fontSize: "clamp(1rem, 1.6vw, 1.1rem)" }}
               >
-                This is why I founded and direct <span style={{ color: "var(--color-navy)", fontWeight: 600 }}>1INC Consulting</span> across three specialist practices with a multi-disciplinary team: sports injury and rehabilitation, performance science and clinical sports nutrition. Every client begins with a personal online consultation with me directly. Training load, injury history, nutrition and performance goals assessed, then mapped to a written report, a clear plan and a programme. Data-driven consulting. Evidence-based direction. This includes athletes, active individuals and those managing GLP-1-related muscle loss, sarcopenia, or bone health concerns, where rehabilitation, nutrition and structured load management intersect.
+                Every client starts with a consultation with me. We look at your training, injury history, nutrition and goals. You leave with a written report, a clear plan and a programme, delivered by my team across three practices: Prehab, Pure Science Performance and Sports Nutrition.
               </motion.p>
 
             </div>
@@ -416,40 +419,23 @@ export default function AboutPage() {
               letterSpacing: "-0.01em",
             }}
           >
-            The standard I hold every consultation to is the kind of integrated, data-led performance environment found at elite athlete performance centres globally.
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={closingInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.75, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-6"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(1.2rem, 2.4vw, 1.75rem)",
-              fontWeight: 700,
-              lineHeight: 1.55,
-              letterSpacing: "-0.01em",
-              color: "rgba(255,255,255,0.88)",
-            }}
-          >
-            Where rehabilitation, performance science and nutrition are not separate conversations.
+            Sports Injuries &amp; Rehabilitation, Performance Science and Nutrition are one conversation, not three.
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 14 }}
             animate={closingInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-3"
+            transition={{ duration: 0.7, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-5"
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(1.2rem, 2.4vw, 1.75rem)",
-              fontWeight: 700,
-              lineHeight: 1.55,
-              letterSpacing: "-0.01em",
+              fontSize: "clamp(1rem, 1.8vw, 1.3rem)",
+              fontWeight: 600,
+              lineHeight: 1.6,
+              letterSpacing: "0.02em",
               color: "var(--color-gold)",
-              whiteSpace: "nowrap",
             }}
           >
-            They are 3 in 1. That is 1INC.
+            Data-driven consulting. Evidence-based direction.
           </motion.p>
         </div>
       </section>
