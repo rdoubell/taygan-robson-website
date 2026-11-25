@@ -173,6 +173,7 @@ export default function Hero() {
             controls
             playsInline
             src="/1INC Hero – v4 (ElevenLabs VO) copy.mp4"
+            poster="/hero-video-poster.jpg"
             style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
           />
         </div>
