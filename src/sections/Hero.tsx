@@ -1,8 +1,16 @@
+import { useRef, useState } from "react"
 import { ArrowRight, ChevronRight } from "lucide-react"
 import { useBookingModal } from "../lib/booking-modal-context"
 
 export default function Hero() {
   const { open } = useBookingModal()
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
+
+  function handlePlay() {
+    videoRef.current?.play()
+    setPlaying(true)
+  }
 
   return (
     <section id="hero" style={{ background: "#FFFFFF", overflow: "hidden" }}>
@@ -169,13 +177,59 @@ export default function Hero() {
             aspectRatio: "16 / 9",
           }}
         >
-          <video
-            controls
-            playsInline
-            src="/1INC Hero – v4 (ElevenLabs VO) copy.mp4"
-            poster="/hero-video-poster.jpg"
-            style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
-          />
+          <div style={{ position: "relative", width: "100%", height: "100%" }}>
+            <video
+              ref={videoRef}
+              controls
+              playsInline
+              src="/1INC Hero – v4 (ElevenLabs VO) copy.mp4"
+              poster="/hero-video-poster.jpg"
+              onPlay={() => setPlaying(true)}
+              onPause={() => setPlaying(false)}
+              style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
+            />
+            {!playing && (
+              <button
+                onClick={handlePlay}
+                aria-label="Play video"
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: "72px",
+                  height: "72px",
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.15)",
+                  backdropFilter: "blur(8px)",
+                  border: "2px solid rgba(255,255,255,0.5)",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "background 0.2s ease, transform 0.2s ease",
+                  pointerEvents: "auto",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.background = "rgba(199,161,76,0.85)"
+                  el.style.border = "2px solid var(--color-gold)"
+                  el.style.transform = "translate(-50%, -50%) scale(1.08)"
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.background = "rgba(255,255,255,0.15)"
+                  el.style.border = "2px solid rgba(255,255,255,0.5)"
+                  el.style.transform = "translate(-50%, -50%) scale(1)"
+                }}
+              >
+                {/* Play triangle */}
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                  <polygon points="9,5 22,13 9,21" fill="white" />
+                </svg>
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
