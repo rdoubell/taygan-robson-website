@@ -169,10 +169,10 @@ export default function Hero() {
             aspectRatio: "16 / 9",
           }}
         >
-          {/* Replace src with your MP4 path, e.g. src="/your-video.mp4" */}
           <video
             controls
             playsInline
+            src="/1INC Hero – v4 (ElevenLabs VO) copy.mp4"
             style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
           />
         </div>
