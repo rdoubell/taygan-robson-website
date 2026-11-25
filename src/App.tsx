@@ -10,16 +10,28 @@ import { HomeSchema } from "./components/SchemaOrg"
 function StickyBookButton() {
   const { open, isOpen } = useBookingModal()
   const [nearPricing, setNearPricing] = useState(false)
+  // On mobile, hide until the hero has scrolled out of view
+  const [pastHero, setPastHero] = useState(() => window.innerWidth >= 1024)
 
   useEffect(() => {
-    const el = document.getElementById("pricing")
-    if (!el) return
-    const obs = new IntersectionObserver(([e]) => setNearPricing(e.isIntersecting), { threshold: 0.05 })
-    obs.observe(el)
+    const pricing = document.getElementById("pricing")
+    if (pricing) {
+      const obs = new IntersectionObserver(([e]) => setNearPricing(e.isIntersecting), { threshold: 0.05 })
+      obs.observe(pricing)
+      return () => obs.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (window.innerWidth >= 1024) return // desktop always shows; observer not needed
+    const hero = document.getElementById("hero")
+    if (!hero) { setPastHero(true); return }
+    const obs = new IntersectionObserver(([e]) => setPastHero(!e.isIntersecting), { threshold: 0 })
+    obs.observe(hero)
     return () => obs.disconnect()
   }, [])
 
-  if (isOpen || nearPricing) return null
+  if (isOpen || nearPricing || !pastHero) return null
 
   return (
     <button
