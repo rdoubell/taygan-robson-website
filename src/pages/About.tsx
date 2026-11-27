@@ -235,7 +235,7 @@ export default function AboutPage() {
             </div>
 
             {/* Bio text */}
-            <div className="flex flex-col justify-between gap-6">
+            <div className="flex flex-col justify-start gap-6">
 
               <motion.div
                 variants={fadeUp(0.12)}
